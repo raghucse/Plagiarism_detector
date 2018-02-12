@@ -13,8 +13,24 @@ public interface User {
 	 * Primarily initializes cache and other data structures for the user.
 	 */
     public void onLogin();
+    
+    /**
+	 * Does things to be done when an user logs out
+	 * Primarily clears cache and destroys other data structures for the user.
+	 */
     public void onLogout();
+    
+    /**
+     * Adds a line of log to the users log
+     * A user log contains important information about the user activity
+     * @param log
+     */
     public void addUserLog(String log);
-    public String showUserLogs();
+    
+    /**
+     * Return the user logs recorded for an user
+     * @return the logs for an user
+     */
+    public List<String> showUserLogs();
 
 }
