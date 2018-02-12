@@ -1,8 +1,8 @@
 package plagiarismdetector;
 
-import netscape.javascript.JSObject;
+import net.sf.json.JSONObject;
 
 public interface Report {
 
-    public JSObject getReport();
+    public JSONObject getReport();
 }
