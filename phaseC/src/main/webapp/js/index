@@ -1,0 +1,26 @@
+class Test extends React.Component {
+		constructor() {
+			super();
+			this.state = {
+				page: 1
+			}
+		}
+
+		render() {
+			if (this.state.page == 0) {
+				return(<p>Hello!!!</p>);
+			} else {	
+				return(
+					<div>
+					<button onClick={ () => this.setState({ page: 0 })}>Hello</button>
+					</div>
+				);
+			}
+			
+		}
+	}
+	
+	ReactDOM.render(
+			<Test />,
+			document.getElementById('root')
+	);
