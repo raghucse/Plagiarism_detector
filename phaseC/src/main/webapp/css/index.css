@@ -12,3 +12,16 @@ h1 {
 	padding-top: 30px;
 	text-align: center;
 }
+
+.clickedButton {
+	padding-top: 20px;
+	background-color: #e7e7e7;
+	color: black;
+}
+
+.unclickedButton {
+	padding-top: 20px;
+	background-color: #464c54;
+    border: 1px solid #464c54;
+    color: #ffebb5;
+}

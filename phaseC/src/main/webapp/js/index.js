@@ -8,8 +8,8 @@ class Test extends React.Component {
     	if (this.state.page == 0) {
     		return(
     			<div>
-                <button onClick={ () => this.setState({ page: 0 })}>Log In</button>
-                <button onClick={ () => this.setState({ page: 1 })}>Register</button>
+                <button class={ this.state.page == 0 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 0 })}>Log In</button>
+                <button class={ this.state.page == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 1 })}>Register</button>
 				<table>
 					<tr>
 						<td>Email</td>
@@ -36,8 +36,8 @@ class Test extends React.Component {
 		} else {	
 			return(
 				<div>
-				<button onClick={ () => this.setState({ page: 0 })}>Log In</button>
-				<button onClick={ () => this.setState({ page: 1 })}>Register</button>
+				<button class={ this.state.page == 0 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 0 })}>Log In</button>
+                <button class={ this.state.page == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 1 })}>Register</button>
 				<table>
           			<tr>
             			<td>Email</td>
