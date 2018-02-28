@@ -17,11 +17,11 @@ class Test extends React.Component {
 				</p>
 				<table>
 					<tr>
-						<td>Email</td>
+						<td><span>Email</span></td>
 						<td><input type="text"/></td>
 					</tr>
 					<tr>
-						<td>Password</td>
+						<td><span>Password</span></td>
 						<td><input type="password"/></td>
 					</tr>
 					<tr>
@@ -50,19 +50,19 @@ class Test extends React.Component {
 				</p>
 				<table>
           			<tr>
-            			<td>Email</td>
+            			<td><span>Email</span></td>
             			<td><input type="email" /></td>
           			</tr>
           			<tr>
-            			<td>Password</td>
+            			<td><span>Password</span></td>
             			<td><input type="password" /></td>
           			</tr>
           			<tr>
-            			<td>Confirm Password</td>
+            			<td><span>Confirm Password</span></td>
             			<td><input type="password" /></td>
           			</tr>
           			<tr>
-            			<td>Role</td>
+            			<td><span>Role</span></td>
             			<td>
               				<select>
                 				<option value ="Professor">Professor</option>
