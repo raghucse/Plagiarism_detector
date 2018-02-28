@@ -14,14 +14,44 @@ h1 {
 }
 
 .clickedButton {
-	padding-top: 20px;
+	float: right;
+	padding-top: 30px;
 	background-color: #e7e7e7;
-	color: black;
+	color: #282e32;
+  	border: 1px solid #e7e7e7;
+  	font-family: Verdana,Arial,Helvetica,sans-serif;
+  	font-size: 15px;
+  	font-weight: bold;
+  	padding: 8px 14px;
+  	text-decoration: none;	
 }
 
 .unclickedButton {
-	padding-top: 20px;
+	float: right;
+	padding-top: 30px;
 	background-color: #464c54;
     border: 1px solid #464c54;
-    color: #ffebb5;
+	color: #ffebb5;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 15px;
+  	font-weight: bold;
+  	padding: 8px 14px;
+  	text-decoration: none;
+}
+
+table {
+	float: right;
+	width: 350px;
+	height: 200px;
+	background-color: #e7e7e7;
+	margin-right: 10%;
+	text-align: right;
+}
+
+p {
+	margin-right: 10%;
+}
+
+button {
+	width: 175px;
 }

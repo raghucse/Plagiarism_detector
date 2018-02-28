@@ -7,9 +7,14 @@ class Test extends React.Component {
     render() {
     	if (this.state.page == 0) {
     		return(
-    			<div>
-                <button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 0 })}>Log In</button>
-                <button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 1 })}>Register</button>
+    			<div >
+				<p>
+					<button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
+						onClick={ () => this.setState({ page: 1 })}>Register</button>
+					<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
+						onClick={ () => this.setState({ page: 0 })}>Log In</button>
+					&nbsp;<br/>
+				</p>
 				<table>
 					<tr>
 						<td>Email</td>
@@ -36,8 +41,13 @@ class Test extends React.Component {
 		} else {	
 			return(
 				<div>
-				<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 0 })}>Log In</button>
-                <button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ page: 1 })}>Register</button>
+				<p>
+					<button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
+						onClick={ () => this.setState({ page: 1 })}>Register</button>
+					<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
+						onClick={ () => this.setState({ page: 0 })}>Log In</button>
+					&nbsp;<br/>
+				</p>
 				<table>
           			<tr>
             			<td>Email</td>
