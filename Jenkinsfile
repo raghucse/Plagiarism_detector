@@ -3,7 +3,6 @@ pipeline {
        docker {
            image 'maven:3-alpine'
            args '-v /root/.m2:/root/.m2'
-           args '-f phaseC/pom.xml'
        }
    }
 
@@ -11,14 +10,14 @@ pipeline {
        stage('Build') {
            steps {
                echo "Building"
-               sh 'mvn compile'
-               sh 'mvn package'
+               sh 'mvn -f phaseC/pom.xml compile'
+               sh 'mvn -f phaseC/pom.xml package'
            }
        }
        stage('Test'){
            steps {
                echo "Testing"
-               sh 'mvn test'
+               sh 'mvn -f phaseC/pom.xml test'
            }
        }
     }
