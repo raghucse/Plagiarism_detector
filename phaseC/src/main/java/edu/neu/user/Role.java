@@ -1,6 +1,6 @@
 package edu.neu.user;
 
-enum Role
+public enum Role
 {
     PROFESSOR, GRADER;
 }

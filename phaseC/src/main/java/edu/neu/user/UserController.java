@@ -16,9 +16,6 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
     private UserValidator userValidator;
 
     /*@RequestMapping(value = "/registration", method = RequestMethod.POST)
