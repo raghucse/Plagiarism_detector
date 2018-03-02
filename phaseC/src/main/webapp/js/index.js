@@ -26,7 +26,8 @@ class Index extends React.Component {
 		var _data = new FormData();
 		_data.append('username', this.state.email);
 		_data.append('password', this.state.password);
-		alert(this.state.email.concat(this.state.password))
+
+		alert("Start to login");
 
 		fetch('http://localhost:8080/login', {
 			method: 'POST',
@@ -61,7 +62,6 @@ class Index extends React.Component {
 			method: 'POST',
 			body: data
 		});
-		
 		alert("Registration succeed!");
 	}
 	
