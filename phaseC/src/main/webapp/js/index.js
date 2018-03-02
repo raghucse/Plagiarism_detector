@@ -23,12 +23,28 @@ class Index extends React.Component {
 
 	// Submit the form to login
 	onLogInSubmit() {
-		alert(this.state.email);
+		var _data = new FormData();
+		_data.append('username', this.state.email);
+		_data.append('password', this.state.password);
+		
+		fetch('http://localhost:8080/login', {
+			method: 'POST',
+			body: _data
+		}).then((msg) => {  
+			window.location.replace("http://localhost:8080/home.html");
+		}).catch((error) => {  
+			window.location.replace("http://localhost:8080/home.html");
+		});
 	}
 
 	// Submit the form to register
 	onRegisterSubmit() {
 		
+		if(this.state.cfrm_pwd != this.state.password) {
+			alert('Password must be same!');
+			return;
+		}
+
 		/**
 		 * Send the data to the registration end point.
 		 * 
@@ -43,6 +59,8 @@ class Index extends React.Component {
 			method: 'POST',
 			body: data
 		});
+		
+		alert("Registration succeed!");
 	}
 	
 	// Render the UI
