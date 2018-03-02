@@ -26,14 +26,16 @@ class Index extends React.Component {
 		var _data = new FormData();
 		_data.append('username', this.state.email);
 		_data.append('password', this.state.password);
-		
+		alert(this.state.email.concat(this.state.password))
+
 		fetch('http://localhost:8080/login', {
 			method: 'POST',
 			body: _data
-		}).then((msg) => {  
+		}).then((msg) => {
+			alert("Log in successfull!");
 			window.location.replace("http://localhost:8080/home.html");
-		}).catch((error) => {  
-			window.location.replace("http://localhost:8080/home.html");
+		}).catch((error) => {
+			alert(error);
 		});
 	}
 
@@ -89,7 +91,8 @@ class Index extends React.Component {
 							<td><input className="button" type="reset" value="Reset" /></td>
 						</tr>
 						<tr>
-							<td colspan="2"><a href="#"><br />Forget password?</a></td>
+							<td><a href="#">Forget password?</a></td>
+							<td><a href="../home.html">View UI as non-wireframes</a></td>
           	</tr>
 					</form>
 					</table>
