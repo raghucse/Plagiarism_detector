@@ -31,29 +31,32 @@ import edu.neu.user.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(UserController.class)
+
 public class PlagarismDetectorApplicationTests{
 
-	@Autowired
+
 	private MockMvc mvc;
 
-	@Autowired
-	private ObjectMapper objectMapper;
 
-	@MockBean
+	@Mock
 	private UserService userService;
 
-	@MockBean
+	@Mock
 	private UserRepository userRepository;
+
+	@InjectMocks
+	private UserController userController;
+
+	@Before
+	public void init(){
+		MockitoAnnotations.initMocks(this);
+		mvc = MockMvcBuilders
+				.standaloneSetup(userController)
+				.build();
+	}
 
 	@Test
 	public void testRegister() throws Exception {
-		User req = new User();
-		req.setUsername("raghucse");
-		req.setPassword("Test@1234");
-		req.setRole(Role.PROFESSOR);
-		String stringifiedRequest = objectMapper.writeValueAsString(req);
 
 		mvc.perform(post("/registration")
 				.param("username","raghucse")
@@ -66,13 +69,13 @@ public class PlagarismDetectorApplicationTests{
 	public void testLogin() throws Exception {
 
 		User user = new User();
-		user.setUsername("raghucse");
+		user.setUsername("raghu");
 		user.setPassword("Test@1234");
 		user.setRole(Role.PROFESSOR);
 
-		when(userRepository.findByUsername("raghucse")).thenReturn(user);
+		when(userService.findByUsername("raghu")).thenReturn(user);
 		mvc.perform(post("/login")
-				.param("username", "raghucse")
+				.param("username", "raghu")
 				.param("password","Test@1234")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())

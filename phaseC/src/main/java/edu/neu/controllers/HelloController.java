@@ -34,10 +34,7 @@ public class HelloController {
 
     @RequestMapping("/api/hello/select/all")
     public List<HelloObject> selectAllHelloObjects() {
-        List<HelloObject> hellos =
-                (List<HelloObject>)helloRepository.findAll();
-
-        return hellos;
+        return helloRepository.findAll();
     }
 
 }
