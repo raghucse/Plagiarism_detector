@@ -34,9 +34,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 public class PlagarismDetectorApplicationTests{
 
-
 	private MockMvc mvc;
-
 
 	@Mock
 	private UserService userService;
