@@ -3,7 +3,7 @@ package edu.neu.user;
 import javax.persistence.*;
 
 @Entity
-@Table(name="`User`")
+@Table(name="users")
 public class User {
 
     @Id

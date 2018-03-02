@@ -17,7 +17,7 @@ class Index extends React.Component {
 			email: '',
 			password: '',
 			cfrm_pwd: '',
-			role: ''
+			role: 'Professor'
 		}
 	}
 
@@ -28,7 +28,21 @@ class Index extends React.Component {
 
 	// Submit the form to register
 	onRegisterSubmit() {
-		alert(this.state.password);
+		
+		/**
+		 * Send the data to the registration end point.
+		 * 
+		 * Note: don't send JSON objects, instead, send FormData
+		*/
+		var data = new FormData();
+		data.append('username', this.state.email);
+		data.append('password', this.state.password);
+		data.append('role', this.state.role);
+
+		fetch('http://localhost:8080/registration', {
+			method: 'POST',
+			body: data
+		});
 	}
 	
 	// Render the UI
@@ -53,8 +67,8 @@ class Index extends React.Component {
 							<td><input type="password" onChange={ ev => this.setState({ password: ev.target.value }) } /></td>
 						</tr>
 						<tr>
-							<td><input class="button" type="submit" value="Submit"/></td>
-							<td><input class="button" type="reset" value="Reset" /></td>
+							<td><input className="button" type="submit" value="Submit"/></td>
+							<td><input className="button" type="reset" value="Reset" /></td>
 						</tr>
 						<tr>
 							<td colspan="2"><a href="#"><br />Forget password?</a></td>
@@ -76,7 +90,7 @@ class Index extends React.Component {
 						<form onSubmit={ () => this.onRegisterSubmit() }>
 						<tr>
 							<td><span>Email</span></td>
-							<td><input type="email" onChange={ ev => this.setState({ email: e.target.value }) } /></td>
+							<td><input type="email" onChange={ ev => this.setState({ email: ev.target.value }) } /></td>
           	</tr>
 						<tr>
 							<td><span>Password</span></td>
@@ -89,16 +103,16 @@ class Index extends React.Component {
           	<tr>
             	<td><span>Role</span></td>
             	<td>
-              	<select>
+              	<select onChange={ ev => this.setState({ role: ev.target.value }) }>
                 	<option value ="Professor">Professor</option>
                 	<option value ="Grader">Grader</option>
-                	<option value ="Admin">Administrator</option>
+                	<option value ="Administrator">Administrator</option>
               	</select>
             	</td>
           	</tr>
           	<tr>
-            	<td><input class="button" type="submit" value="Submit"/></td>
-              <td><input class="button" type="reset" value="Reset" /></td>
+            	<td><input className="button" type="submit" value="Submit"/></td>
+              <td><input className="button" type="reset" value="Reset" /></td>
 						</tr>
 					</form>
         	</table>
