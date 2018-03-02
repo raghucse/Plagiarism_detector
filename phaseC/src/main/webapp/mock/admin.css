@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+#background {
+	width: 1024px;
+	height: 768px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h1 {
+	color: white;
+	font-weight: bold;
+	padding-top: 50px;
+}
+
+body {
+	background-color: #336699;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#tabbed_box_1 {
+    margin: 0 auto;
+    width: 80%;
+    height: 80%;
+}  
+
+.content {
+    background-color: #ffffff;
+    border: 1px solid #464c54;
+    font-family: Arial,Helvetica,sans-serif;
+    padding: 10px;
+}
+
+table {
+	padding-top: 10px;
+	width: 500px;
+}
+
+tr {
+	height: 50px;
+}
+
+.approve {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px;
+	font-size: 15px;
+	border-radius: 50%;
+}
+
+.decline {
+	background-color: red;
+	color: white;
+	padding: 10px;
+	font-size: 15px;
+	border-radius: 50%;
+}
+
+.approved {
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+}
+
+.declined {
+	background-color: red;
+	color: white;
+	text-align: center;
+}
+
+.tabbed_area {
+    background-color: #336699;
+    border: 0px solid #494e52;
+    padding: 15px;
+}
+
+ul.tabs {  
+    margin: 5px 0 6px;
+    padding: 0;
+}
+
+ul.tabs li {
+    display: inline;
+    list-style: outside none none;
+}
+
+ul.tabs li a {  
+    background-color: #464c54;
+    border: 1px solid #464c54;
+    color: #ffebb5;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 8px 14px;
+    text-decoration: none;
+} 
+
+ul.tabs li a.active {
+    background-color: #ffffff;
+    border-color: #464c54 #464c54 #ffffff;
+    border-style: solid;
+    border-width: 1px;
+    color: #282e32;
+}
+
+#content_2 {  
+    display: none;  
+}

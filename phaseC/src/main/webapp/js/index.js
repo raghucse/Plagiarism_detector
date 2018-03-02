@@ -92,7 +92,7 @@ class Index extends React.Component {
 						</tr>
 						<tr>
 							<td><a href="#">Forget password?</a></td>
-							<td><a href="../home.html">View UI as non-wireframes</a></td>
+							<td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
           	</tr>
 					</form>
 					</table>
