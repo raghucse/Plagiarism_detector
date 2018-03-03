@@ -17,7 +17,7 @@ class Index extends React.Component {
 			email: '',
 			password: '',
 			cfrm_pwd: '',
-			role: 'Professor'
+			role: 'PROFESSOR'
 		}
 	}
 
@@ -125,9 +125,9 @@ class Index extends React.Component {
             	<td><span>Role</span></td>
             	<td>
               	<select onChange={ ev => this.setState({ role: ev.target.value }) }>
-                	<option value ="Professor">Professor</option>
-                	<option value ="Grader">Grader</option>
-                	<option value ="Administrator">Administrator</option>
+                	<option value ="PROFESSOR">Professor</option>
+                	<option value ="GRADER">Grader</option>
+                	<option value ="ADMINISTRATOR">Administrator</option>
               	</select>
             	</td>
           	</tr>
