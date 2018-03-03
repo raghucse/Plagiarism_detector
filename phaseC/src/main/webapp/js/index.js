@@ -23,18 +23,24 @@ class Index extends React.Component {
 
 	// Submit the form to login
 	onLogInSubmit() {
-		var _data = new FormData();
-		_data.append('username', this.state.email);
-		_data.append('password', this.state.password);
+        var data = new FormData();
+        data.append("username", this.state.email);
+        data.append("password", this.state.password);
 
-		fetch('http://localhost:8080/login', {
-			method: 'POST',
-			body: _data
-		}).then((msg) => {
-			window.location.replace("http://localhost:8080/home.html");
-		}).catch((error) => {
-			console.log(error);
-		});
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+		//alert(data)
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+            	alert(this.responseText)
+                if(this.responseText == "{\"msg\":\"login successful\"}")
+                	window.location.replace('http://localhost:8080/home.html');
+            }
+        });
+
+        xhr.open("POST", "http://localhost:8080/login");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.send(data);
 	}
 
 	// Submit the form to register
