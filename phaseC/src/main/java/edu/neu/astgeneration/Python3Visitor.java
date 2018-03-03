@@ -152,151 +152,151 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBreak_stmt(Python3Parser.Break_stmtContext ctx);
+	T visitBreakStmt(Python3Parser.Break_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#continue_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitContinue_stmt(Python3Parser.Continue_stmtContext ctx);
+	T visitContinueStmt(Python3Parser.Continue_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#return_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitReturn_stmt(Python3Parser.Return_stmtContext ctx);
+	T visitReturnStmt(Python3Parser.Return_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#yield_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitYield_stmt(Python3Parser.Yield_stmtContext ctx);
+	T visitYieldStmt(Python3Parser.Yield_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#raise_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRaise_stmt(Python3Parser.Raise_stmtContext ctx);
+	T visitRaiseStmt(Python3Parser.Raise_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#import_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitImport_stmt(Python3Parser.Import_stmtContext ctx);
+	T visitImportStmt(Python3Parser.Import_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#import_name}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitImport_name(Python3Parser.Import_nameContext ctx);
+	T visitImportName(Python3Parser.Import_nameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#import_from}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitImport_from(Python3Parser.Import_fromContext ctx);
+	T visitImportFrom(Python3Parser.Import_fromContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#import_as_name}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitImport_as_name(Python3Parser.Import_as_nameContext ctx);
+	T visitImportAsName(Python3Parser.Import_as_nameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#dotted_as_name}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDotted_as_name(Python3Parser.Dotted_as_nameContext ctx);
+	T visitDottedAsName(Python3Parser.Dotted_as_nameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#import_as_names}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitImport_as_names(Python3Parser.Import_as_namesContext ctx);
+	T visitImportAsNames(Python3Parser.Import_as_namesContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#dotted_as_names}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDotted_as_names(Python3Parser.Dotted_as_namesContext ctx);
+	T visitDottedAsNames(Python3Parser.Dotted_as_namesContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#dotted_name}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDotted_name(Python3Parser.Dotted_nameContext ctx);
+	T visitDottedName(Python3Parser.Dotted_nameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#global_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGlobal_stmt(Python3Parser.Global_stmtContext ctx);
+	T visitGlobalStmt(Python3Parser.Global_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#nonlocal_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNonlocal_stmt(Python3Parser.Nonlocal_stmtContext ctx);
+	T visitNonlocalStmt(Python3Parser.Nonlocal_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#assert_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssert_stmt(Python3Parser.Assert_stmtContext ctx);
+	T visitAssertStmt(Python3Parser.Assert_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#compound_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCompound_stmt(Python3Parser.Compound_stmtContext ctx);
+	T visitCompoundStmt(Python3Parser.Compound_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#async_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAsync_stmt(Python3Parser.Async_stmtContext ctx);
+	T visitAsyncStmt(Python3Parser.Async_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#if_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIf_stmt(Python3Parser.If_stmtContext ctx);
+	T visitIfStmt(Python3Parser.If_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#while_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWhile_stmt(Python3Parser.While_stmtContext ctx);
+	T visitWhileStmt(Python3Parser.While_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#for_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFor_stmt(Python3Parser.For_stmtContext ctx);
+	T visitForStmt(Python3Parser.For_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#try_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTry_stmt(Python3Parser.Try_stmtContext ctx);
+	T visitTryStmt(Python3Parser.Try_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#with_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWith_stmt(Python3Parser.With_stmtContext ctx);
+	T visitWithStmt(Python3Parser.With_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#with_item}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWith_item(Python3Parser.With_itemContext ctx);
+	T visitWithItem(Python3Parser.With_itemContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#except_clause}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExcept_clause(Python3Parser.Except_clauseContext ctx);
+	T visitExceptClause(Python3Parser.Except_clauseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#suite}.
 	 * @param ctx the parse tree
@@ -314,7 +314,7 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTest_nocond(Python3Parser.Test_nocondContext ctx);
+	T visitTestNocond(Python3Parser.Test_nocondContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#lambdef}.
 	 * @param ctx the parse tree
@@ -326,25 +326,25 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLambdef_nocond(Python3Parser.Lambdef_nocondContext ctx);
+	T visitLambdefNocond(Python3Parser.Lambdef_nocondContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#or_test}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOr_test(Python3Parser.Or_testContext ctx);
+	T visitOrTest(Python3Parser.Or_testContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#and_test}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAnd_test(Python3Parser.And_testContext ctx);
+	T visitAndTest(Python3Parser.And_testContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#not_test}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNot_test(Python3Parser.Not_testContext ctx);
+	T visitNotTest(Python3Parser.Not_testContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#comparison}.
 	 * @param ctx the parse tree
@@ -356,13 +356,13 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComp_op(Python3Parser.Comp_opContext ctx);
+	T visitCompOp(Python3Parser.Comp_opContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#star_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStar_expr(Python3Parser.Star_exprContext ctx);
+	T visitStarExpr(Python3Parser.Star_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
@@ -374,25 +374,25 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitXor_expr(Python3Parser.Xor_exprContext ctx);
+	T visitXorExpr(Python3Parser.Xor_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#and_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAnd_expr(Python3Parser.And_exprContext ctx);
+	T visitAndExpr(Python3Parser.And_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#shift_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitShift_expr(Python3Parser.Shift_exprContext ctx);
+	T visitShiftExpr(Python3Parser.Shift_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#arith_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitArith_expr(Python3Parser.Arith_exprContext ctx);
+	T visitArithExpr(Python3Parser.Arith_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#term}.
 	 * @param ctx the parse tree
@@ -416,7 +416,7 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAtom_expr(Python3Parser.Atom_exprContext ctx);
+	T visitAtomExpr(Python3Parser.Atom_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#atom}.
 	 * @param ctx the parse tree
@@ -428,7 +428,7 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTestlist_comp(Python3Parser.Testlist_compContext ctx);
+	T visitTestlistComp(Python3Parser.Testlist_compContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#trailer}.
 	 * @param ctx the parse tree
@@ -494,35 +494,35 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComp_iter(Python3Parser.Comp_iterContext ctx);
+	T visitCompIter(Python3Parser.Comp_iterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#comp_for}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComp_for(Python3Parser.Comp_forContext ctx);
+	T visitCompFor(Python3Parser.Comp_forContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#comp_if}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComp_if(Python3Parser.Comp_ifContext ctx);
+	T visitCompIf(Python3Parser.Comp_ifContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#encoding_decl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEncoding_decl(Python3Parser.Encoding_declContext ctx);
+	T visitEncodingDecl(Python3Parser.Encoding_declContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#yield_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitYield_expr(Python3Parser.Yield_exprContext ctx);
+	T visitYieldExpr(Python3Parser.Yield_exprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#yield_arg}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitYield_arg(Python3Parser.Yield_argContext ctx);
+	T visitYieldArg(Python3Parser.Yield_argContext ctx);
 }
