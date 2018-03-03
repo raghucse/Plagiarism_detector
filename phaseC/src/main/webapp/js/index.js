@@ -27,16 +27,13 @@ class Index extends React.Component {
 		_data.append('username', this.state.email);
 		_data.append('password', this.state.password);
 
-		alert("Start to login");
-
 		fetch('http://localhost:8080/login', {
 			method: 'POST',
 			body: _data
 		}).then((msg) => {
-			alert("Log in successfull!");
 			window.location.replace("http://localhost:8080/home.html");
 		}).catch((error) => {
-			alert(error);
+			console.log(error);
 		});
 	}
 
@@ -44,7 +41,6 @@ class Index extends React.Component {
 	onRegisterSubmit() {
 		
 		if(this.state.cfrm_pwd != this.state.password) {
-			alert('Password must be same!');
 			return;
 		}
 
@@ -62,7 +58,6 @@ class Index extends React.Component {
 			method: 'POST',
 			body: data
 		});
-		alert("Registration succeed!");
 	}
 	
 	// Render the UI
