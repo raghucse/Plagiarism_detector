@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,12 +21,18 @@ public class UserController {
         return ResponseEntity.ok(new ServerResponse("registration successful"));
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<ServerResponse> login(@ModelAttribute LoginRequest loginRequest) {
-        if(userService.findByUsername(loginRequest.getUsername()) != null)
+        User user = userService.findByUsername(loginRequest.getUsername());
+        if( user != null && user.getUsername().equals(loginRequest.getUsername())
+                && user.getPassword().equals(loginRequest.getPassword())){
+            System.out.println(System.currentTimeMillis()+" success");
             return ResponseEntity.ok(new ServerResponse("login successful"));
-        else
+        }
+        else {
             return ResponseEntity.ok(new ServerResponse("login failed"));
+        }
     }
 
 

@@ -17,34 +17,36 @@ class Index extends React.Component {
 			email: '',
 			password: '',
 			cfrm_pwd: '',
-			role: 'Professor'
+			role: 'PROFESSOR'
 		}
 	}
 
 	// Submit the form to login
 	onLogInSubmit() {
-		var _data = new FormData();
-		_data.append('username', this.state.email);
-		_data.append('password', this.state.password);
+        var data = new FormData();
+        data.append("username", this.state.email);
+        data.append("password", this.state.password);
 
-		alert("Start to login");
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+		//alert(data)
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+            	alert(this.responseText)
+                if(this.responseText == "{\"msg\":\"login successful\"}")
+                	window.location.replace('http://localhost:8080/home.html');
+            }
+        });
 
-		fetch('http://localhost:8080/login', {
-			method: 'POST',
-			body: _data
-		}).then((msg) => {
-			alert("Log in successfull!");
-			window.location.replace("http://localhost:8080/home.html");
-		}).catch((error) => {
-			alert(error);
-		});
+        xhr.open("POST", "http://localhost:8080/login");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.send(data);
 	}
 
 	// Submit the form to register
 	onRegisterSubmit() {
 		
 		if(this.state.cfrm_pwd != this.state.password) {
-			alert('Password must be same!');
 			return;
 		}
 
@@ -62,7 +64,6 @@ class Index extends React.Component {
 			method: 'POST',
 			body: data
 		});
-		alert("Registration succeed!");
 	}
 	
 	// Render the UI
@@ -125,9 +126,9 @@ class Index extends React.Component {
             	<td><span>Role</span></td>
             	<td>
               	<select onChange={ ev => this.setState({ role: ev.target.value }) }>
-                	<option value ="Professor">Professor</option>
-                	<option value ="Grader">Grader</option>
-                	<option value ="Administrator">Administrator</option>
+                	<option value ="PROFESSOR">Professor</option>
+                	<option value ="GRADER">Grader</option>
+                	<option value ="ADMINISTRATOR">Administrator</option>
               	</select>
             	</td>
           	</tr>
