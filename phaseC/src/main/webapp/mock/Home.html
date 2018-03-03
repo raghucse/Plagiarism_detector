@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Plagiarism Detector</title>
+<link rel="stylesheet" type="text/css" href="./home.css">
+</head>
+
+<body>
+<div id="background">
+  <h1 align="center">Plagiarism Detector of Team 106</h1>
+  <table >
+    <tr>
+      <td>
+        <select id="select">
+          <option value ="">Class Name</option>
+          <option value ="">CS5100</option>
+          <option value ="">CS5200</option>
+          <option value ="">CS5300</option>
+          <option value ="">CS5400</option>
+        </select>
+      </td>
+      <td width="100">&nbsp;</td>
+      <td id="selectedAssignment">Assignment</td>
+      <td id="unSelectedAssignment"><a href="ClassInfo.html">Class Information</a></td>
+      <td width="100"><a href="Admin.html">Admin Page</a></td>
+      <td width="100">&nbsp;</td>
+      <td width="100">&nbsp;</td>
+      <td width="100" id="selectedAssignment">Log Out</td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><input type="button" value="Add Assignment" id="add" onClick="location.href='AddAssignment.html'"></td>
+      <td colspan="6" rowspan="5" id="selectedAssignment">
+        <table>
+          <tr>
+            <td colspan="3">
+              The statistics of the latest run
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <img width="300" src="./piechart.png">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select id="select">
+                <option value ="">History Run</option>
+                <option value ="">Run 03</option>
+                <option value ="">Run 02</option>
+                <option value ="">Run 01</option>
+                <option value ="">Run 00</option>
+              </select>
+            </td>
+            <td><input type="button" value="New Run" id="add"></td>
+            <td><input type="button" value="Edit Submissions" id="add"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" id="selectedAssignment">
+        Assignment N
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" id="unSelectedAssignment">
+        Assignment N - 1
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" id="unSelectedAssignment">
+        Assignment ...
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" id="unSelectedAssignment">
+        Assignment 1
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Plagiarism Detector</title>
+<link rel="stylesheet" type="text/css" href="./admin.css">
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>  
+<script type="text/javascript">
+// http://blog.csdn.net/yuexin2/article/details/43906953
+$(document).ready(function(){
+  $("a.tab").click(function () {
+      $(".active").removeClass("active");
+      $(this).addClass("active");
+      $(".content").slideUp();
+      var content_show = $(this).attr("title");
+      $("#"+content_show).slideDown();
+  });
+  var vheight = $(window).height();
+});
+</script>
+</head>
+
+<body>
+<div id="background">
+  <h1 align="center">Plagiarism Detector of Team 106</h1>
+  <div id="tabbed_box_1">
+    <div class="tabbed_area">
+      <ul class="tabs">
+        <li><a href="#" title="content_1" class="tab active">Pending Requests</a></li>
+        <li><a href="#" title="content_2" class="tab">History</a></li>
+      </ul>
+      <div id="content_1" class="content" align="center">
+        <form action="">
+        <table>
+          <tr>
+            <td>Class: CS5500, Professor: Mike</td>
+            <td><input class="approve" type="button" value="OK"></td>
+            <td><input class="decline" type="button" value="NO"></td>
+          </tr>
+          <tr>
+            <td>Class: CS5610, Professor: Nat</td>
+            <td><input class="approve" type="button" value="OK"></td>
+            <td><input class="decline" type="button" value="NO"></td>
+          </tr>
+          <tr>
+            <td>Class: CS4500, Professor: Sam</td>
+            <td><input class="approve" type="button" value="OK"></td>
+            <td><input class="decline" type="button" value="NO"></td>
+          </tr>
+          <tr>
+            <td>Class: CS5500, Professor: Mike</td>
+            <td><input class="approve" type="button" value="OK"></td>
+            <td><input class="decline" type="button" value="NO"></td>
+          </tr>
+          <tr>
+            <td>Class: CS5610, Professor: Nat</td>
+            <td><input class="approve" type="button" value="OK"></td>
+            <td><input class="decline" type="button" value="NO"></td>
+          </tr>
+          <tr>
+            <td>Class: CS4500, Professor: Sam</td>
+            <td><input class="approve" type="button" value="OK"></td>
+            <td><input class="decline" type="button" value="NO"></td>
+          </tr>
+        </table>
+        </form>
+      </div>  
+      <div id="content_2" class="content" align="center">
+        <table>
+        <tr>
+            <td>Class: CS5500, Professor: Mike</td>
+            <td class="approved">Approved</td>
+          </tr>
+          <tr>
+            <td>Class: CS5610, Professor: Nat</td>
+            <td class="declined">Declined</td>
+          </tr>
+          <tr>
+            <td>Class: CS4500, Professor: Sam</td>
+            <td class="approved">Approved</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
