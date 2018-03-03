@@ -24,6 +24,7 @@ public class AstPrinter {
                 && ctx.getChild(0) instanceof ParserRuleContext;
         if (!toBeIgnored) {
             String ruleName = Python3Parser.ruleNames[ctx.getRuleIndex()];
+
             for (int i = 0; i < indentation; i++) {
                 System.out.print("  ");
             }
@@ -38,3 +39,4 @@ public class AstPrinter {
     }
 
 }
+
