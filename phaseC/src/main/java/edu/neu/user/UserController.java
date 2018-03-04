@@ -21,7 +21,6 @@ public class UserController {
         return ResponseEntity.ok(new ServerResponse("registration successful"));
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<ServerResponse> login(@ModelAttribute LoginRequest loginRequest) {
         User user = userService.findByUsername(loginRequest.getUsername());
