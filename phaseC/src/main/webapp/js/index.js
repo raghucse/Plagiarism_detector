@@ -22,7 +22,8 @@ class Index extends React.Component {
 	}
 
 	// Submit the form to login
-	onLogInSubmit() {
+	onLogInSubmit(e) {
+		e.preventDefault();
         var data = new FormData();
         data.append("username", this.state.email);
         data.append("password", this.state.password);
@@ -32,9 +33,10 @@ class Index extends React.Component {
 		//alert(data)
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-            	alert(this.responseText)
                 if(this.responseText == "{\"msg\":\"login successful\"}")
                 	window.location.replace('http://localhost:8080/home.html');
+                else
+                	alert("LOGIN FAILED INVALID CREDENTIALS")
             }
         });
 
@@ -44,8 +46,9 @@ class Index extends React.Component {
 	}
 
 	// Submit the form to register
-	onRegisterSubmit() {
-		
+	onRegisterSubmit(e) {
+		e.preventDefault();
+
 		if(this.state.cfrm_pwd != this.state.password) {
 			return;
 		}
@@ -60,13 +63,14 @@ class Index extends React.Component {
 		data.append('password', this.state.password);
 		data.append('role', this.state.role);
 
-		fetch('http://localhost:8080/registration', {
+		fetch('/registration', {
 			method: 'POST',
 			body: data
 		});
+        window.location.replace("http://localhost:8080/index.html");
 	}
 	
-	// Render the UI
+	// Rend	er the UI
 	render() {
 		if (this.state.page == 0) {
 			return(
@@ -78,7 +82,7 @@ class Index extends React.Component {
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
 					<table>
-					<form onSubmit={ () => this.onLogInSubmit() }>
+					<form onSubmit={ e => this.onLogInSubmit(e) }>
 						<tr>
 							<td><span>Email</span></td>
 							<td><input type="text" onChange={ ev => this.setState({ email: ev.target.value }) } /></td>
@@ -109,7 +113,7 @@ class Index extends React.Component {
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
 					<table>
-						<form onSubmit={ () => this.onRegisterSubmit() }>
+						<form onSubmit={ e => this.onRegisterSubmit(e) }>
 						<tr>
 							<td><span>Email</span></td>
 							<td><input type="email" onChange={ ev => this.setState({ email: ev.target.value }) } /></td>
@@ -120,7 +124,7 @@ class Index extends React.Component {
           	</tr>
           	<tr>
             	<td><span>Confirm Password</span></td>
-            	<td><input type="password" onChange={ ev => this.setState({ cfrm_pwd: ev.target.value }) } /></td>
+            	<td><input type="password" value="" onChange={ ev => this.setState({ cfrm_pwd: ev.target.value }) } /></td>
           	</tr>
           	<tr>
             	<td><span>Role</span></td>
