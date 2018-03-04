@@ -1,4 +1,5 @@
 package edu.neu.astgeneration;
+import java.util.logging.Logger;
 
 
 
@@ -6,8 +7,10 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+
 public class AstPrinter {
 
+    private static Logger lg = Logger.getLogger(AstPrinter.class.getName());
     private boolean ignoringWrappers = true;
 
     public void setIgnoringWrappers(boolean ignoringWrappers) {
@@ -26,9 +29,9 @@ public class AstPrinter {
             String ruleName = Python3Parser.ruleNames[ctx.getRuleIndex()];
 
             for (int i = 0; i < indentation; i++) {
-                System.out.print("  ");
+                lg.info("  ");
             }
-            System.out.println(ruleName);
+            lg.info(ruleName);
         }
         for (int i=0;i<ctx.getChildCount();i++) {
             ParseTree element = ctx.getChild(i);
