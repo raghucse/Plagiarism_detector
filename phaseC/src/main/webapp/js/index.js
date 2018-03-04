@@ -36,7 +36,9 @@ class Index extends React.Component {
                 if(this.responseText == "{\"msg\":\"login successful\"}")
                 	window.location.replace('http://localhost:8080/home.html');
                 else
-                	alert("LOGIN FAILED INVALID CREDENTIALS")
+									// alert("LOGIN FAILED INVALID CREDENTIALS");
+									console.log("LOGIN FAILED INVALID CREDENTIALS");
+									
             }
         });
 
@@ -93,7 +95,6 @@ class Index extends React.Component {
 						</tr>
 						<tr>
 							<td><input className="button" type="submit" value="Submit"/></td>
-							<td><input className="button" type="reset" value="Reset" /></td>
 						</tr>
 						<tr>
 							<td><a href="#">Forget password?</a></td>
@@ -122,9 +123,9 @@ class Index extends React.Component {
 							<td><span>Password</span></td>
             	<td><input type="password" onChange={ ev => this.setState({ password: ev.target.value }) } /></td>
           	</tr>
-          	<tr>
+						<tr>
             	<td><span>Confirm Password</span></td>
-            	<td><input type="password" value="" onChange={ ev => this.setState({ cfrm_pwd: ev.target.value }) } /></td>
+							<td><input type="password" onChange={ ev => this.setState({ cfrm_pwd: ev.target.value }) } /></td>
           	</tr>
           	<tr>
             	<td><span>Role</span></td>
@@ -138,7 +139,6 @@ class Index extends React.Component {
           	</tr>
           	<tr>
             	<td><input className="button" type="submit" value="Submit"/></td>
-              <td><input className="button" type="reset" value="Reset" /></td>
 						</tr>
 					</form>
         	</table>

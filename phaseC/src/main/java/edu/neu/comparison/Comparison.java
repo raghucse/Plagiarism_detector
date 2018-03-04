@@ -61,10 +61,8 @@ public class Comparison {
      */
     public void longestCommonSubstring() {
         LCS myClass = new LCS(file1, file2);
+        myClass.getRes(myClass.getLength(), 500);
 
-        System.out.println("\n***** The first comparison strategy: longest common subsequence *****");
-        System.out.println("The length of LCS is: " + myClass.getLength());
-        // System.out.println(myClass.getLCS());
     }
 
     /**
@@ -72,7 +70,6 @@ public class Comparison {
      */
     public void eDist() {
         EditDistance distance = new EditDistance();
-        System.out.println("\n***** The second comparison strategy: edit distance *****");
-        System.out.println(distance.editDist(file1, file2));
+        distance.getRes(distance.editDist(file1, file2), 500);
     }
 }

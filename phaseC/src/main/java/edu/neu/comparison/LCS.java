@@ -94,4 +94,17 @@ public class LCS {
         }
         return res.toString();
     }
+
+    /**
+     * Set a judge value
+     * @param len   length of LCS
+     * @param val   the valve
+     * @return      if the student is cheating
+     */
+    public String getRes(int len, int val) {
+        if (len > val) {
+            return "The student is cheating!";
+        }
+        return "The student is good";
+    }
 }

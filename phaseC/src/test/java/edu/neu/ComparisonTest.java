@@ -38,7 +38,7 @@ public class ComparisonTest {
         String file1 = "src/main/resources/simplecodetree.txt";
         String file2 = "src/main/resources/simplecode2tree.txt";
         LCS lcs = new LCS(getSingleFile(file1), getSingleFile(file2));
-        assertEquals(679, lcs.getLength());
+        assertEquals("The student is cheating!", lcs.getRes(lcs.getLength(), 500));
     }
 
     @Test
@@ -46,6 +46,6 @@ public class ComparisonTest {
         String file1 = "src/main/resources/simplecodetree.txt";
         String file2 = "src/main/resources/simplecode2tree.txt";
         EditDistance distance = new EditDistance();
-        assertEquals(596, distance.editDist(getSingleFile(file1), getSingleFile(file2)));
+        assertEquals("The student is cheating!", distance.getRes(distance.editDist(getSingleFile(file1), getSingleFile(file2)), 500));
     }
 }
