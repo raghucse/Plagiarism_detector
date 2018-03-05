@@ -34,7 +34,7 @@ class Index extends React.Component {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 if(this.responseText == "{\"msg\":\"login successful\"}")
-                	window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com/home.html');
+                	window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
                 else
                 	alert("LOGIN FAILED INVALID CREDENTIALS");
             }
