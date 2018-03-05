@@ -26,7 +26,6 @@ public class UserController {
         User user = userService.findByUsername(loginRequest.getUsername());
         if( user != null && user.getUsername().equals(loginRequest.getUsername())
                 && user.getPassword().equals(loginRequest.getPassword())){
-            System.out.println(System.currentTimeMillis()+" success");
             return ResponseEntity.ok(new ServerResponse("login successful"));
         }
         else {
