@@ -36,7 +36,7 @@ class Index extends React.Component {
                 if(this.responseText == "{\"msg\":\"login successful\"}")
                 	window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
                 else
-                	alert("LOGIN FAILED INVALID CREDENTIALS");
+                	console.log("LOGIN FAILED INVALID CREDENTIALS");
             }
         });
 
