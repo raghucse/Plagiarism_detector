@@ -34,15 +34,13 @@ class Index extends React.Component {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 if(this.responseText == "{\"msg\":\"login successful\"}")
-                	window.location.replace('http://localhost:8080/home.html');
+                	window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com/home.html');
                 else
-									// alert("LOGIN FAILED INVALID CREDENTIALS");
-									console.log("LOGIN FAILED INVALID CREDENTIALS");
-									
+                	alert("LOGIN FAILED INVALID CREDENTIALS");
             }
         });
 
-        xhr.open("POST", "http://localhost:8080/login");
+        xhr.open("POST", "http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/login");
         xhr.setRequestHeader("Cache-Control", "no-cache");
         xhr.send(data);
 	}
@@ -65,11 +63,11 @@ class Index extends React.Component {
 		data.append('password', this.state.password);
 		data.append('role', this.state.role);
 
-		fetch('/registration', {
+		fetch('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/registration', {
 			method: 'POST',
 			body: data
 		});
-        window.location.replace("http://localhost:8080/index.html");
+        window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
 	}
 	
 	// Rend	er the UI
