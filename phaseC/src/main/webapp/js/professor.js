@@ -24,8 +24,15 @@ class Professor extends React.Component {
 							<option>TBD</option>
 						</select>
 					</div>
-					<div className="col-md-2" id={ this.state.page == 0 ? "currentpage" : "futurepage" }>Assignment</div>
-					<div className="col-md-2" id={ this.state.page == 1 ? "currentpage" : "futurepage" }>Class Information</div>
+					<div className="col-md-2">
+						<button id="assi" className={ this.state.page == 0 ? "currentpage" : "futurepage" } onClick={ () => this.setState({page: 0}) } >Assignment</button>
+					</div>
+					<div className="col-md-2">
+						<button id="classinfo" className={ this.state.page == 1 ? "currentpage" : "futurepage" } onClick={ () => this.setState({page: 1}) } >Class Information</button>
+					</div>
+					<div className="col">
+						<button id="logout">Log out</button>
+					</div>
 				</div>
 			</div>
 		);
@@ -39,13 +46,14 @@ class Professor extends React.Component {
 					<div className="row">
 						{ this.showBanner() }
 					</div>
-					
 				</div>
 			);
 		} else {
 			return(
-				<div>
-					d
+				<div className="container">
+					<div className="row">
+						{ this.showBanner() }
+					</div>
 				</div>
 			);
 		}
