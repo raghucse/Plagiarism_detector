@@ -34,13 +34,14 @@ class Index extends React.Component {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 if(this.responseText == "{\"msg\":\"login successful\"}")
-                	window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
+                	window.location.replace('http://localhost:8080/home.html');
                 else
                 	console.log("LOGIN FAILED INVALID CREDENTIALS");
             }
-        });
-
-        xhr.open("POST", "http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/login");
+				});
+				
+				// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
+        xhr.open("POST", "http://localhost:8080/login");
         xhr.setRequestHeader("Cache-Control", "no-cache");
         xhr.send(data);
 	}
