@@ -39,6 +39,7 @@ class Professor extends React.Component {
 					<div className="row">
 						{ this.showBanner() }
 					</div>
+					
 				</div>
 			);
 		} else {
