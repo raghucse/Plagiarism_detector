@@ -13,28 +13,41 @@ h1 {
 	text-align: center;
 }
 
-.clickedButton {
-	float: right;
-	padding-top: 30px;
-	background-color: #e7e7e7;
-	color: #282e32;
-  	border: 1px solid #e7e7e7;
-  	font-family: Verdana,Arial,Helvetica,sans-serif;
-  	font-size: 15px;
-  	font-weight: bold;
-  	padding: 8px 14px;
-  	text-decoration: none;	
+.container {
+	background-color: #336699;
 }
 
-.unclickedButton {
-	float: right;
-	padding-top: 30px;
+select {
+	width: 80%;
+	font-size: 15px;
+	height: 40px;
+	background-color: wheat;
+}
+
+#banner {
+	margin-top: 3%;
+}
+
+#currentpage {
+	background-color: #e7e7e7;
+	text-align: center;
+	color: #282e32;
+  border: 1px solid #e7e7e7;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;
+}
+
+#futurepage {
+	text-align: center;
 	background-color: #464c54;
-    border: 1px solid #464c54;
+  border: 1px solid #464c54;
 	color: #ffebb5;
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 15px;
-  	font-weight: bold;
-  	padding: 8px 14px;
-  	text-decoration: none;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;
 }

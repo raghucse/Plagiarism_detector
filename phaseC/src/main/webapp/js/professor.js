@@ -5,10 +5,6 @@ class Professor extends React.Component {
 	 * 
 	 * The state contains:
 	 *   page: to show the assignment page or the class information page
-	 *   email: the user's email address
-	 *   password: the user's password
-	 *   cfrm_pwd: confirm the password for register
-	 *   role: which role is the user
 	*/
 	constructor() {
 		super();
@@ -17,18 +13,38 @@ class Professor extends React.Component {
 		}
 	}
 
+	// Show the banner UI
+	showBanner() {
+		return(
+			<div className="container" id="banner">
+				<div className="row">
+					<div className="col-md-2">
+						<select className="selectpicker">
+							<option>CS5500</option>
+							<option>TBD</option>
+						</select>
+					</div>
+					<div className="col-md-2" id={ this.state.page == 0 ? "currentpage" : "futurepage" }>Assignment</div>
+					<div className="col-md-2" id={ this.state.page == 1 ? "currentpage" : "futurepage" }>Class Information</div>
+				</div>
+			</div>
+		);
+	}
+
 	// Rend	er the UI
 	render() {
 		if (this.state.page == 0) {
 			return(
-				<div>
-					sa
+				<div className="container">
+					<div className="row">
+						{ this.showBanner() }
+					</div>
 				</div>
 			);
 		} else {
 			return(
 				<div>
-				
+					d
 				</div>
 			);
 		}
