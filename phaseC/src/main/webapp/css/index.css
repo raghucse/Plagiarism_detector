@@ -18,25 +18,25 @@ h1 {
 	padding-top: 30px;
 	background-color: #e7e7e7;
 	color: #282e32;
-  	border: 1px solid #e7e7e7;
-  	font-family: Verdana,Arial,Helvetica,sans-serif;
-  	font-size: 15px;
-  	font-weight: bold;
-  	padding: 8px 14px;
-  	text-decoration: none;	
+  border: 1px solid #e7e7e7;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;	
 }
 
 .unclickedButton {
 	float: right;
 	padding-top: 30px;
 	background-color: #464c54;
-    border: 1px solid #464c54;
+  border: 1px solid #464c54;
 	color: #ffebb5;
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 15px;
-  	font-weight: bold;
-  	padding: 8px 14px;
-  	text-decoration: none;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;
 }
 
 table {

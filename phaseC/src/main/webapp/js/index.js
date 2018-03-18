@@ -24,26 +24,25 @@ class Index extends React.Component {
 	// Submit the form to login
 	onLogInSubmit(e) {
 		e.preventDefault();
-        var data = new FormData();
-        data.append("username", this.state.email);
-        data.append("password", this.state.password);
+      var data = new FormData();
+      data.append("username", this.state.email);
+      data.append("password", this.state.password);
 
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-		//alert(data)
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                if(this.responseText == "{\"msg\":\"login successful\"}")
-                	window.location.replace('http://localhost:8080/home.html');
-                else
-                	console.log("LOGIN FAILED INVALID CREDENTIALS");
-            }
-				});
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+				if (this.readyState === 4) {
+					if(this.responseText == "{\"msg\":\"login successful\"}")
+					  window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
+          else
+            console.log("LOGIN FAILED INVALID CREDENTIALS");
+          }
+			});
 				
-				// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
-        xhr.open("POST", "http://localhost:8080/login");
-        xhr.setRequestHeader("Cache-Control", "no-cache");
-        xhr.send(data);
+      xhr.open("POST", "http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/login");
+      xhr.setRequestHeader("Cache-Control", "no-cache");
+      xhr.send(data);
 	}
 
 	// Submit the form to register
@@ -68,7 +67,7 @@ class Index extends React.Component {
 			method: 'POST',
 			body: data
 		});
-        window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
+    window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
 	}
 	
 	// Rend	er the UI
