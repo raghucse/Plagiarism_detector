@@ -52,7 +52,7 @@ select {
 	width: 120%;
 }
 
-#assi {
+#assignmentBanner {
 	margin-left: 10%;
 }
 
@@ -70,4 +70,59 @@ select {
   font-weight: bold;
   padding: 8px 14px;
 	text-decoration: none;
+}
+
+.addAssignment {
+	margin-top: 2%;
+	background-color: red;
+	color: white;
+	font-size: 140%;
+	padding: 8px 14px;
+}
+
+#existingAssi {
+	background-color: #464c54;
+  border: 1px solid #464c54;
+	color: #ffebb5;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 110%;
+  padding: 8px 14px;
+	text-decoration: none;
+	margin-top: 5px;
+}
+
+#statistics {
+	margin-top: 1%;
+	background-color: white;
+	height: auto;
+}
+
+#assignmentsWrapper {
+	width: 19.5%;
+	float: left;
+	text-align: center;
+	margin-top: 1%;
+}
+
+.currentAssignment {
+	background-color: white;
+	color: black;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 110%;
+  padding: 8px 14px;
+	text-decoration: none;
+	margin-top: 5px;
+	width: 77%;
+}
+
+.futureAssignment {
+	background-color: #464c54;
+  border: 1px solid #464c54;
+	color: #ffebb5;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 110%;
+  padding: 8px 14px;
+	text-decoration: none;
+	margin-top: 5px;
+	width: 77%;
 }
