@@ -23,13 +23,15 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<ServerResponse> login(@ModelAttribute LoginRequest loginRequest) {
-        Log.info("Hello Logging");
+        Log.info("Begin Login");
         User user = userService.findByUsername(loginRequest.getUsername());
         if( user != null && user.getUsername().equals(loginRequest.getUsername())
                 && user.getPassword().equals(loginRequest.getPassword())){
+            Log.info("Login successful");
             return ResponseEntity.ok(new ServerResponse("login successful"));
         }
         else {
+            Log.error(loginRequest.getUsername()+" login failed");
             return ResponseEntity.ok(new ServerResponse("login failed"));
         }
     }

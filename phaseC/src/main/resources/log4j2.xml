@@ -12,12 +12,12 @@
 
         <SMTP name="MailAppender"
               subject="Plagarism detector error in production"
-              to="venkatesh.ra@huksy.neu.edu"
-              from="venkatesh.ra@huksy.neu.edu"
+              to="venkatesh.ra@husky.neu.edu, arora.ana@husky.neu.edu, qu.ju@husky.neu.edu, vaidhyanathan.b@husky.neu.edu"
+              from="palagarismdetector@gmail.com"
               smtpHost="smtp.gmail.com"
               smtpPort="587"
-              smtpUsername="venkatesh.ra@huksy.neu.edu"
-              smtpPassword="Aero@420"
+              smtpUsername="palagarismdetector@gmail.com"
+              smtpPassword="team106pass"
               bufferSize="1">
             <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout>
@@ -39,6 +39,9 @@
         <Root level="info">
             <AppenderRef ref="ConsoleAppender" />
             <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="MailAppender"/>
+        </Root>
+        <Root level="error">
             <AppenderRef ref="MailAppender"/>
         </Root>
     </Loggers>
