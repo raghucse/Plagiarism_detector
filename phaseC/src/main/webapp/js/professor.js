@@ -86,6 +86,32 @@ class Professor extends React.Component {
 		});
 	}
 
+	// Compare two files
+	onCompareSubmit(e) {
+		/*
+		e.preventDefault();
+		var data = new FormData();
+		data.append('file1', document.getElementById('file1').files[0]);
+		data.append('file2', document.getElementById('file2').files[0]);
+		
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				if(this.responseText == "TODO")
+					console.log("todo");
+				else
+					console.log("todo");
+				}
+		});
+			
+		xhr.open("POST", "TODO");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.send(data);
+		*/
+	}
+
 	// Rend	er the UI
 	render() {
 		if (this.state.page == 0) {
@@ -103,9 +129,22 @@ class Professor extends React.Component {
 								<div className="row">
 									<div className="col">The statistics of the latest run</div>
 									<div className="w-100"></div>
-									<div className="col">Pictures!!</div>
-									<div className="w-100"></div>
-									<div className="col">Currectly it's showing the statistics of the assignment {this.state.statistics}. </div>
+									<div className="col">
+									<form onSubmit={ e => this.onCompareSubmit(e) }>
+											<table>
+												<tr>
+													<td><span>File 1</span></td>
+													<td><input type="file" id="file1"/></td>
+												</tr>
+												<tr>
+													<td><span>File 2</span></td>
+													<td><input type="file" id="file2"/></td>
+												</tr>
+												<input className="button" type="submit" value="Submit"/>
+												<div id="result"></div>
+											</table>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
