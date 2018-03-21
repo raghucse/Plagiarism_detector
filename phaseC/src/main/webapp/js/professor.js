@@ -136,12 +136,18 @@ class Professor extends React.Component {
 		modal.style.display = "block";
 	}
 
-	// update students' GitHub link
+	/**
+	 * update students' GitHub link
+	 */
 	updateGitHubLink() {
 		/**
 		 * TODO: post the query to DB to update students' GitHub link
 		 */
 	}
+
+	/**
+	 * Generate modal to show and edit students' GitHub links
+	 */
 
 	/**
 	 * Render the main UI
