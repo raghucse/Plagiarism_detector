@@ -2,8 +2,6 @@ package edu.neu.models;
 
 import java.util.List;
 
-import netscape.javascript.JSObject;
-
 public class Grader implements Faculty{
 
 	@Override
