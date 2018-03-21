@@ -21,28 +21,51 @@ class Index extends React.Component {
 		}
 	}
 
+	/**
+   * Make a toast
+   * http://blog.csdn.net/yuetingzhuying/article/details/56489439
+   */
+  toast(msg) {
+    setTimeout(function() {
+        document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = msg;
+        var toastTag = document.getElementsByClassName('toast-wrap')[0];
+        toastTag.className = toastTag.className.replace('toastAnimate', '');
+        setTimeout(function() {
+          toastTag.className = toastTag.className + ' toastAnimate';
+        }, 100);
+      }, 100);
+	}
+	
 	// Submit the form to login
+	// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
 	onLogInSubmit(e) {
 		e.preventDefault();
-        var data = new FormData();
-        data.append("username", this.state.email);
-        data.append("password", this.state.password);
+      var data = new FormData();
+      data.append("username", this.state.email);
+      data.append("password", this.state.password);
 
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-		//alert(data)
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                if(this.responseText == "{\"msg\":\"login successful\"}")
-                	window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
-                else
-                	console.log("LOGIN FAILED INVALID CREDENTIALS");
-            }
-        });
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
 
-        xhr.open("POST", "http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/login");
-        xhr.setRequestHeader("Cache-Control", "no-cache");
-        xhr.send(data);
+      xhr.addEventListener("readystatechange", function () {
+				if (this.readyState === 4) {
+					if(this.responseText == "{\"msg\":\"login successful\"}")
+					  window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
+					else
+						setTimeout(function() {
+							document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
+							var toastTag = document.getElementsByClassName('toast-wrap')[0];
+							toastTag.className = toastTag.className.replace('toastAnimate', '');
+							setTimeout(function() {
+								toastTag.className = toastTag.className + ' toastAnimate';
+							}, 100);
+						}, 100);
+          }
+			});
+				
+      xhr.open("POST", "http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/login");
+      xhr.setRequestHeader("Cache-Control", "no-cache");
+      xhr.send(data);
 	}
 
 	// Submit the form to register
@@ -50,6 +73,7 @@ class Index extends React.Component {
 		e.preventDefault();
 
 		if(this.state.cfrm_pwd != this.state.password) {
+			this.toast('Passwords must be same!');
 			return;
 		}
 
@@ -67,7 +91,7 @@ class Index extends React.Component {
 			method: 'POST',
 			body: data
 		});
-        window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
+		window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
 	}
 	
 	// Rend	er the UI
@@ -100,6 +124,9 @@ class Index extends React.Component {
           	</tr>
 					</form>
 					</table>
+					<div className="toast-wrap">
+          	<span className="toast-msg"></span>
+        	</div>
 				</div>
 			);
 		} else {
@@ -140,6 +167,9 @@ class Index extends React.Component {
 						</tr>
 					</form>
         	</table>
+					<div className="toast-wrap">
+          	<span className="toast-msg"></span>
+        	</div>
 				</div>
 			);
 		}

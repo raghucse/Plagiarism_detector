@@ -18,25 +18,25 @@ h1 {
 	padding-top: 30px;
 	background-color: #e7e7e7;
 	color: #282e32;
-  	border: 1px solid #e7e7e7;
-  	font-family: Verdana,Arial,Helvetica,sans-serif;
-  	font-size: 15px;
-  	font-weight: bold;
-  	padding: 8px 14px;
-  	text-decoration: none;	
+  border: 1px solid #e7e7e7;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;	
 }
 
 .unclickedButton {
 	float: right;
 	padding-top: 30px;
 	background-color: #464c54;
-    border: 1px solid #464c54;
+  border: 1px solid #464c54;
 	color: #ffebb5;
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 15px;
-  	font-weight: bold;
-  	padding: 8px 14px;
-  	text-decoration: none;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;
 }
 
 table {
@@ -84,4 +84,32 @@ span {
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #154682;
+}
+
+.toast-wrap {
+  opacity: 0;
+  position: fixed;
+  bottom: 10%;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+}
+
+.toast-msg {
+  background-color: rgba(0,0,0,0.7);
+  padding: 1% 3%;
+  font-size: 150%;
+  border-radius: 5px;
+}
+
+.toastAnimate {
+  animation: toastKF 2s;
+}
+
+@keyframes toastKF {
+  0%  { opacity: 0; }
+  25% { opacity: 1; z-index: 9999 }
+  50% { opacity: 1; z-index: 9999 }
+  75% { opacity: 1; z-index: 9999 }
+  100% { opacity: 0; z-index: 0 }
 }
