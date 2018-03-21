@@ -37,7 +37,7 @@ public class Instructor implements Faculty{
 	}
 
 	@Override
-	public JSObject viewReport(Report report) {
+	public String viewReport(Report report) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,4 @@
 package edu.neu.models;
-import netscape.javascript.JSObject;
 
 /**
  * Interface of a faculty representing a different role than other users in the system
@@ -24,5 +23,5 @@ public interface Faculty extends SystemUser {
 	 * @param report : The report which needs to be viewed
 	 * @return : The JSON object if report is found, else an empty error object.
 	 */
-	JSObject viewReport (Report report);
+	String viewReport (Report report);
 }
