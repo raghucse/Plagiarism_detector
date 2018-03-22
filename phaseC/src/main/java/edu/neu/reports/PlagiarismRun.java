@@ -9,7 +9,7 @@ import edu.neu.models.GitSubmission;
 import edu.neu.models.Submission;
 
 @Entity
-@Table(name="PlagarismRun")
+@Table(name="PlagiarismRun")
 public class PlagiarismRun {
 
     @Id
