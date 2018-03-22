@@ -19,7 +19,7 @@ public class Report {
     public void setId(int id) {
         this.id = id;
     }
-    private byte[] report;
+    private byte[] reportFile;
 
     public int getOwner() {
         return owner;
@@ -37,12 +37,8 @@ public class Report {
         this.name = name;
     }
 
-    public byte[] getProfilePic() {
-        return report;
-    }
-
-    public void setProfilePic(byte[] profilePic) {
-        this.report = profilePic;
+    public byte[] getReportFile() {
+        return reportFile;
     }
 
 }
