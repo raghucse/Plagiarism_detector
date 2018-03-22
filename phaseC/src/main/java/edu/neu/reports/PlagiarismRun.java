@@ -3,16 +3,17 @@ package edu.neu.reports;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import edu.neu.models.GitSubmission;
 import edu.neu.models.Submission;
 
 @Entity
-@Table(name="PlagarismRun")
+@Table(name="PlagiarismRun")
 public class PlagiarismRun {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int runId;
     private int userId;
     String gitUrls;
