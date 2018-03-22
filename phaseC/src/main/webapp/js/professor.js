@@ -4,24 +4,31 @@ class Professor extends React.Component {
 	 * Constructor
 	 * 
 	 * The state contains:
-	 *   page: to show the assignment page or the class information page
-	 *   assignments: name of all assignments in this class
-	 *   statistics: which assignment to show the statistics
-	 * 
-	 * Before constructing the state,
-	 *   the backend shall return an array listing all assignments' names.
-	 * 
+	 *   page: 0 for the assignment page and 1 for class information page
+	 *   assignments: list of all assignments' ID in this class
+	 *   students: list of all students' ID in this class
+	 *   statistics: ID of the selected assignment to check 
 	*/
 	constructor() {
 		super();
+
+		/**
+		 * TODO: get a course object/json from the end point and initialize the following state
+		 */
+		var loadAssignments = [0, 1, 2];
+		var loadStudents = [0, 1, 2, 3, 4, 5];
+
 		this.state = {
 			page: 0,
-			assignments: ["0", "1", "2"],
+			assignments: loadAssignments,
+			students: loadStudents,
 			statistics: 0
 		}
 	}
 
-	// Show the banner UI
+	/**
+	 * Show the banner UI
+	 */
 	showBanner() {
 		return(
 			<div className="container" id="banner">
@@ -48,17 +55,17 @@ class Professor extends React.Component {
 		);
 	}
 
-	// Show all assignments
-	// TODO: change the way to judge whether it is the current assignment
+	/**
+	 * Show all assignments
+	 */
 	showAssignments() {
 		const assiElements = [];
 		for (let assi of this.state.assignments) {
 			assiElements.push(
 				<div className="row">
 					<div className="col">
-						<button className={ this.state.statistics == Number(assi) ? "currentAssignment" : "futureAssignment" }
-						  onClick={ () => this.setState({ statistics: Number(assi) }) }>
-							Assignment { assi }</button>
+						<button className={ this.state.statistics == assi ? "currentAssignment" : "futureAssignment" }
+						  onClick={ () => this.setState({ statistics: assi }) }>Assignment { assi }</button>
 						</div>
 				</div>
 			);
@@ -76,17 +83,22 @@ class Professor extends React.Component {
 		);
 	}
 
-	// Add assignments
-	// TODO: will be replaced, current code is for testing use only
+	/**
+	 * Add assignments
+	 * 
+	 * TODO: will be replaced, current code is for testing use only
+	 */
 	addAssignments() {
 		let test = this.state.assignments;
-		test.push("X");
+		test.push("9");
 		this.setState({
 			assignments: test
 		});
 	}
 
-	// Compare two files
+	/**
+	 * Compare two files, for test use only
+	 */
 	onCompareSubmit(e) {
 		/*
 		e.preventDefault();
@@ -112,38 +124,90 @@ class Professor extends React.Component {
 		*/
 	}
 
-	// Rend	er the UI
+	/**
+	 * Modal animations for editing GitHub link in a certain assignment
+	 */
+	editAllSubmissions() {
+		var modal = document.getElementById('myModal');
+		var span = document.getElementsByClassName("close")[0];
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+		modal.style.display = "block";
+	}
+
+	/**
+	 * update students' GitHub link
+	 */
+	updateGitHubLink() {
+		/**
+		 * TODO: post the query to DB to update students' GitHub link
+		 */
+	}
+
+	/**
+	 * Generate modal to show and edit students' GitHub links
+	 */
+
+	/**
+	 * Render the main UI
+	 */
 	render() {
 		if (this.state.page == 0) {
 			return(
 				<div className="container">
+					<div className="row">{ this.showBanner() }</div>
 					<div className="row">
-						{ this.showBanner() }
-					</div>
-					<div className="row">
-						<div className="col">
-							{ this.showAssignments() }
-						</div>
+						<div className="col">{ this.showAssignments() }</div>
 						<div className="col-5" >
 							<div className="container" id="statistics">
 								<div className="row">
-									<div className="col">The statistics of the latest run</div>
-									<div className="w-100"></div>
 									<div className="col">
+									<span>For testing use:</span><br/>
 									<form onSubmit={ e => this.onCompareSubmit(e) }>
-											<table>
-												<tr>
-													<td><span>File 1</span></td>
-													<td><input type="file" id="file1"/></td>
-												</tr>
-												<tr>
-													<td><span>File 2</span></td>
-													<td><input type="file" id="file2"/></td>
-												</tr>
-												<input className="button" type="submit" value="Submit"/>
-												<div id="result"></div>
-											</table>
-										</form>
+										<table>
+											<tr>
+												<td><span>File 1</span></td>
+												<td><input type="file" id="file1"/></td>
+											</tr>
+											<tr>
+												<td><span>File 2</span></td>
+												<td><input type="file" id="file2"/></td>
+											</tr>
+											<input className="button" type="submit" value="Submit"/>
+											<div id="result"></div>
+										</table>
+									</form>
+									</div>
+									<div className="col">
+										<button onClick={this.editAllSubmissions.bind(this)} id="editAllSubmissions">Edit all submissions</button>
+										<div id="myModal" className="modal">
+											<div className="modal-content">
+											  <span className="close">&times;</span>
+												<div className="student_container">
+													<div className="row">
+														<div className="col-md-4">Student 1</div>
+														<div className="col-md-auto"><input type="text" id=""></input></div>
+													</div>
+													<div className="row">
+														<div className="col-md-4">Student 2</div>
+														<div className="col-md-auto"><input type="text" id=""></input></div>
+													</div>
+													<div className="row">
+														<div className="col-md-4">Student 3</div>
+														<div className="col-md-auto"><input type="text" id=""></input></div>
+													</div>
+													<div className="row">
+														<div className="col">
+															<button id="" onClick={ this.updateGitHubLink.bind(this) }>Save</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="col">
+										<button id="runCheck">Run</button>
 									</div>
 								</div>
 							</div>
