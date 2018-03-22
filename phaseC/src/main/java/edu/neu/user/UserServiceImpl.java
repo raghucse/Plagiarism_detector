@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository userRepository;
+    private ApplicationUserRepository userRepository;
 
-    public void save(User user) {
+    public void save(ApplicationUser user) {
         userRepository.save(user);
     }
 
-    public User findByUsername(String username) {
+    public ApplicationUser findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 }
