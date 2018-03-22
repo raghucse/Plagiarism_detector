@@ -5,11 +5,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="PlagarismRun")
-public class PlagarismRun {
+public class PlagiarismRun {
 
     private int runId;
     private int userId;
-    String gitUrl;
+    String gitUrls;
     String description;
 
     public int getRunId() {
@@ -28,12 +28,12 @@ public class PlagarismRun {
         this.userId = userId;
     }
 
-    public String getGitUrl() {
-        return gitUrl;
+    public String getGitUrls() {
+        return gitUrls;
     }
 
-    public void setGitUrl(String gitUrl) {
-        this.gitUrl = gitUrl;
+    public void setGitUrls(String gitUrls) {
+        this.gitUrls = gitUrls;
     }
 
     public String getDescription() {
