@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.comparison.Strategy;
-import edu.neu.models.Assignment;
 import edu.neu.models.Report;
 import edu.neu.models.Submission;
+import edu.neu.reports.PlagiarismRun;
 import edu.neu.utils.Constants;
 
 public class PlagiarismChecker {
 
-	// A single plagiarism check is run on an assignment
-	private Assignment assignment;
+	// A single plagiarism check is run when a plagiarism check is initiated
+	private PlagiarismRun plagiarismRun;
 	private Report report;
 	private Strategy comparisonStrategy;
 	
-	public PlagiarismChecker(Assignment assignment, Strategy comparisonStrategy) {
-		this.assignment = assignment;
+	public PlagiarismChecker(PlagiarismRun plagiarismRun, Strategy comparisonStrategy) {
+		this.plagiarismRun = plagiarismRun;
 		this.comparisonStrategy = comparisonStrategy;
 		this.report = new Report();
 	}
@@ -26,9 +26,9 @@ public class PlagiarismChecker {
 	// returns the plagiarism check id assosciated with the run
 	public String check() {
 		String id = "someUniqueIDHereGeneratedBYSingleton";
-		if(this.assignment!=null) {
+		if(this.plagiarismRun!=null) {
 			this.report.appendToResult("Initiating Plagiarism Check with id : "+id);
-			this.compareAllSubmissions(this.assignment);
+			this.compareAllSubmissions(this.plagiarismRun);
 		}
 		else {
 			this.report.appendToResult(Constants.P_CHECK_ERROR_STRING);
@@ -36,16 +36,16 @@ public class PlagiarismChecker {
 		return id;
 	}
 	
-	private void compareAllSubmissions(Assignment assignment) {
-		for(Submission[] submissionPair : getSubmissionPairs(assignment)) {
+	private void compareAllSubmissions(PlagiarismRun plagiarismRun) {
+		for(Submission[] submissionPair : getSubmissionPairs(plagiarismRun)) {
 			compareSubmissions(submissionPair[0], submissionPair[1]);
 		}
 	}
 	
-	public List<Submission[]> getSubmissionPairs(Assignment assignment) {
+	public List<Submission[]> getSubmissionPairs(PlagiarismRun plagiarismRun) {
 		List<Submission[]> result = new ArrayList<>();
-		Submission[] submissions= assignment.getStudentSubmissions().values()
-				.toArray(new Submission[assignment.getStudentSubmissions().size()]);
+		Submission[] submissions= plagiarismRun.getStudentSubmissions()
+				.toArray(new Submission[plagiarismRun.getStudentSubmissions().size()]);
 		
 		for(int i=0; i<submissions.length-1; i++) {
 			for(int j=i+1; j<submissions.length; j++) {
@@ -56,8 +56,8 @@ public class PlagiarismChecker {
 	}
 	
 	public void compareSubmissions(Submission submission1, Submission submission2) {
-		for(File f1 : submission1.getSource().getFiles()) {
-			for(File f2 : submission2.getSource().getFiles()) {
+		for(File f1 : submission1.getFiles()) {
+			for(File f2 : submission2.getFiles()) {
 				this.report.appendToResult(compareFiles(f1, f2));
 			}
 		}

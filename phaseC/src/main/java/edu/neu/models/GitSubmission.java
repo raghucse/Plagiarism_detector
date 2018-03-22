@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GitSource implements Source{
+public class GitSubmission implements Submission{
 	
 	private String gitURL;
 	
-	public GitSource(String gitURL) {
+	public GitSubmission(String gitURL) {
 		this.gitURL = gitURL;
 	}
 
