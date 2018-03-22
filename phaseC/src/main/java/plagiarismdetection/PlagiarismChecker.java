@@ -4,13 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import edu.neu.comparison.Strategy;
 import edu.neu.models.Report;
 import edu.neu.models.Submission;
 import edu.neu.reports.PlagiarismRun;
 import edu.neu.utils.Constants;
 
-public class PlagiarismChecker {
+public class PlagiarismChecker implements Runnable{
+	
+	private static final Logger log = LogManager.getLogger(PlagiarismChecker.class);
 
 	// A single plagiarism check is run when a plagiarism check is initiated
 	private PlagiarismRun plagiarismRun;
@@ -20,8 +25,20 @@ public class PlagiarismChecker {
 	public PlagiarismChecker(PlagiarismRun plagiarismRun, Strategy comparisonStrategy) {
 		this.plagiarismRun = plagiarismRun;
 		this.comparisonStrategy = comparisonStrategy;
-		this.report = new Report();
+		this.report = new Report(); // create a new empty report in the reports table here and get back the id
 	}
+	
+	@Override
+	public void run() {
+		try {
+			String report = check();
+			// dump this report to the reports table
+		}
+		catch(Exception e) {
+			log.error("Error when running plagiarism check for "+plagiarismRun+ " : "+ e.getStackTrace());
+		}
+	}
+	
 	
 	// returns the plagiarism check id assosciated with the run
 	public String check() {

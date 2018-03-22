@@ -57,5 +57,10 @@ public class PlagiarismRun {
     		}
     		return submissions;
     }
+    
+    @Override
+    public String toString() {
+    		return "PlagiarismRun : ["+"RunID:"+runId+","+"UserID:"+userId+","+"GitURLS:"+gitUrls+"]";
+    }
 
 }
