@@ -2,9 +2,11 @@ package edu.neu.reports;
 
 import edu.neu.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReportService {
     @Autowired
     private ReportRepository reportRepository;
@@ -24,7 +26,7 @@ public class ReportService {
         return reportRepository.findById(reportId);
     }
 
-    public Report getReportByOwnerId(int userId){
+    public List<Report> getReportByOwnerId(int userId){
         return reportRepository.findByOwner(userId);
     }
 
