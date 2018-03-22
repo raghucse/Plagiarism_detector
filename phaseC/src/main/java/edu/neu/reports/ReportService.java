@@ -30,12 +30,12 @@ public class ReportService {
         return reportRepository.findByOwner(userId);
     }
 
-    public void saveReport(Report report){
-        reportRepository.save(report);
+    public Report saveReport(Report report){
+        return reportRepository.save(report);
     }
 
-    public void saveSharedReport(ReportShared reportShared){
-        reportSharedRepository.save(reportShared);
+    public ReportShared saveSharedReport(ReportShared reportShared){
+        return reportSharedRepository.save(reportShared);
     }
 
 }
