@@ -37,5 +37,12 @@ public class ReportService {
     public ReportShared saveSharedReport(ReportShared reportShared){
         return reportSharedRepository.save(reportShared);
     }
+    
+    public Report createNewEmptyReportWithNameAndOwner(String name, int ownerId) {
+    		Report report = new Report();
+    		report.setName(name);
+    		report.setOwner(ownerId);
+    		return saveReport(report);
+    }
 
 }

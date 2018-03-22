@@ -6,11 +6,14 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.neu.comparison.Strategy;
-import edu.neu.models.Report;
+import edu.neu.models.ReportContent;
 import edu.neu.models.Submission;
 import edu.neu.reports.PlagiarismRun;
+import edu.neu.reports.Report;
+import edu.neu.reports.ReportService;
 import edu.neu.utils.Constants;
 
 public class PlagiarismChecker implements Runnable{
@@ -20,18 +23,22 @@ public class PlagiarismChecker implements Runnable{
 	// A single plagiarism check is run when a plagiarism check is initiated
 	private PlagiarismRun plagiarismRun;
 	private Report report;
+	private ReportContent reportContent;
 	private Strategy comparisonStrategy;
+	
+	 @Autowired
+	 private ReportService reportService;
 	
 	public PlagiarismChecker(PlagiarismRun plagiarismRun, Strategy comparisonStrategy) {
 		this.plagiarismRun = plagiarismRun;
 		this.comparisonStrategy = comparisonStrategy;
-		this.report = new Report(); // create a new empty report in the reports table here and get back the id
+		this.report = reportService.createNewEmptyReportWithNameAndOwner(plagiarismRun.getDescription(), plagiarismRun.getUserId()); // create a new empty report in the reports table here and get back the id
 	}
 	
 	@Override
 	public void run() {
 		try {
-			String report = check();
+			check();
 			// dump this report to the reports table
 		}
 		catch(Exception e) {
@@ -44,11 +51,11 @@ public class PlagiarismChecker implements Runnable{
 	public String check() {
 		String id = "someUniqueIDHereGeneratedBYSingleton";
 		if(this.plagiarismRun!=null) {
-			this.report.appendToResult("Initiating Plagiarism Check with id : "+id);
+			log.info("Initiating Plagiarism Check with id : "+id);
 			this.compareAllSubmissions(this.plagiarismRun);
 		}
 		else {
-			this.report.appendToResult(Constants.P_CHECK_ERROR_STRING);
+			log.error(Constants.P_CHECK_ERROR_STRING + "for id : "+id);
 		}
 		return id;
 	}
@@ -75,17 +82,18 @@ public class PlagiarismChecker implements Runnable{
 	public void compareSubmissions(Submission submission1, Submission submission2) {
 		for(File f1 : submission1.getFiles()) {
 			for(File f2 : submission2.getFiles()) {
-				this.report.appendToResult(compareFiles(f1, f2));
+				reportContent.addAll(compareFiles(f1, f2));
 			}
 		}
 	}
 	
-	public String compareFiles(File f1, File f2) {
-		return comparisonStrategy.compare(f1, f2);
+	public ReportContent compareFiles(File f1, File f2) {
+		//return comparisonStrategy.compare(f1, f2);
+		return null;
 	}
 	
 	public String getReportResult() {
-		return this.report.getResult();
+		return this.reportContent.getResult();
 	}
 	
 }
