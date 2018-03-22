@@ -26,4 +26,10 @@ public class ReportController {
         return ResponseEntity.ok(result);
     }
 
+    @RequestMapping(value = "/report/shared/{suserId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Report>> getSharedReportsforId(@PathVariable("suserId") int reportId) {
+        List<Report> result = reportService.findAllReportsForSharedUser(reportId);
+        return ResponseEntity.ok(result);
+    }
+
 }
