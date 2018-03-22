@@ -17,18 +17,7 @@ h1 {
 	background-color: #336699;
 }
 
-select {
-	width: 80%;
-	font-size: 15px;
-	height: 40px;
-	background-color: wheat;
-}
-
-#banner {
-	margin-top: 3%;
-}
-
-.currentpage {
+.currentRun {
 	background-color: #e7e7e7;
 	color: #282e32;
   border: 1px solid #e7e7e7;
@@ -37,10 +26,11 @@ select {
   font-weight: bold;
   padding: 8px 14px;
 	text-decoration: none;
-	width: 120%;
+	width: 60%;
+	margin-top: 1%;
 }
 
-.futurepage {
+.futureRun {
 	background-color: #464c54;
   border: 1px solid #464c54;
 	color: #ffebb5;
@@ -49,46 +39,8 @@ select {
   font-weight: bold;
   padding: 8px 14px;
 	text-decoration: none;
-	width: 120%;
-}
-
-#assignmentBanner {
-	margin-left: 10%;
-}
-
-#classinfo {
-	margin-left: 14%;
-}
-
-#logout {
-	float: right;
-	background-color: #e7e7e7;
-	color: #282e32;
-  border: 1px solid #e7e7e7;
-  font-family: Verdana,Arial,Helvetica,sans-serif;
-  font-size: 110%;
-  font-weight: bold;
-  padding: 8px 14px;
-	text-decoration: none;
-}
-
-.addAssignment, #editAllSubmissions, #runCheck {
-	margin-top: 2%;
-	background-color: red;
-	color: white;
-	font-size: 140%;
-	padding: 8px 14px;
-}
-
-#existingAssi {
-	background-color: #464c54;
-  border: 1px solid #464c54;
-	color: #ffebb5;
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 110%;
-  padding: 8px 14px;
-	text-decoration: none;
-	margin-top: 5px;
+	width: 60%;
+	margin-top: 1%;
 }
 
 #statistics {
@@ -97,34 +49,24 @@ select {
 	height: auto;
 }
 
-#assignmentsWrapper {
+.addRun, #run {
+	margin-top: 2%;
+	background-color: red;
+	color: white;
+	font-size: 140%;
+	padding: 8px 30px;
+}
+
+#statistics {
+	margin-left: 14%;
+	margin-top: 1%;
+}
+
+#runsWrapper {
 	width: 19.5%;
 	float: left;
 	text-align: center;
 	margin-top: 1%;
-}
-
-.currentAssignment {
-	background-color: white;
-	color: black;
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 110%;
-  padding: 8px 14px;
-	text-decoration: none;
-	margin-top: 5px;
-	width: 77%;
-}
-
-.futureAssignment {
-	background-color: #464c54;
-  border: 1px solid #464c54;
-	color: #ffebb5;
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 110%;
-  padding: 8px 14px;
-	text-decoration: none;
-	margin-top: 5px;
-	width: 77%;
 }
 
 .modal {
@@ -149,3 +91,7 @@ select {
   width: 30%;
 }
 
+.git {
+	background-color: white;
+	width: 100%;
+}
