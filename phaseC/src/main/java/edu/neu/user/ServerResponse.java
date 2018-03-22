@@ -10,7 +10,7 @@ public class ServerResponse {
     }
 
     String msg;
-    ServerResponse(String message){
+    public ServerResponse(String message){
         this.msg = message;
     }
 }
