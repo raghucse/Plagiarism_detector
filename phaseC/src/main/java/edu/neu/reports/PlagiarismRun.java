@@ -1,7 +1,13 @@
 package edu.neu.reports;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import edu.neu.models.GitSubmission;
+import edu.neu.models.Submission;
 
 @Entity
 @Table(name="PlagarismRun")
@@ -42,6 +48,14 @@ public class PlagiarismRun {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public List<Submission> getStudentSubmissions() {
+    		List<Submission> submissions = new ArrayList<>();
+    		for(String gitUrl : this.getGitUrls().split(",")) {
+    			submissions.add(new GitSubmission(gitUrl));
+    		}
+    		return submissions;
     }
 
 }

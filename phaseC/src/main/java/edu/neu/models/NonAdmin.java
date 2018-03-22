@@ -2,7 +2,7 @@ package edu.neu.models;
 
 import java.util.List;
 
-public class Instructor implements Faculty{
+public class NonAdmin implements SystemUser{
 
 	@Override
 	public void onLogin() {
@@ -24,18 +24,6 @@ public class Instructor implements Faculty{
 
 	@Override
 	public List<String> showUserLogs() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void runPlagiarismChecker(Assignment assignment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String viewReport(Report report) {
 		// TODO Auto-generated method stub
 		return null;
 	}
