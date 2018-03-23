@@ -1,12 +1,8 @@
 package edu.neu.testResources;
 
 import edu.neu.astgeneration.ASTUtils;
-import edu.neu.astgeneration.AstPrinter;
-import edu.neu.astgeneration.ParserFacade;
 import org.junit.Test;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import edu.neu.comparison.LVDistance;
 
 import static org.junit.Assert.*;
