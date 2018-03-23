@@ -40,7 +40,7 @@ class Index extends React.Component {
 	// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
 	onLogInSubmit(e) {
 		e.preventDefault();
-        fetch('http://localhost:8080/login', {
+        fetch('/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -52,7 +52,23 @@ class Index extends React.Component {
             })
         }).then(function (msg) {
         	if(msg.ok) {
-				document.cookie = msg.headers.get('Authorization')
+				//document.cookie ="Authorization="+msg.headers.get('Authorization')
+                createCookie('UserName',msg.headers.get('User'));
+                createCookie('Authorization',msg.headers.get('Authorization'));
+                var data = null;
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === 4) {
+                        createCookie('UserId',this.responseText);
+                    }
+                });
+
+                xhr.open("GET", "/user?userName="+msg.headers.get('User'));
+                xhr.setRequestHeader("Authorization", "Bearer Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhQGEuY29tIiwiZXhwIjoxNTIyNjg1OTczfQ.K2m_K6kH7GYsRhLokzcvsAKiuwd2zSE8KYDFSucrAXPkOKmeAWlQEqxURXbUxurM6thN1EX6vSdYasY62XRS1Q");
+                xhr.setRequestHeader("Cache-Control", "no-cache");
+                xhr.send(data);
                 window.location.replace('http://localhost:8080/home.html');
             }
         	else
