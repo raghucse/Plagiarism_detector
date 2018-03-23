@@ -94,9 +94,10 @@ public class PlagiarismChecker implements Runnable{
 	}
 	
 	public ComparisonReport compareFiles(File f1, File f2) {
-		ComparisonReport cr = new ComparisonReport(f1.getName(), f2.getName());
+		/*ComparisonReport cr = new ComparisonReport(f1.getName(), f2.getName());
 		cr.putScore(comparisonStrategy.getName(), comparisonStrategy.compare(f1, f2));
-		return cr;
+		return cr;*/
+		return new ComparisonReport(f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2));
 	}
 	
 	public boolean didRunStart() {
