@@ -1,6 +1,6 @@
 package edu.neu.reports;
 
-import edu.neu.user.User;
+import edu.neu.user.ApplicationUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class ReportService {
         return reportSharedRepository.findAllReportsForSharedUser(userId);
     }
 
-    public List<User> findSharedUsersForReport(int reportId){
+    public List<ApplicationUser> findSharedUsersForReport(int reportId){
         return reportSharedRepository.findUsersByReportId(reportId);
     }
 
