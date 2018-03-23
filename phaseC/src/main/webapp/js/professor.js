@@ -92,7 +92,7 @@ class Check extends React.Component {
 
 		// Generate an end point URL
 		var endPoint = "http://localhost:8080/report/reportId/";
-		endPoint.concat(r.toString());
+		endPoint = endPoint.concat(r.toString());
 
 		// Post data
 		var data = null;
