@@ -22,9 +22,10 @@ class Check extends React.Component {
 				loadRuns = [0, 1, 2];
 			}
 		});
-		xhr.open("GET", "http://localhost:8080/report/userId/{userId}");
+		var url = "/report/userId/"+readCookie('User');
+		xhr.open("GET", url);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
-		xhr.setRequestHeader("Authorization", document.cookie);		
+		xhr.setRequestHeader("Authorization", readCookie('Authorization'));
 		xhr.send(data);
 
 		// TODO: get the first report
