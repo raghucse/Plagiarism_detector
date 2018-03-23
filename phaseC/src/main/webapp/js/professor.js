@@ -1,19 +1,16 @@
 class Check extends React.Component {
 
-	/** 
+	/**
 	 * Constructor
-	 * 
-	 * The state contains:
-	 *   runs: list of all runs' ID
-	 *   statistics: ID of the selected run to check its data
-	 *   stuNum: the number of students in the run, by default is 1 
-	*/
+	 */
 	constructor() {
 		super();
 
 		// Get all the report ID
-		var loadRuns = [0, 1, 2];
+		// REAL: var url = "/report/userId/"+readCookie('User');
 		var data = null;
+		var loadRuns = [0, 1, 2];
+		var url = "/report/userId/0"
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
@@ -21,24 +18,36 @@ class Check extends React.Component {
 				console.log(this.responseText);
 				loadRuns = [0, 1, 2];
 			}
-		});
-		var url = "/report/userId/"+readCookie('User');
+		});		
 		xhr.open("GET", url);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", readCookie('Authorization'));
 		xhr.send(data);
 
-		// TODO: get the first report
-		// TODO: get the percentage value of the first
-		// TODO: get the git diff
-		var loadPercentage = 0.8;
+		/**
+		 * SIMULATION to get the first report in the list
+		 */
+		var smallObj = new Object();
+		smallObj.file1 = "name1";
+		smallObj.file2 = "name2";
+		smallObj.percentage = 0.1;
 
+		var obj = new Object();
+		obj.reportID = 0;
+		var testDiffData = [];
+		for (var i = 0; i < 3; i++) {
+			testDiffData.push(smallObj);
+		}
+		obj.diffData = testDiffData;
+		// -----------------------------------------------
+
+		// Set up the components state
 		this.state = {
-			runs: loadRuns,
-			statistics: loadRuns[0],
-			stuNum: 1,
-			percentage: loadPercentage,
-			userID: 0
+			runs: loadRuns,						// a list of all report IDs
+			statistics: loadRuns[0],	// by default the page loads the first report
+			report: obj,							// by default the page loads the first report
+			stuNum: 1,								// by default there is 1 student to add solution	
+			userID: 0									// user ID in the session
 		}
 	}
 
@@ -84,46 +93,46 @@ class Check extends React.Component {
 	}
 
 	/**
-	 * Show statistic of a certain run,
+	 * Show statistics of a certain run,
 	 *   triggered by pressing the button of a historical run.
 	 */
 	showStatistics(r) {
-		
-		// Set state for rendering UI
 		this.setState({ statistics: r });
-
-		// Generate an end point URL
-		var endPoint = "http://localhost:8080/report/reportId/";
-		endPoint = endPoint.concat(r.toString());
 
 		// Post data
 		var data = null;
+		var endPoint = "http://localhost:8080/report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-				// TODO: Analyze JSON object
-				console.log(this.responseText);
+				// this.setState({report: this.responseText});
 			}
 		});
 		xhr.open("GET", endPoint);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
 		xhr.send(data);
-	}
+		document.getElementById("tabledata").innerHTML = null;
 
-	/**
-	 * Adjust the arrow,
-	 *   by appending white characters before the arrow.
-	 */
-	adjustArrow() {
-		var ADJUSTING = 75;
-		var hashTags = this.state.percentage * ADJUSTING;
-		var space = "";
-		for (var i = 0; i < hashTags; i++) {
-			space += "#";
+		// Append new data
+		var element = document.getElementById("tabledata");
+		for (var i = 0; i < this.state.report.diffData.length; i++) {
+			var row = document.createElement("tr");
+			var para = document.createElement("td");
+			var node = document.createTextNode(this.state.report.diffData[i].file1);
+			para.appendChild(node);
+			row.appendChild(para);
+			para = document.createElement("td");
+			node = document.createTextNode(this.state.report.diffData[i].file2);
+			para.appendChild(node);
+			row.appendChild(para);
+			para = document.createElement("td");
+			node = document.createTextNode(this.state.report.diffData[i].percentage);
+			para.appendChild(node);
+			row.appendChild(para);
+		  element.appendChild(row);
 		}
-		return space;
 	}
 
 	/**
@@ -162,7 +171,7 @@ class Check extends React.Component {
 		var data = new FormData();
 		data.append("runDescription", document.getElementById('run_description').value);
 		data.append("gitHubLinks", links);
-		data.append("sharedUsers", document.getElementById('shared_users').value.split(","));
+		data.append("sharedUsers", []);
 		
 		// Post to end point
 		var xhr = new XMLHttpRequest();
@@ -195,18 +204,17 @@ class Check extends React.Component {
 					<div className="col-4" id="statistics">
 						<div className="container report">
 							<div className="row">
+								<div className="col"><h3>Statistics of run {this.state.statistics}</h3><br/></div>
 								<div className="col">
-									<h3>Statistics of run {this.state.statistics}</h3><br/>
+									<table>
+										<tr>
+											<th>File 1</th><th>File 2</th><th>Similarity</th>
+										</tr>
+									</table>
+									<table>
+										<div id="tabledata"></div>
+									</table>
 								</div>
-								<div className="col meter"></div>
-								<div className="col meter2">
-									<div id="zero_tag">0%</div>
-									<div id="hundred_tag">100%</div>
-								</div>
-								<div className="col">
-								  <span id="nbsp">{ this.adjustArrow() }</span>
-									<span id="arrow">↑</span>
-							  </div>
 							</div>
 						</div>
 					</div>
