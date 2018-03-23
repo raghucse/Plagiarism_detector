@@ -91,6 +91,18 @@ class Check extends React.Component {
 	 */
 	showStatistics(r) {
 		this.setState({ statistics: r });
+
+		var data = null;
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				console.log(this.responseText);
+			}
+		});
+		xhr.open("GET", "http://localhost:8080/report/reportId/0");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.send(data);
 	}
 
 	/**
