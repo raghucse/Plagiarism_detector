@@ -87,6 +87,7 @@ class Check extends React.Component {
 	 *   triggered by pressing the button of a historical run.
 	 */
 	showStatistics(r) {
+		
 		// Set state for rendering UI
 		this.setState({ statistics: r });
 
