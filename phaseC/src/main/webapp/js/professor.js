@@ -9,20 +9,56 @@ class Check extends React.Component {
 	 *   stuNum: the number of students in the run, by default is 1 
 	*/
 	constructor() {
-		/**
-		 * TODO: get a run list object/json from the end point and initialize the following state
-		 */
 		super();
+
+		// Get the report by user ID
+		var data = null;
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				console.log(this.responseText);
+			}
+		});
+		xhr.open("GET", "http://localhost:8080/report/userId/0");
+		xhr.setRequestHeader("Cache-Control", "no-cache");		
+		xhr.send(data);
+
+		// TODO: get all run ID
 		var loadRuns = [0, 1, 2];
+
+		// TODO: get the first report
+
+		// TODO: get the percentage value of the first 
+		var loadPercentage = 0.8;
+
+		// TODO: get the git diff
+
 		this.state = {
 			runs: loadRuns,
-			statistics: 0,
-			stuNum: 1
+			statistics: loadRuns[0],
+			stuNum: 1,
+			percentage: loadPercentage,
+			userID: 0,
+			reports: []
 		}
 	}
 
 	/**
-	 * Show all runs
+	 * Start a new run by popping up a modal,
+	 *   which allows the user to add multiple solutions.
+	 */
+	addRuns() {
+		var modal = document.getElementById('myModal');
+		var span = document.getElementsByClassName("close")[0];
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+		modal.style.display = "block";
+	}
+
+	/**
+	 * Show all runs by going through the list of run ID.
 	 */
 	showRuns() {
 		const runElements = [];
@@ -31,7 +67,7 @@ class Check extends React.Component {
 				<div className="row">
 					<div className="col">
 						<button className={ this.state.statistics == r ? "currentRun" : "futureRun" }
-						  onClick={ () => this.setState({ statistics: r }) }>Run { r }</button>
+						  onClick={ () => this.showStatistics(r) }>Run { r }</button>
 						</div>
 				</div>
 			);
@@ -50,43 +86,37 @@ class Check extends React.Component {
 	}
 
 	/**
-	 * Add runs
+	 * Show statistic of a certain run,
+	 *   triggered by pressing the button of a historical run.
 	 */
-	addRuns() {
-		var modal = document.getElementById('myModal');
-		var span = document.getElementsByClassName("close")[0];
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-		modal.style.display = "block";
+	showStatistics(r) {
+		this.setState({ statistics: r });
+
+		var data = null;
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				console.log(this.responseText);
+			}
+		});
+		xhr.open("GET", "http://localhost:8080/report/reportId/0");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.send(data);
 	}
 
 	/**
-	 * Compare two files, for test use only
+	 * Adjust the arrow,
+	 *   by appending white characters before the arrow.
 	 */
-	onCompareSubmit(e) {
-		/*
-		e.preventDefault();
-		var data = new FormData();
-		data.append('file1', document.getElementById('file1').files[0]);
-		data.append('file2', document.getElementById('file2').files[0]);
-		
-		var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;
-
-		xhr.addEventListener("readystatechange", function () {
-			if (this.readyState === 4) {
-				if(this.responseText == "TODO")
-					console.log("todo");
-				else
-					console.log("todo");
-				}
-		});
-			
-		xhr.open("POST", "TODO");
-		xhr.setRequestHeader("Cache-Control", "no-cache");
-		xhr.send(data);
-		*/
+	adjustArrow() {
+		var ADJUSTING = 75;
+		var hashTags = this.state.percentage * ADJUSTING;
+		var space = "";
+		for (var i = 0; i < hashTags; i++) {
+			space += "#";
+		}
+		return space;
 	}
 
 	/**
@@ -118,15 +148,30 @@ class Check extends React.Component {
 	}
 
 	/**
-	 * Render the main UI
+	 * Render the main UI.
 	 */
 	render() {
 		return(
 			<div className="container">
 				<div className="row">
 					<div className="col-1">{ this.showRuns() }</div>
-					<div className="col-5" id="statistics">
-					statistics of { this.state.statistics }
+					<div className="col-4" id="statistics">
+						<div className="container report">
+							<div className="row">
+								<div className="col">
+									<h3>Statistics of run {this.state.statistics}</h3><br/>
+								</div>
+								<div className="col meter"></div>
+								<div className="col meter2">
+									<div id="zero_tag">0%</div>
+									<div id="hundred_tag">100%</div>
+								</div>
+								<div className="col">
+								  <span id="nbsp">{ this.adjustArrow() }</span>
+									<span id="arrow">↑</span>
+							  </div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="myModal" className="modal">
@@ -137,9 +182,7 @@ class Check extends React.Component {
 								<div className="col-md-5">Run description</div>
 								<div className="col-md-5"><input type="text" id="run_description"/></div>
 							</div>
-
 							<div id="github_links"></div>
-
 							<div className="row">
 								<div className="col-md-5"><button id="run" onClick={ this.runCheck.bind(this) }>Run</button></div>
 								<div className="col-md-5"><button id="run" onClick={ this.addStudent.bind(this) }>Add Student</button></div>
