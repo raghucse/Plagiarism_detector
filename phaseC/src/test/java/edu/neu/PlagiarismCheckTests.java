@@ -25,6 +25,7 @@ import plagiarismdetection.PlagiarismChecker;
 public class PlagiarismCheckTests {
 	
 	private static final double ASSERT_EPSILON = 0.001;
+	private static final String MOCK_TEST_ID = "mockTestID"; 
 	
 	@Mock
 	private ReportService reportService;
@@ -42,7 +43,7 @@ public class PlagiarismCheckTests {
 	public void testNullAssignment() throws IOException {
 		Strategy comparisonStrategy = new AlwaysTrueComparisonStrategy();
 		PlagiarismRun plagiarismRun = null;
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
 		p_checker.check();
 		//assertEquals(Constants.P_CHECK_ERROR_STRING, p_checker.getReportResult());
 		assertEquals(0, p_checker.getNumComparisons());
@@ -62,7 +63,7 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub1);
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
 		p_checker.check();
 		//assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
 		assertEquals(1, p_checker.getNumComparisons());
@@ -87,7 +88,7 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		plagiarismRun.getStudentSubmissions().add(sub3);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
 		p_checker.check();
 		//assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
 		assertEquals(3, p_checker.getNumComparisons());
@@ -109,7 +110,7 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub1);
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
 		p_checker.check();
 		//assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
 		assertEquals(4, p_checker.getNumComparisons());
@@ -136,7 +137,7 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		plagiarismRun.getStudentSubmissions().add(sub3);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
 		p_checker.check();
 		//assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
 		assertEquals(12, p_checker.getNumComparisons());

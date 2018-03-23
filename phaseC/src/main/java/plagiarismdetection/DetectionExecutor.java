@@ -16,6 +16,7 @@ public class DetectionExecutor {
 	private ExecutorService executor;
 	private static final Logger log = Logger.getLogger(DetectionExecutor.class);
 	private static DetectionExecutor mInstance = null;
+	private long checkCount = 0;
 	
 	@Autowired
 	private ReportService reportService;
@@ -45,10 +46,14 @@ public class DetectionExecutor {
 	}
 	
 	public boolean runPlagiarismCheck(PlagiarismRun plagRun, Strategy comparisonStrategy) {
-		executor.submit(new PlagiarismChecker(plagRun, comparisonStrategy, reportService));
+		executor.submit(new PlagiarismChecker(plagRun, comparisonStrategy, reportService, getUniqueCheckID()));
 		log.info("Submitted to executor : "+plagRun);
 		return true;
 	}
 	
+	private synchronized String getUniqueCheckID() {
+		checkCount ++;
+		return checkCount+"";
+	}
 
 }

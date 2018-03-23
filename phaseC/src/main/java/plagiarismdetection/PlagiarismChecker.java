@@ -28,14 +28,17 @@ public class PlagiarismChecker implements Runnable{
 	private ReportContent reportContent;
 	private Strategy comparisonStrategy;
 	private boolean runStarted = false;
+	private boolean runCompleted = false;
+	private String checkID;
 	
 	private ReportService reportService;
 	
-	public PlagiarismChecker(PlagiarismRun plagiarismRun, Strategy comparisonStrategy, ReportService reportService) {
+	public PlagiarismChecker(PlagiarismRun plagiarismRun, Strategy comparisonStrategy, ReportService reportService, String checkID) {
 		this.plagiarismRun = plagiarismRun;
 		this.comparisonStrategy = comparisonStrategy;
 		this.reportContent = new ReportContent();
 		this.reportService = reportService;
+		this.checkID = checkID;
 	}
 	
 	@Override
@@ -45,22 +48,22 @@ public class PlagiarismChecker implements Runnable{
 	
 	
 	// returns the plagiarism check id assosciated with the run
-	public String check() {
-		String id = "someUniqueIDHereGeneratedBYSingleton";
+	public boolean check() {
 		if(this.plagiarismRun!=null) {
-			log.info("Initiating Plagiarism Check with id : "+id);
+			log.info("Initiating Plagiarism Check with id : "+checkID);
 			this.report = reportService.createNewEmptyReportWithNameAndOwner(plagiarismRun.getDescription(), plagiarismRun.getUserId());
 			runStarted = true;
 			this.compareAllSubmissions(this.plagiarismRun);
 			report.setReportFile(SerializationUtils.serialize(reportContent));
 			reportService.saveReport(report);
+			runCompleted = true;
 		}
 		else {
-			log.error(Constants.P_CHECK_ERROR_STRING + " for id : "+id);
+			log.error(Constants.P_CHECK_ERROR_STRING + " for id : "+checkID);
 			this.reportContent = new UnsuccessfulReportContent();
 		}
 		
-		return id;
+		return runCompleted;
 	}
 	
 	private void compareAllSubmissions(PlagiarismRun plagiarismRun) {
