@@ -4,10 +4,22 @@ import java.util.ArrayList;
 /**
  * Implementing another comparison strategy by using the Longest
  * Common Subsequence (LCS) technique.
+ * @author Ananta Rajesh Arora
+ * @version 1.0
+ * @since 2018-03-20
  */
 
 public class LCS {
 
+    /**
+     * This function implements the Longest Common Subsequence technique
+     * and returns a normalized score which determines whether or not the files are
+     * plagiarized
+     * @param tree1 is a list of strings equivalent of the AST generated for the first file
+     * @param tree2 is a list of strings equivalent of the AST generated for the second file
+     * @return returns a score for the given files which determines whether or not the
+     *         given files are plagiarized
+     */
     public static double calculateLCS(ArrayList<String>tree1, ArrayList<String> tree2){
 
         int tree1Size = tree1.size();

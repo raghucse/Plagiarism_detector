@@ -92,9 +92,7 @@
 			<version>42.2.1</version>
 		</dependency>
 
-
-
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
