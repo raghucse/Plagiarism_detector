@@ -136,9 +136,9 @@ class Check extends React.Component {
 			para.appendChild(node);
 			test.appendChild(para);
 
-		  // element.appendChild(test);
-			element.innerHTML = test.innerHTML;
+		  element.appendChild(test);
 		}
+
 	}
 
 	/**
@@ -216,6 +216,8 @@ class Check extends React.Component {
 										<tr>
 											<th>File 1</th><th>File 2</th><th>Similarity</th>
 										</tr>
+									</table>
+									<table>
 										<div id="tabledata"></div>
 									</table>
 								</div>
