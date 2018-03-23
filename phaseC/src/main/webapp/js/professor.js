@@ -9,20 +9,53 @@ class Check extends React.Component {
 	 *   stuNum: the number of students in the run, by default is 1 
 	*/
 	constructor() {
-		/**
-		 * TODO: get a run list object/json from the end point and initialize the following state
-		 */
 		super();
+
+		// Get all the report ID
 		var loadRuns = [0, 1, 2];
+		var data = null;
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				console.log(this.responseText);
+				loadRuns = [0, 1, 2];
+			}
+		});
+		xhr.open("GET", "http://localhost:8080/report/userId/{userId}");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);		
+		xhr.send(data);
+
+		// TODO: get the first report
+		// TODO: get the percentage value of the first
+		// TODO: get the git diff
+		var loadPercentage = 0.8;
+
 		this.state = {
 			runs: loadRuns,
-			statistics: 0,
-			stuNum: 1
+			statistics: loadRuns[0],
+			stuNum: 1,
+			percentage: loadPercentage,
+			userID: 0
 		}
 	}
 
 	/**
-	 * Show all runs
+	 * Start a new run by popping up a modal,
+	 *   which allows the user to add multiple solutions.
+	 */
+	addRuns() {
+		var modal = document.getElementById('myModal');
+		var span = document.getElementsByClassName("close")[0];
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+		modal.style.display = "block";
+	}
+
+	/**
+	 * Show all runs by going through the list of run ID.
 	 */
 	showRuns() {
 		const runElements = [];
@@ -31,7 +64,7 @@ class Check extends React.Component {
 				<div className="row">
 					<div className="col">
 						<button className={ this.state.statistics == r ? "currentRun" : "futureRun" }
-						  onClick={ () => this.setState({ statistics: r }) }>Run { r }</button>
+						  onClick={ () => this.showStatistics(r) }>Run { r }</button>
 						</div>
 				</div>
 			);
@@ -50,43 +83,46 @@ class Check extends React.Component {
 	}
 
 	/**
-	 * Add runs
+	 * Show statistic of a certain run,
+	 *   triggered by pressing the button of a historical run.
 	 */
-	addRuns() {
-		var modal = document.getElementById('myModal');
-		var span = document.getElementsByClassName("close")[0];
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-		modal.style.display = "block";
+	showStatistics(r) {
+		
+		// Set state for rendering UI
+		this.setState({ statistics: r });
+
+		// Generate an end point URL
+		var endPoint = "http://localhost:8080/report/reportId/";
+		endPoint = endPoint.concat(r.toString());
+
+		// Post data
+		var data = null;
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				// TODO: Analyze JSON object
+				console.log(this.responseText);
+			}
+		});
+		xhr.open("GET", endPoint);
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+		xhr.send(data);
 	}
 
 	/**
-	 * Compare two files, for test use only
+	 * Adjust the arrow,
+	 *   by appending white characters before the arrow.
 	 */
-	onCompareSubmit(e) {
-		/*
-		e.preventDefault();
-		var data = new FormData();
-		data.append('file1', document.getElementById('file1').files[0]);
-		data.append('file2', document.getElementById('file2').files[0]);
-		
-		var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;
-
-		xhr.addEventListener("readystatechange", function () {
-			if (this.readyState === 4) {
-				if(this.responseText == "TODO")
-					console.log("todo");
-				else
-					console.log("todo");
-				}
-		});
-			
-		xhr.open("POST", "TODO");
-		xhr.setRequestHeader("Cache-Control", "no-cache");
-		xhr.send(data);
-		*/
+	adjustArrow() {
+		var ADJUSTING = 75;
+		var hashTags = this.state.percentage * ADJUSTING;
+		var space = "";
+		for (var i = 0; i < hashTags; i++) {
+			space += "#";
+		}
+		return space;
 	}
 
 	/**
@@ -110,23 +146,68 @@ class Check extends React.Component {
 	 * Run the checks
 	 */
 	runCheck() {
+		// Push all git links to an array
 		var links = [];
 		for (var i = 1; i < this.state.stuNum; i++) {
 			links.push(document.getElementById(i.toString()).value);
 		}
-		console.log(links);
+
+		/**
+		 * Generate a form data
+		 *   runDescription: String
+		 *   gitHubLinks: String array
+		 *   sharedUsers: String array
+		 */
+		var data = new FormData();
+		data.append("runDescription", document.getElementById('run_description').value);
+		data.append("gitHubLinks", links);
+		data.append("sharedUsers", document.getElementById('shared_users').value.split(","));
+		
+		// Post to end point
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+
+				// Here the end point should return a report ID
+				console.log(this.responseText);
+				var tmp = this.state.runs;
+				tmp.push(9);
+				this.setState({ runs: tmp });
+			}
+		});
+
+		xhr.open("POST", "END POINT");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+		xhr.send(data);
 	}
 
 	/**
-	 * Render the main UI
+	 * Render the main UI.
 	 */
 	render() {
 		return(
 			<div className="container">
 				<div className="row">
 					<div className="col-1">{ this.showRuns() }</div>
-					<div className="col-5" id="statistics">
-					statistics of { this.state.statistics }
+					<div className="col-4" id="statistics">
+						<div className="container report">
+							<div className="row">
+								<div className="col">
+									<h3>Statistics of run {this.state.statistics}</h3><br/>
+								</div>
+								<div className="col meter"></div>
+								<div className="col meter2">
+									<div id="zero_tag">0%</div>
+									<div id="hundred_tag">100%</div>
+								</div>
+								<div className="col">
+								  <span id="nbsp">{ this.adjustArrow() }</span>
+									<span id="arrow">↑</span>
+							  </div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="myModal" className="modal">
@@ -137,9 +218,11 @@ class Check extends React.Component {
 								<div className="col-md-5">Run description</div>
 								<div className="col-md-5"><input type="text" id="run_description"/></div>
 							</div>
-
 							<div id="github_links"></div>
-
+							<div className="row">
+								<div className="col-md-5">Shared Users</div>
+								<div className="col-md-5"><input type="text" id="shared_users"/></div>
+							</div>
 							<div className="row">
 								<div className="col-md-5"><button id="run" onClick={ this.runCheck.bind(this) }>Run</button></div>
 								<div className="col-md-5"><button id="run" onClick={ this.addStudent.bind(this) }>Add Student</button></div>

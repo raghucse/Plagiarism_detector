@@ -46,7 +46,6 @@ h1 {
 #statistics {
 	margin-top: 1%;
 	background-color: white;
-	height: auto;
 }
 
 .addRun, #run {
@@ -57,16 +56,12 @@ h1 {
 	padding: 8px 30px;
 }
 
-#statistics {
-	margin-left: 14%;
-	margin-top: 1%;
-}
-
 #runsWrapper {
 	width: 19.5%;
 	float: left;
 	text-align: center;
 	margin-top: 1%;
+	height: 450px;
 }
 
 .modal {
@@ -88,10 +83,52 @@ h1 {
   margin: auto;
   padding: 2%;
   border: 1px solid #888;
-  width: 30%;
+  width: 45%;
 }
 
 .git {
 	background-color: white;
 	width: 100%;
+}
+
+.report {
+	background-color: white;
+}
+
+.meter {
+	width: 70%;
+	background: linear-gradient(to right, green, yellow, red);
+	height: 40px;
+}
+
+.meter2 {
+	width: 70%;
+	height: 40px;
+}
+
+#zero_tag {
+	float: left;
+	font-size: 120%;
+}
+
+#hundred_tag {
+	float: right;
+	font-size: 120%;
+}
+
+#nbsp {
+	color: white;
+}
+
+#arrow {
+	font-size: 250%;
+	font-weight: bold;
+}
+
+h3 {
+	text-align: center;
+}
+
+.test {
+	text-align: center;
 }
