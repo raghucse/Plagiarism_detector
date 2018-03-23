@@ -97,8 +97,6 @@ class Check extends React.Component {
 	 *   triggered by pressing the button of a historical run.
 	 */
 	showStatistics(r) {
-		
-		// Set state for rendering UI
 		this.setState({ statistics: r });
 
 		// Post data
@@ -115,30 +113,26 @@ class Check extends React.Component {
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
 		xhr.send(data);
+		document.getElementById("tabledata").innerHTML = null;
 
+		// Append new data
 		var element = document.getElementById("tabledata");
-
 		for (var i = 0; i < this.state.report.diffData.length; i++) {
-			var test = document.createElement("tr");
-			
+			var row = document.createElement("tr");
 			var para = document.createElement("td");
 			var node = document.createTextNode(this.state.report.diffData[i].file1);
 			para.appendChild(node);
-			test.appendChild(para);
-
+			row.appendChild(para);
 			para = document.createElement("td");
 			node = document.createTextNode(this.state.report.diffData[i].file2);
 			para.appendChild(node);
-			test.appendChild(para);
-
+			row.appendChild(para);
 			para = document.createElement("td");
 			node = document.createTextNode(this.state.report.diffData[i].percentage);
 			para.appendChild(node);
-			test.appendChild(para);
-
-		  element.appendChild(test);
+			row.appendChild(para);
+		  element.appendChild(row);
 		}
-
 	}
 
 	/**
@@ -177,7 +171,7 @@ class Check extends React.Component {
 		var data = new FormData();
 		data.append("runDescription", document.getElementById('run_description').value);
 		data.append("gitHubLinks", links);
-		data.append("sharedUsers", document.getElementById('shared_users').value.split(","));
+		data.append("sharedUsers", []);
 		
 		// Post to end point
 		var xhr = new XMLHttpRequest();
@@ -211,7 +205,7 @@ class Check extends React.Component {
 						<div className="container report">
 							<div className="row">
 								<div className="col"><h3>Statistics of run {this.state.statistics}</h3><br/></div>
-								<div className="col">{ this.state.report.reportID }
+								<div className="col">
 									<table>
 										<tr>
 											<th>File 1</th><th>File 2</th><th>Similarity</th>
