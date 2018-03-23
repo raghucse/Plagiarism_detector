@@ -1,16 +1,51 @@
 package edu.neu.comparison;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import edu.neu.Log;
+import edu.neu.astgeneration.ASTUtils;
 /**
  * Implementing another comparison strategy by using the Longest
  * Common Subsequence (LCS) technique.
- * @author Ananta Rajesh Arora
+ * @author Ananta Rajesh Arora, Bharat Vaidhyanathan
  * @version 1.0
  * @since 2018-03-20
  */
 
-public class LCS {
+public class LCS implements ASTBasedStrategy{
 
+	private ASTUtils astUtils;
+	
+	public LCS(ASTUtils astUtils) {
+		this.astUtils = astUtils;
+	}
+	
+	@Override
+	public STRATEGIES getName() {
+		return STRATEGIES.LCS;
+	}
+
+	@Override
+	public double compare(File f1, File f2) {
+		try {
+			return calculateLCS(
+					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f1)),
+					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f2))
+					);
+		} catch (IOException e) {
+			Log.info("ERROR while reading files for comparison "+e.getStackTrace());
+		}
+		return 0;
+				
+	}
+	
+	@Override
+	public ASTUtils getASTUtils() {
+		return astUtils;
+	}
+	
     /**
      * This function implements the Longest Common Subsequence technique
      * and returns a normalized score which determines whether or not the files are

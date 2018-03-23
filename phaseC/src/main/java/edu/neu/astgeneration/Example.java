@@ -33,22 +33,18 @@ public class Example {
      * comparison strategies on them
      * @throws IOException
      */
-    public void printAST() throws IOException {
-    		/*
-    		double EPSILON = 0.01;
-
-        File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
+    public void printAST() {
+    		File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
         
-        LVDistance lvDistance = new LVDistance(new ASTUtils());
+        LVDistance lvd = new LVDistance(new ASTUtils());
+        LCS lcs = new LCS(new ASTUtils());
         
-        double LVscore = lvDistance.compare(f1, f2);
-        System.out.println("Levenshtein Score: "+LVscore);
-
-        double LCSScore = LCS.calculateLCS(AST1String,AST2String);
-        System.out.println("LCS Score : "+LCSScore);
-		*/
-
+        double lvdScore = lvd.compare(f1, f2);
+        double lcsScore = lcs.compare(f1, f2);
+        
+        System.out.println("Levenshtein Score: "+lvdScore);
+        System.out.println("LCS Score : "+lcsScore);
     }
 
 }
