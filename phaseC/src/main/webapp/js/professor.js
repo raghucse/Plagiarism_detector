@@ -23,7 +23,8 @@ class Check extends React.Component {
 			}
 		});
 		xhr.open("GET", "END POINT");
-		xhr.setRequestHeader("Cache-Control", "no-cache");		
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);		
 		xhr.send(data);
 
 		// TODO: get the first report
@@ -105,6 +106,7 @@ class Check extends React.Component {
 		});
 		xhr.open("GET", endPoint);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
 		xhr.send(data);
 	}
 
@@ -176,6 +178,7 @@ class Check extends React.Component {
 
 		xhr.open("POST", "END POINT");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
 		xhr.send(data);
 	}
 
