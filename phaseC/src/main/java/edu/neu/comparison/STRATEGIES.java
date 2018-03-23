@@ -1,5 +1,5 @@
 package edu.neu.comparison;
 
 public enum STRATEGIES {
-	ALWAYS_TRUE
+	ALWAYS_TRUE, COSINE
 }

@@ -1,5 +1,6 @@
 package edu.neu.comparison;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -8,7 +9,19 @@ import java.util.*;
  * @author Junhao Qu
  * @see https://en.wikipedia.org/wiki/Cosine_similarity
  */
-public class CosineSimilarity {
+public class CosineSimilarity implements Strategy{
+	
+	@Override
+	public STRATEGIES getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double compare(File f1, File f2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
     public double cosSim(ArrayList<String> tree1, ArrayList<String> tree2) {
 
