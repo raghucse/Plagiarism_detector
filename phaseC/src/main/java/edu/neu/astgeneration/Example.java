@@ -17,8 +17,8 @@ public class Example {
 
     public void printAST() throws IOException {
 
-        ArrayList<String> AST1String = new ArrayList<String>();
-        ArrayList<String> AST2String = new ArrayList<String>();
+        ArrayList<String> AST1String = new ArrayList<>();
+        ArrayList<String> AST2String = new ArrayList<>();
         ParserFacade parserFacade = new ParserFacade();
         AstPrinter astPrinter = new AstPrinter();
         AST1String = astPrinter.getASTStringeEq(parserFacade.parse(new File(getClass().getClassLoader().getResource("simplecode2.py").getFile())));
