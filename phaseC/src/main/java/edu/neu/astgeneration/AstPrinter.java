@@ -1,44 +1,48 @@
 package edu.neu.astgeneration;
-import java.util.logging.Logger;
-
-
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.util.ArrayList;
 
 public class AstPrinter {
 
-    private static Logger lg = Logger.getLogger(AstPrinter.class.getName());
     private boolean ignoringWrappers = true;
 
     public void setIgnoringWrappers(boolean ignoringWrappers) {
         this.ignoringWrappers = ignoringWrappers;
     }
 
-    public void print(RuleContext ctx) {
-        explore(ctx, 0);
+    public ArrayList<String> getASTStringeEq(RuleContext ctx) {
+
+        ArrayList<String> ASTStringEquiv =  new ArrayList<String>();
+        ASTStringEquiv = explore(ctx,ASTStringEquiv);
+        return ASTStringEquiv;
     }
 
-    private void explore(RuleContext ctx, int indentation) {
-        boolean toBeIgnored = ignoringWrappers
-                && ctx.getChildCount() == 1
-                && ctx.getChild(0) instanceof ParserRuleContext;
-        if (!toBeIgnored) {
-            String ruleName = Python3Parser.ruleNames[ctx.getRuleIndex()];
 
-            for (int i = 0; i < indentation; i++) {
-                lg.info("  ");
-            }
-            lg.info(ruleName);
-        }
-        for (int i=0;i<ctx.getChildCount();i++) {
+    private ArrayList<String> explore(RuleContext ctx, ArrayList<String> ASTStringEquiv){
+
+        String ruleName = Python3Parser.ruleNames[ctx.getRuleIndex()];
+        boolean toBeIgnored = ignoringWrappers
+                && ctx.getChildCount()==1
+                && ctx.getChild(0) instanceof ParserRuleContext;
+
+        if(!toBeIgnored)
+            //System.out.println(ruleName);
+            ASTStringEquiv.add(ruleName);
+        for (int i=0; i<ctx.getChildCount();i++)
+        {
             ParseTree element = ctx.getChild(i);
-            if (element instanceof RuleContext) {
-                explore((RuleContext)element, indentation + (toBeIgnored ? 0 : 1));
+            if(element instanceof RuleContext)
+            {
+                explore((RuleContext)element, ASTStringEquiv);
             }
         }
+
+        return ASTStringEquiv;
+
     }
 
 }
