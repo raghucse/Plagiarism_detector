@@ -11,28 +11,25 @@ class Check extends React.Component {
 	constructor() {
 		super();
 
-		// Get the report by user ID
+		// Get all the report ID
+		var loadRuns = [0, 1, 2];
 		var data = null;
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
 				console.log(this.responseText);
+				loadRuns = [0, 1, 2];
 			}
 		});
-		xhr.open("GET", "http://localhost:8080/report/userId/0");
+		xhr.open("GET", "END POINT");
 		xhr.setRequestHeader("Cache-Control", "no-cache");		
 		xhr.send(data);
 
-		// TODO: get all run ID
-		var loadRuns = [0, 1, 2];
-
 		// TODO: get the first report
-
-		// TODO: get the percentage value of the first 
-		var loadPercentage = 0.8;
-
+		// TODO: get the percentage value of the first
 		// TODO: get the git diff
+		var loadPercentage = 0.8;
 
 		this.state = {
 			runs: loadRuns,
