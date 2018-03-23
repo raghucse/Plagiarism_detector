@@ -51,8 +51,10 @@ class Index extends React.Component {
                 password: this.state.password,
             })
         }).then(function (msg) {
-        	if(msg.ok)
-            	window.location.replace('http://localhost:8080/home.html');
+        	if(msg.ok) {
+				document.cookie = msg.headers.get('Authorization')
+                window.location.replace('http://localhost:8080/home.html');
+            }
         	else
                 setTimeout(function() {
                     document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
