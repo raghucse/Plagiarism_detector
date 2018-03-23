@@ -34,21 +34,20 @@ public class Example {
      * @throws IOException
      */
     public void printAST() throws IOException {
+    		/*
+    		double EPSILON = 0.01;
 
-        ArrayList<String> AST1String = new ArrayList<String>();
-        ArrayList<String> AST2String = new ArrayList<String>();
-        ParserFacade parserFacade = new ParserFacade();
-        AstPrinter astPrinter = new AstPrinter();
-        AST1String = astPrinter.getASTStringeEq(parserFacade.parse(new File(getClass().getClassLoader().getResource("simplecode2.py").getFile())));
-        AST2String = astPrinter.getASTStringeEq(parserFacade.parse(new File(getClass().getClassLoader().getResource("simplecode.py").getFile())));
-        int tree1Length = AST1String.size();
-        int tree2Length = AST2String.size();
-        double LVscore = LVDistance.calculateLD(AST1String,AST2String,tree1Length,tree2Length);
+        File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
+        
+        LVDistance lvDistance = new LVDistance(new ASTUtils());
+        
+        double LVscore = lvDistance.compare(f1, f2);
         System.out.println("Levenshtein Score: "+LVscore);
 
         double LCSScore = LCS.calculateLCS(AST1String,AST2String);
         System.out.println("LCS Score : "+LCSScore);
-
+		*/
 
     }
 
