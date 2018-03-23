@@ -11,7 +11,8 @@ public class Report {
     private int id;
     private String name;
     private int owner;
-
+    private double reportScore;
+    private byte[] reportFile;
 
     public int getId() {
         return id;
@@ -19,7 +20,6 @@ public class Report {
     public void setId(int id) {
         this.id = id;
     }
-    private byte[] reportFile;
 
     public int getOwner() {
         return owner;
@@ -35,6 +35,18 @@ public class Report {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public double getReportScore() {
+        return reportScore;
+    }
+
+    public void setReportScore(double reportScore) {
+        this.reportScore = reportScore;
+    }
+    
+    public void setReportFile(byte[] data) {
+	    	this.reportFile = data;
     }
 
     public byte[] getReportFile() {
