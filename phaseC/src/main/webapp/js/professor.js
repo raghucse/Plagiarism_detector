@@ -22,7 +22,7 @@ class Check extends React.Component {
 				loadRuns = [0, 1, 2];
 			}
 		});
-		xhr.open("GET", "END POINT");
+		xhr.open("GET", "http://localhost:8080/report/userId/{userId}");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);		
 		xhr.send(data);
