@@ -5,35 +5,46 @@ import java.io.IOException;
 import java.util.ArrayList;
 import edu.neu.comparison.LVDistance;
 import edu.neu.comparison.LCS;
+
+/**
+ * This class contains the main function which is used for generating
+ * ASTs for the given files and applies comparison strategy on them
+ * @author Ananta Rajesh Arora
+ * @version 1.0
+ * @since 2018-03-20
+ */
+
 public class Example {
 
-    //private static Logger lg = Logger.getLogger(AstPrinter.class.getName());
+    /**
+     * This function is used to call printAST() function that generates AST
+     * for the given files and applies the comparison strategy on them
+     * @param args are the command line arguments if any
+     * @throws IOException in case of a invalid input
+     */
 
     public static void main(String[] args) throws IOException {
         new Example().printAST();
     }
 
 
-
-    public void printAST() throws IOException {
-
-        ArrayList<String> AST1String = new ArrayList<String>();
-        ArrayList<String> AST2String = new ArrayList<String>();
-        ParserFacade parserFacade = new ParserFacade();
-        AstPrinter astPrinter = new AstPrinter();
-        AST1String = astPrinter.getASTStringeEq(parserFacade.parse(new File(getClass().getClassLoader().getResource("simplecode2.py").getFile())));
-        AST2String = astPrinter.getASTStringeEq(parserFacade.parse(new File(getClass().getClassLoader().getResource("simplecode.py").getFile())));
-        int tree1Length = AST1String.size();
-        int tree2Length = AST2String.size();
-        double LVscore = LVDistance.calculateLD(AST1String,AST2String,tree1Length,tree2Length);
-        System.out.println(LVscore);
-
-        double LCSScore = LCS.calculateLCS(AST1String,AST2String);
-        System.out.println("Tree 1 : "+AST1String);
-        System.out.println("Tree 2 : "+AST2String);
-        System.out.println("Score : "+LCSScore);
-
-
+    /**
+     * This function is used for generating the ASTs and applying
+     * comparison strategies on them
+     * @throws IOException
+     */
+    public void printAST() {
+    		File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
+        
+        LVDistance lvd = new LVDistance(new ASTUtils());
+        LCS lcs = new LCS(new ASTUtils());
+        
+        double lvdScore = lvd.compare(f1, f2);
+        double lcsScore = lcs.compare(f1, f2);
+        
+        System.out.println("Levenshtein Score: "+lvdScore);
+        System.out.println("LCS Score : "+lcsScore);
     }
 
 }

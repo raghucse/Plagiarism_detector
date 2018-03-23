@@ -1,11 +1,11 @@
 package edu.neu.models;
 
-public class ReportTuple {
+public class DiffTuple {
 
 	private String data;
 	private boolean match;
 	
-	public ReportTuple(String data, boolean match) {
+	public DiffTuple(String data, boolean match) {
 		this.data = data;
 		this.match = match;
 	}
