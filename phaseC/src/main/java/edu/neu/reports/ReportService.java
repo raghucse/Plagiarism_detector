@@ -39,6 +39,7 @@ public class ReportService {
     }
     
     public Report createNewEmptyReportWithNameAndOwner(String name, int ownerId) {
+    		System.out.println("THIS IS CALLED");
     		Report report = new Report();
     		report.setName(name);
     		report.setOwner(ownerId);

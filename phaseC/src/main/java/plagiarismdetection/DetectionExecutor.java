@@ -4,9 +4,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.neu.comparison.Strategy;
 import edu.neu.reports.PlagiarismRun;
+import edu.neu.reports.ReportService;
 
 public class DetectionExecutor {
 	
@@ -14,6 +16,9 @@ public class DetectionExecutor {
 	private ExecutorService executor;
 	private static final Logger log = Logger.getLogger(DetectionExecutor.class);
 	private static DetectionExecutor mInstance = null;
+	
+	@Autowired
+	private ReportService reportService;
 	
 	private DetectionExecutor(int threadPoolSize) {
 		THREAD_POOL_SIZE = threadPoolSize;
@@ -40,7 +45,7 @@ public class DetectionExecutor {
 	}
 	
 	public boolean runPlagiarismCheck(PlagiarismRun plagRun, Strategy comparisonStrategy) {
-		executor.submit(new PlagiarismChecker(plagRun, comparisonStrategy));
+		executor.submit(new PlagiarismChecker(plagRun, comparisonStrategy, reportService));
 		log.info("Submitted to executor : "+plagRun);
 		return true;
 	}

@@ -1,15 +1,24 @@
 package edu.neu;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import edu.neu.comparison.Strategy;
 import edu.neu.models.Submission;
 import edu.neu.reports.PlagiarismRun;
+import edu.neu.reports.Report;
+import edu.neu.reports.ReportService;
 import edu.neu.testResources.AlwaysTrueComparisonStrategy;
+import edu.neu.testResources.MockPlagiarismChecker;
 import edu.neu.testResources.MockPlagiarismRun;
 import edu.neu.testResources.MockSubmission;
 import edu.neu.utils.Constants;
@@ -17,17 +26,30 @@ import plagiarismdetection.PlagiarismChecker;
 
 public class PlagiarismCheckTests {
 	
+	private static final double ASSERT_EPSILON = 0.001;
+	
+	@Mock
+	private ReportService reportService;
+	
+	@Before
+	public void init(){
+		MockitoAnnotations.initMocks(this);
+		Report report = new Report();
+		report.setId(1);
+		when(reportService.createNewEmptyReportWithNameAndOwner("", 0)).thenReturn(report);
+	}
+	
 	@Test
-	public void testNullAssignment() {
+	public void testNullAssignment() throws IOException {
 		Strategy comparisonStrategy = new AlwaysTrueComparisonStrategy();
 		PlagiarismRun plagiarismRun = null;
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy);
+		PlagiarismChecker p_checker = new MockPlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
 		p_checker.check();
 		assertEquals(Constants.P_CHECK_ERROR_STRING, p_checker.getReportResult());
 	}
 	
 	@Test
-	public void testTwoSubmissionsAssignment() {
+	public void testTwoSubmissionsAssignment(){
 		Strategy comparisonStrategy = new AlwaysTrueComparisonStrategy();
 		PlagiarismRun plagiarismRun = new MockPlagiarismRun();
 		
@@ -40,9 +62,14 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub1);
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy);
-		p_checker.check();
-		assertEquals(1, matchCount(p_checker.getReportResult()));
+		PlagiarismChecker p_checker = new MockPlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		try {
+			p_checker.check();
+		} catch (IOException e) {
+			fail("Pchecker check returned exception : "+e.getStackTrace());
+		}
+		assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
+		assertEquals(1, matchCountPerFile(p_checker.getReportResult()));
 	}
 	
 	
@@ -64,9 +91,14 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		plagiarismRun.getStudentSubmissions().add(sub3);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy);
-		p_checker.check();
-		assertEquals(3, matchCount(p_checker.getReportResult()));
+		PlagiarismChecker p_checker = new MockPlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		try {
+			p_checker.check();
+		} catch (IOException e) {
+			fail("Pchecker check returned exception : "+e.getStackTrace());
+		}
+		assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
+		assertEquals(3, matchCountPerFile(p_checker.getReportResult()));
 	}
 	
 	@Test
@@ -85,9 +117,14 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub1);
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy);
-		p_checker.check();
-		assertEquals(4, matchCount(p_checker.getReportResult()));
+		PlagiarismChecker p_checker = new MockPlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		try {
+			p_checker.check();
+		} catch (IOException e) {
+			fail("Pchecker check returned exception : "+e.getStackTrace());
+		}
+		assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
+		assertEquals(4, matchCountPerFile(p_checker.getReportResult()));
 	}
 	
 	@Test
@@ -111,17 +148,27 @@ public class PlagiarismCheckTests {
 		plagiarismRun.getStudentSubmissions().add(sub2);
 		plagiarismRun.getStudentSubmissions().add(sub3);
 		
-		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy);
-		p_checker.check();
-		assertEquals(12, matchCount(p_checker.getReportResult()));
+		PlagiarismChecker p_checker = new MockPlagiarismChecker(plagiarismRun, comparisonStrategy, reportService);
+		try {
+			p_checker.check();
+		} catch (IOException e) {
+			fail("Pchecker check returned exception : "+e.getStackTrace());
+		}
+		assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
+		assertEquals(12, matchCountPerFile(p_checker.getReportResult()));
 	}
 	
-	private int matchCount(String result) {
+	/*private int matchCount(String result) {
 		int count = 0;
 		for(String s : result.split(",")) {
 			if(s.equals("Match"))
 				count++;
 		}
 		return count;
+	}*/
+	
+	public static int matchCountPerFile(String result){
+		String subStr = "Match";
+		return (result.length() - result.replace(subStr, "").length()) / (2 * subStr.length());
 	}
 }
