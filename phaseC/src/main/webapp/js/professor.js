@@ -11,36 +11,32 @@ class Check extends React.Component {
 	constructor() {
 		super();
 
-		// Get the report by user ID
+		// Get all the report ID
+		var loadRuns = [0, 1, 2];
 		var data = null;
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
 				console.log(this.responseText);
+				loadRuns = [0, 1, 2];
 			}
 		});
-		xhr.open("GET", "http://localhost:8080/report/userId/0");
+		xhr.open("GET", "END POINT");
 		xhr.setRequestHeader("Cache-Control", "no-cache");		
 		xhr.send(data);
 
-		// TODO: get all run ID
-		var loadRuns = [0, 1, 2];
-
 		// TODO: get the first report
-
-		// TODO: get the percentage value of the first 
-		var loadPercentage = 0.8;
-
+		// TODO: get the percentage value of the first
 		// TODO: get the git diff
+		var loadPercentage = 0.8;
 
 		this.state = {
 			runs: loadRuns,
 			statistics: loadRuns[0],
 			stuNum: 1,
 			percentage: loadPercentage,
-			userID: 0,
-			reports: []
+			userID: 0
 		}
 	}
 
@@ -90,17 +86,24 @@ class Check extends React.Component {
 	 *   triggered by pressing the button of a historical run.
 	 */
 	showStatistics(r) {
+		// Set state for rendering UI
 		this.setState({ statistics: r });
 
+		// Generate an end point URL
+		var endPoint = "http://localhost:8080/report/reportId/";
+		endPoint.concat(r.toString());
+
+		// Post data
 		var data = null;
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
+				// TODO: Analyze JSON object
 				console.log(this.responseText);
 			}
 		});
-		xhr.open("GET", "http://localhost:8080/report/reportId/0");
+		xhr.open("GET", endPoint);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.send(data);
 	}
@@ -140,11 +143,40 @@ class Check extends React.Component {
 	 * Run the checks
 	 */
 	runCheck() {
+		// Push all git links to an array
 		var links = [];
 		for (var i = 1; i < this.state.stuNum; i++) {
 			links.push(document.getElementById(i.toString()).value);
 		}
-		console.log(links);
+
+		/**
+		 * Generate a form data
+		 *   runDescription: String
+		 *   gitHubLinks: String array
+		 *   sharedUsers: String array
+		 */
+		var data = new FormData();
+		data.append("runDescription", document.getElementById('run_description').value);
+		data.append("gitHubLinks", links);
+		data.append("sharedUsers", document.getElementById('shared_users').value.split(","));
+		
+		// Post to end point
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+
+				// Here the end point should return a report ID
+				console.log(this.responseText);
+				var tmp = this.state.runs;
+				tmp.push(9);
+				this.setState({ runs: tmp });
+			}
+		});
+
+		xhr.open("POST", "END POINT");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.send(data);
 	}
 
 	/**
@@ -183,6 +215,10 @@ class Check extends React.Component {
 								<div className="col-md-5"><input type="text" id="run_description"/></div>
 							</div>
 							<div id="github_links"></div>
+							<div className="row">
+								<div className="col-md-5">Shared Users</div>
+								<div className="col-md-5"><input type="text" id="shared_users"/></div>
+							</div>
 							<div className="row">
 								<div className="col-md-5"><button id="run" onClick={ this.runCheck.bind(this) }>Run</button></div>
 								<div className="col-md-5"><button id="run" onClick={ this.addStudent.bind(this) }>Add Student</button></div>
