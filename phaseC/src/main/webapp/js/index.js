@@ -40,32 +40,29 @@ class Index extends React.Component {
 	// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
 	onLogInSubmit(e) {
 		e.preventDefault();
-      var data = new FormData();
-      data.append("username", this.state.email);
-      data.append("password", this.state.password);
-
-      var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
-
-      xhr.addEventListener("readystatechange", function () {
-				if (this.readyState === 4) {
-					if(this.responseText == "{\"msg\":\"login successful\"}")
-					  window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
-					else
-						setTimeout(function() {
-							document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
-							var toastTag = document.getElementsByClassName('toast-wrap')[0];
-							toastTag.className = toastTag.className.replace('toastAnimate', '');
-							setTimeout(function() {
-								toastTag.className = toastTag.className + ' toastAnimate';
-							}, 100);
-						}, 100);
-          }
-			});
-				
-      xhr.open("POST", "http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/login");
-      xhr.setRequestHeader("Cache-Control", "no-cache");
-      xhr.send(data);
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.email,
+                password: this.state.password,
+            })
+        }).then(function (msg) {
+        	if(msg.ok)
+            	window.location.replace('http://localhost:8080/home.html');
+        	else
+                setTimeout(function() {
+                    document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
+                    var toastTag = document.getElementsByClassName('toast-wrap')[0];
+                    toastTag.className = toastTag.className.replace('toastAnimate', '');
+                    setTimeout(function() {
+                        toastTag.className = toastTag.className + ' toastAnimate';
+                    }, 100);
+                }, 100);
+        })
 	}
 
 	// Submit the form to register
@@ -87,11 +84,11 @@ class Index extends React.Component {
 		data.append('password', this.state.password);
 		data.append('role', this.state.role);
 
-		fetch('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/registration', {
+		fetch('http://localhost:8080/registration', {
 			method: 'POST',
 			body: data
 		});
-		window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
+		window.location.replace('http://localhost:8080/index.html');
 	}
 	
 	// Rend	er the UI
