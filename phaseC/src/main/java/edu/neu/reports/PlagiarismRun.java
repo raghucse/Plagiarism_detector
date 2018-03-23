@@ -16,7 +16,7 @@ public class PlagiarismRun {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int runId;
     private int userId;
-    String gitUrls;
+    List<String> gitUrls;
     String description;
 
     public int getRunId() {
@@ -35,11 +35,11 @@ public class PlagiarismRun {
         this.userId = userId;
     }
 
-    public String getGitUrls() {
+    public List<String> getGitUrls() {
         return gitUrls;
     }
 
-    public void setGitUrls(String gitUrls) {
+    public void setGitUrls(List<String> gitUrls) {
         this.gitUrls = gitUrls;
     }
 
@@ -53,7 +53,7 @@ public class PlagiarismRun {
     
     public List<Submission> getStudentSubmissions() {
     		List<Submission> submissions = new ArrayList<>();
-    		for(String gitUrl : this.getGitUrls().split(",")) {
+    		for(String gitUrl : this.getGitUrls()) {
     			submissions.add(new GitSubmission(gitUrl));
     		}
     		return submissions;
