@@ -1,50 +1,52 @@
 package edu.neu.comparison;
 
-import edu.neu.models.ReportContent;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.EnumMap;
 
-public class ComparisonReport {
+public class ComparisonReport implements Serializable{
 
-	double runningScore;
-	int runningCount;
-	ReportContent reportContent;
+	String filename1;
+	String filename2;
+	EnumMap<STRATEGIES, Double> scores;
 	
 	public ComparisonReport() {
-		runningScore = 0.0;
-		runningCount = 0;
-		reportContent = new ReportContent();
+		scores = new EnumMap<>(STRATEGIES.class);
 	}
 	
-	public ComparisonReport(double score, int count, ReportContent reportContent) {
-		this.runningScore = score;
-		this.runningCount = count;
-		this.reportContent = reportContent;
+	public ComparisonReport(String filename1, String filename2) {
+		this.filename1 = filename1;
+		this.filename2 = filename2;
+		scores = new EnumMap<>(STRATEGIES.class);
 	}
 	
-	public double getAvgScore() {
-		return runningScore / runningCount;
+	public void setFileName1(String filename1) {
+		this.filename1 = filename1;
 	}
 	
-	public int getRunningCount() {
-		return runningCount;
+	public void setFileName2(String filename2) {
+		this.filename2 = filename2;
 	}
 	
-	public void setReportContent(ReportContent reportContent) {
-		this.reportContent = reportContent;
-	}
-	
-	public ReportContent getReportContent() {
-		return reportContent;
-	}
-	
-	public void addAnotherComparisonReport(ComparisonReport other) {
-		this.runningScore += other.runningScore;
-		this.runningCount += other.runningCount;
-		this.reportContent.addAll(other.reportContent);
+	public void putScore(STRATEGIES strategy, double score) {
+		scores.put(strategy, score);
 	}
 	
 	@Override
 	public String toString() {
-		return this.getAvgScore()+"|"+reportContent.getResult();
+		return this.filename1+":"+this.filename2+"|"+scores.toString();
+	}
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		out.writeUTF(filename1);
+		out.writeUTF(filename2);
+		out.writeObject(scores);
+	}
+	
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		filename1 = in.readUTF();
+		filename2 = in.readUTF();
+		scores = (EnumMap<STRATEGIES, Double>) in.readObject();
 	}
 	
 }
