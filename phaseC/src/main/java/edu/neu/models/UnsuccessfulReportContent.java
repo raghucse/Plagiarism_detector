@@ -6,10 +6,10 @@ import edu.neu.Log;
 import edu.neu.utils.Constants;
 
 public class UnsuccessfulReportContent extends ReportContent{
-	
-	@Override
-	public String getResult() {
-		return Constants.P_CHECK_ERROR_STRING;
+
+	public UnsuccessfulReportContent() {
+		super();
+		this.reportMessage = Constants.P_CHECK_ERROR_STRING;
 	}
 	
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
@@ -20,7 +20,9 @@ public class UnsuccessfulReportContent extends ReportContent{
 		if(in.readInt() != -404) {
 			Log.error("Error when deserializing an unsuccessful report");
 		}
+		else {
+			this.reportMessage = Constants.P_CHECK_ERROR_STRING;
+		}
 	}
 	
-
 }
