@@ -1,6 +1,8 @@
-package edu.neu;
+package edu.neu.plagiarismdetection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
@@ -143,8 +145,47 @@ public class PlagiarismCheckTests {
 		assertEquals(12, p_checker.getNumComparisons());
 	}
 	
-	public static int matchCountPerFile(String result){
-		String subStr = "Match";
-		return (result.length() - result.replace(subStr, "").length()) / (2 * subStr.length());
+	@Test
+	public void testTwoSubmissionsAssignmentWithRun(){
+		Strategy comparisonStrategy = new AlwaysTrueComparisonStrategy();
+		PlagiarismRun plagiarismRun = new MockPlagiarismRun();
+		
+		Submission sub1 = new MockSubmission();
+		sub1.getFiles().add(new File("temp1"));
+		
+		Submission sub2 = new MockSubmission();
+		sub2.getFiles().add(new File("temp2"));
+		
+		plagiarismRun.getStudentSubmissions().add(sub1);
+		plagiarismRun.getStudentSubmissions().add(sub2);
+		
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
+		p_checker.run();
+		//assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
+		assertEquals(1, p_checker.getNumComparisons());
 	}
+	
+	
+	@Test
+	public void testIfPlagiarismCheckerStarted(){
+		Strategy comparisonStrategy = new AlwaysTrueComparisonStrategy();
+		PlagiarismRun plagiarismRun = new MockPlagiarismRun();
+		
+		Submission sub1 = new MockSubmission();
+		sub1.getFiles().add(new File("temp1"));
+		
+		Submission sub2 = new MockSubmission();
+		sub2.getFiles().add(new File("temp2"));
+		
+		plagiarismRun.getStudentSubmissions().add(sub1);
+		plagiarismRun.getStudentSubmissions().add(sub2);
+		
+		PlagiarismChecker p_checker = new PlagiarismChecker(plagiarismRun, comparisonStrategy, reportService, MOCK_TEST_ID);
+		assertFalse(p_checker.didRunStart());
+		p_checker.run();
+		assertTrue(p_checker.didRunStart());
+		//assertEquals(1.0, p_checker.getReportScore(), ASSERT_EPSILON);
+		assertEquals(1, p_checker.getNumComparisons());
+	}
+	
 }

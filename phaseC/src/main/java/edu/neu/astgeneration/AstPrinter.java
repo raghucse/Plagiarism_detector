@@ -4,6 +4,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import edu.neu.Log;
+
 import java.util.ArrayList;
 
 public class AstPrinter {
@@ -15,14 +17,15 @@ public class AstPrinter {
     }
 
     public ArrayList<String> getASTStringeEq(RuleContext ctx) {
-
-        ArrayList<String> ASTStringEquiv =  new ArrayList<String>();
-        ASTStringEquiv = explore(ctx,ASTStringEquiv);
-        return ASTStringEquiv;
+    		Log.trace("Starting to build AST String List");
+        ArrayList<String> astStringEquiv =  new ArrayList<>();
+        explore(ctx,astStringEquiv);
+        Log.trace("Done building AST String List");
+        return astStringEquiv;
     }
 
 
-    private ArrayList<String> explore(RuleContext ctx, ArrayList<String> ASTStringEquiv){
+    private void explore(RuleContext ctx, ArrayList<String> astStringEquiv){
 
         String ruleName = Python3Parser.ruleNames[ctx.getRuleIndex()];
         boolean toBeIgnored = ignoringWrappers
@@ -30,18 +33,16 @@ public class AstPrinter {
                 && ctx.getChild(0) instanceof ParserRuleContext;
 
         if(!toBeIgnored)
-            //System.out.println(ruleName);
-            ASTStringEquiv.add(ruleName);
+        		astStringEquiv.add(ruleName);
         for (int i=0; i<ctx.getChildCount();i++)
         {
             ParseTree element = ctx.getChild(i);
             if(element instanceof RuleContext)
             {
-                explore((RuleContext)element, ASTStringEquiv);
+                explore((RuleContext)element, astStringEquiv);
             }
         }
-
-        return ASTStringEquiv;
+        
 
     }
 

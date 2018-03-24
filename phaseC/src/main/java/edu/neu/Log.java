@@ -13,4 +13,8 @@ public class Log {
     public  static void error(String message){
         logger.error(message);
     }
+
+    public static void trace(String message){
+        logger.trace(message);
+    }
 }

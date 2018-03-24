@@ -19,6 +19,7 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ResponseEntity<ServerResponse> registration(@ModelAttribute ApplicationUser userForm) {
         Log.info("Starting user registration");
+        Log.error("errooorrr");
         userForm.setUsername(userForm.getUsername());
         userForm.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
         userForm.setRole(userForm.getRole());

@@ -7,7 +7,7 @@ import org.mockito.Mock;
 
 import static org.junit.Assert.assertEquals;
 
-public class reportTest {
+public class ReportTest {
 
     @Mock
     private ReportService reportService;

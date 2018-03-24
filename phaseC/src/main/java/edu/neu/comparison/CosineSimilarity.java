@@ -75,17 +75,17 @@ public class CosineSimilarity implements ASTBasedStrategy{
             return actualScore;
     }
 
-    private int crossMul(int[] A, int[] B) {
+    private int crossMul(int[] arrayA, int[] arrayB) {
         int res = 0;
-        for (int i = 0; i < A.length; i++) {
-            res += A[i] * B[i];
+        for (int i = 0; i < arrayA.length; i++) {
+            res += arrayA[i] * arrayB[i];
         }
         return res;
     }
 
-    private double square(int[] A) {
+    private double square(int[] arrayA) {
         int res = 0;
-        for (int i : A) {
+        for (int i : arrayA) {
             res += i * i;
         }
         return Math.sqrt(res);
