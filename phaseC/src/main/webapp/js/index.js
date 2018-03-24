@@ -120,6 +120,7 @@ class Index extends React.Component {
 						<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
+					<br/><div>
 					<table>
 					<form onSubmit={ e => this.onLogInSubmit(e) }>
 						<tr>
@@ -131,14 +132,11 @@ class Index extends React.Component {
 							<td><input type="password" onChange={ ev => this.setState({ password: ev.target.value }) } /></td>
 						</tr>
 						<tr>
+						  <td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
 							<td><input className="button" type="submit" value="Submit"/></td>
 						</tr>
-						<tr>
-							<td><a href="#">Forget password?</a></td>
-							<td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
-          	</tr>
 					</form>
-					</table>
+					</table></div>
 					<div className="toast-wrap">
           	<span className="toast-msg"></span>
         	</div>
@@ -153,7 +151,8 @@ class Index extends React.Component {
 						<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
-					<table>
+					<br /><div>
+					<table id="temp">
 						<form onSubmit={ e => this.onRegisterSubmit(e) }>
 						<tr>
 							<td><span>Email</span></td>
@@ -181,7 +180,7 @@ class Index extends React.Component {
             	<td><input className="button" type="submit" value="Submit"/></td>
 						</tr>
 					</form>
-        	</table>
+        	</table></div>
 					<div className="toast-wrap">
           	<span className="toast-msg"></span>
         	</div>
