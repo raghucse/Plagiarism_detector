@@ -135,7 +135,6 @@ class Index extends React.Component {
 							<td><input className="button" type="submit" value="Submit"/></td>
 						</tr>
 						<tr>
-							<td><a href="#">Forget password?</a></td>
 							<td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
           	</tr>
 					</form>
@@ -154,7 +153,7 @@ class Index extends React.Component {
 						<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
-					
+					<br />
 					<table>
 						<form onSubmit={ e => this.onRegisterSubmit(e) }>
 						<tr>
