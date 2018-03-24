@@ -95,40 +95,14 @@ h1 {
 	background-color: white;
 }
 
-.meter {
-	width: 70%;
-	background: linear-gradient(to right, green, yellow, red);
-	height: 40px;
-}
-
-.meter2 {
-	width: 70%;
-	height: 40px;
-}
-
-#zero_tag {
-	float: left;
-	font-size: 120%;
-}
-
-#hundred_tag {
-	float: right;
-	font-size: 120%;
-}
-
-#nbsp {
-	color: white;
-}
-
-#arrow {
-	font-size: 250%;
-	font-weight: bold;
-}
-
 h3 {
 	text-align: center;
 }
 
-.test {
-	text-align: center;
+tr, th, td {
+	border: 1px solid black;
+}
+
+th, td {
+	width: 100px;
 }
