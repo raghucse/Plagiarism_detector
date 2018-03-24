@@ -29,7 +29,6 @@ public class ComplexStrategy1Test {
         double roundOff = 10000.0;
         double expectedValue = 1.0;
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
-        
         ComplexStrategy1 complex = new ComplexStrategy1(new ASTUtils());
         double score = complex.compare(f1, f1);
         assertEquals(expectedValue, (Math.round(score * roundOff) / roundOff), EPSILON);
