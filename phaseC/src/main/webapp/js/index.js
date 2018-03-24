@@ -60,7 +60,7 @@ class Index extends React.Component {
                     xhrn.addEventListener("readystatechange", function () {
                         if (this.readyState === 4) {
                             createCookie('uid',this.responseText);
-                            window.location.replace('http://localhost:8080/home.html');
+                            window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
                         }
                     });
 
@@ -68,7 +68,6 @@ class Index extends React.Component {
                     xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
                     xhrn.setRequestHeader("Cache-Control", "no-cache");
                     xhrn.send(datan);
-                    //window.location.replace('http://localhost:8080/home.html');
                 }
                 else
                     setTimeout(function() {
@@ -106,11 +105,11 @@ class Index extends React.Component {
 		data.append('password', this.state.password);
 		data.append('role', this.state.role);
 
-		fetch('http://localhost:8080/registration', {
+		fetch('/registration', {
 			method: 'POST',
 			body: data
 		});
-		window.location.replace('http://localhost:8080/index.html');
+		window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
 	}
 	
 	// Rend	er the UI
