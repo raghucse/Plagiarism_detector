@@ -1,12 +1,10 @@
 package edu.neu;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import edu.neu.user.ApplicationUser;
 import edu.neu.user.Role;
 import edu.neu.user.UserRequest;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class UserRequestTests {
 	
