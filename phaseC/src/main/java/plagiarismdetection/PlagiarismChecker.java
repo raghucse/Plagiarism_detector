@@ -7,7 +7,6 @@ import java.util.List;
 import edu.neu.Log;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.util.SerializationUtils;
 
 import edu.neu.comparison.ComparisonReport;
 import edu.neu.comparison.Strategy;
