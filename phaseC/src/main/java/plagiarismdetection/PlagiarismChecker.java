@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.neu.Log;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.util.SerializationUtils;
@@ -55,21 +56,28 @@ public class PlagiarismChecker implements Runnable{
 			runStarted = true;
 			this.compareAllSubmissions(this.plagiarismRun);
 			report.setReportFile(SerializationUtils.serialize(reportContent));
+			Log.info(reportContent.getComparisonList()+"");
+			Log.info(reportContent.getComparisonList().size()+"");
+			report.setReportScore(reportContent.getComparisonList().get(0).getScore());
+			Log.info("Saving the report");
 			reportService.saveReport(report);
+			Log.info("Done Saving the report");
 			runCompleted = true;
 		}
 		else {
 			log.error(Constants.P_CHECK_ERROR_STRING + " for id : "+checkID);
 			this.reportContent = new UnsuccessfulReportContent();
 		}
-		
+		Log.info("Done Completing plagiarism check run");
 		return runCompleted;
 	}
 	
 	private void compareAllSubmissions(PlagiarismRun plagiarismRun) {
+		Log.info("Start Comparing All Submissions pairs");
 		for(Submission[] submissionPair : getSubmissionPairs(plagiarismRun)) {
 			compareSubmissions(submissionPair[0], submissionPair[1]);
 		}
+		Log.info("Done Comparing All Submissions pairs");
 	}
 	
 	public List<Submission[]> getSubmissionPairs(PlagiarismRun plagiarismRun) {
@@ -86,11 +94,14 @@ public class PlagiarismChecker implements Runnable{
 	}
 	
 	public void compareSubmissions(Submission submission1, Submission submission2) {
+		Log.info("Getting submission Files and comparing them");
 		for(File f1 : submission1.getFiles()) {
 			for(File f2 : submission2.getFiles()) {
+				Log.info("Comparing files");
 				this.reportContent.addTOComparisonList(compareFiles(f1, f2));
 			}
 		}
+		Log.info("Done comparing getting submission Files and comparing them");
 	}
 	
 	public ComparisonReport compareFiles(File f1, File f2) {
