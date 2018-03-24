@@ -40,47 +40,51 @@ class Index extends React.Component {
 	// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
 	onLogInSubmit(e) {
 		e.preventDefault();
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: this.state.email,
-                password: this.state.password,
-            })
-        }).then(function (msg) {
-        	if(msg.ok) {
-				//document.cookie ="Authorization="+msg.headers.get('Authorization')
-                createCookie('UserName',msg.headers.get('User'));
-                createCookie('Authorization',msg.headers.get('Authorization'));
-                var data = null;
-                var xhr = new XMLHttpRequest();
-                xhr.withCredentials = true;
+        var data = JSON.stringify({
+            "username": this.state.email,
+            "password": this.state.password
+        });
 
-                xhr.addEventListener("readystatechange", function () {
-                    if (this.readyState === 4) {
-                        createCookie('UserId',this.responseText);
-                    }
-                });
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
 
-                xhr.open("GET", "/user?userName="+msg.headers.get('User'));
-                xhr.setRequestHeader("Authorization", "Bearer Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhQGEuY29tIiwiZXhwIjoxNTIyNjg1OTczfQ.K2m_K6kH7GYsRhLokzcvsAKiuwd2zSE8KYDFSucrAXPkOKmeAWlQEqxURXbUxurM6thN1EX6vSdYasY62XRS1Q");
-                xhr.setRequestHeader("Cache-Control", "no-cache");
-                xhr.send(data);
-                window.location.replace('http://localhost:8080/home.html');
-            }
-        	else
-                setTimeout(function() {
-                    document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
-                    var toastTag = document.getElementsByClassName('toast-wrap')[0];
-                    toastTag.className = toastTag.className.replace('toastAnimate', '');
+        xhr.addEventListener("readystatechange", function () {
+        	console.log(this)
+            if (this.readyState === 4) {
+                if(this.status == 200){
+                    createCookie('UserName',this.getResponseHeader('User'));
+                    createCookie('Authorization',this.getResponseHeader('Authorization'));
+                    var datan = null;
+                    var xhrn = new XMLHttpRequest();
+                    xhrn.withCredentials = true;
+                    xhrn.addEventListener("readystatechange", function () {
+                        if (this.readyState === 4) {
+                            createCookie('uid',this.responseText);
+                            window.location.replace('http://localhost:8080/home.html');
+                        }
+                    });
+
+                    xhrn.open("GET", "/user?userName="+readCookie('UserName'));
+                    xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
+                    xhrn.setRequestHeader("Cache-Control", "no-cache");
+                    xhrn.send(datan);
+                    //window.location.replace('http://localhost:8080/home.html');
+                }
+                else
                     setTimeout(function() {
-                        toastTag.className = toastTag.className + ' toastAnimate';
+                        document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
+                        var toastTag = document.getElementsByClassName('toast-wrap')[0];
+                        toastTag.className = toastTag.className.replace('toastAnimate', '');
+                        setTimeout(function() {
+                            toastTag.className = toastTag.className + ' toastAnimate';
+                        }, 100);
                     }, 100);
-                }, 100);
-        })
+            }
+        });
+
+        xhr.open("POST", "/login");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.send(data);
 	}
 
 	// Submit the form to register
