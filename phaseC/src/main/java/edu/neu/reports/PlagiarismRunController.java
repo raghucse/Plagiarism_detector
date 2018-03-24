@@ -25,9 +25,10 @@ public class PlagiarismRunController {
     @Autowired
     private PlagiarismRunService plagiarismRunService;
 
-    @RequestMapping(value = "/plagiarism/run", method = RequestMethod.GET)
+    @RequestMapping(value = "/plagiarism/run", method = RequestMethod.POST)
     public ResponseEntity<String> runPlagarism(@ModelAttribute PlagiarismRunRequest runReq) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
         runReq.setUserId(userService.findByUsername(userName).getId());
         
         PlagiarismRun plagiarismRun = mapRequestToBean(runReq);
@@ -40,7 +41,7 @@ public class PlagiarismRunController {
         if(!executionSubmitted) {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        
+
         return ResponseEntity.ok("Plagiarism run started");
     }
     
