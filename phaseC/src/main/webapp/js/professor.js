@@ -9,14 +9,13 @@ class Check extends React.Component {
 		// Get all the report ID
 		// REAL: var url = "/report/userId/"+readCookie('User');
 		var data = null;
-		var loadRuns = [0, 1, 2];
-		var url = "/report/userId/0"
+		var loadRuns = [-1];
+		var url = "report/user/reportIds/0"
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-				console.log(this.responseText);
-				loadRuns = [0, 1, 2];
+				loadRuns = this.responseText;
 			}
 		});		
 		xhr.open("GET", url);
@@ -74,7 +73,7 @@ class Check extends React.Component {
 				<div className="row">
 					<div className="col">
 						<button className={ this.state.statistics == r ? "currentRun" : "futureRun" }
-						  onClick={ () => this.showStatistics(r) }>Run { r }</button>
+						  onClick={ () => this.showStatistics(r) } disabled={r == -1}>Run { r == -1 ? "" : r }</button>
 						</div>
 				</div>
 			);
