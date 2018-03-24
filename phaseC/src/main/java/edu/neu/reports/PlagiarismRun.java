@@ -16,6 +16,7 @@ public class PlagiarismRun {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int runId;
     private int userId;
+    @ElementCollection
     List<String> gitUrls;
     String description;
 
@@ -50,7 +51,7 @@ public class PlagiarismRun {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public List<Submission> getStudentSubmissions() {
     		List<Submission> submissions = new ArrayList<>();
     		for(String gitUrl : this.getGitUrls()) {
