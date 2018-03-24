@@ -3,6 +3,8 @@ package edu.neu;
 import edu.neu.models.DiffContent;
 import edu.neu.models.DiffTuple;
 import org.junit.Test;
+import org.springframework.util.SerializationUtils;
+
 import static org.junit.Assert.*;
 public class DiffContentTests {
 
@@ -39,6 +41,14 @@ public class DiffContentTests {
         String text2 = dfc2.getResult();
         assertEquals(text1,dfc1.getResult());
         assertEquals(text2,dfc2.getResult());
+    }
+    
+    
+    @Test
+    public void testSerializeDeserialize() {
+        DiffContent dfc1 = new DiffContent("abc", true, true);
+        DiffContent dfc2 = (DiffContent) SerializationUtils.deserialize(SerializationUtils.serialize(dfc1));
+        assertEquals(dfc1.getResult(),dfc2.getResult());
     }
 
 }
