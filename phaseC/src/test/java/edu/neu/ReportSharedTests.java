@@ -24,4 +24,14 @@ public class ReportSharedTests {
         int val = rs.getUserId();
         assertEquals(id,val);
     }
+
+    @Test
+    public void test03(){
+        ReportShared rs = new ReportShared();
+        int id = 10;
+        rs.setReportId(id);
+        int val = rs.getReportId();
+        assertEquals(id,val);
+    }
+
 }
