@@ -28,17 +28,8 @@ public class PlagiarismRunRequest {
         this.sharedUsers = sharedUsers;
     }
 
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     private String description;
     private List<String> gitUrls = new ArrayList<>();
     private List<String> sharedUsers = new ArrayList<>();
-    private int userId;
+
 }

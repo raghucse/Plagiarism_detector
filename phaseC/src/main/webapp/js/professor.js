@@ -186,7 +186,7 @@ class Check extends React.Component {
 			}
 		});
 
-		xhr.open("POST", "END POINT");
+		xhr.open("POST", "http://localhost:8080/plagiarism/run");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
 		xhr.send(data);
