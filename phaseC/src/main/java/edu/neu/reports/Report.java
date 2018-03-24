@@ -14,7 +14,7 @@ public class Report {
     private String name;
     private int owner;
     private double reportScore;
-    private ReportContent reportContent;
+    private ReportContent reportFile;
 
     public int getId() {
         return id;
@@ -47,12 +47,12 @@ public class Report {
         this.reportScore = reportScore;
     }
     
-    public void setReportFile(ReportContent reportContent) {
-	    	this.reportContent = reportContent;
+    public void setReportFile(ReportContent reportFile) {
+	    	this.reportFile = reportFile;
     }
 
     public ReportContent getReportFile() {
-        return reportContent;
+        return reportFile;
     }
 
 }

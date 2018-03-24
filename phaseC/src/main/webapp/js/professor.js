@@ -16,7 +16,7 @@ class Check extends React.Component {
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-				loadRuns = this.responseText;
+				loadRuns = JSON.parse(this.responseText);
 				console.log(this.responseText);
 				that.setState({ runs: loadRuns });
 			}
@@ -103,12 +103,34 @@ class Check extends React.Component {
 
 		// Post data
 		var data = null;
-		var endPoint = "http://localhost:8080/report/reportId/" + r.toString();
+        var that = this;
+		var endPoint = "report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-				// this.setState({report: this.responseText});
+				console.log(this.responseText);
+				var result = JSON.parse(this.responseText)
+				 that.setState({report: result.reportFile});
+
+                // Append new data
+                var element = document.getElementById("tabledata");
+                for (var i = 0; i < that.state.report.comparisonList.length; i++) {
+                    var row = document.createElement("tr");
+                    var para = document.createElement("td");
+                    var node = document.createTextNode(that.state.report.comparisonList[i].filename1);
+                    para.appendChild(node);
+                    row.appendChild(para);
+                    para = document.createElement("td");
+                    node = document.createTextNode(that.state.report.comparisonList[i].filename2);
+                    para.appendChild(node);
+                    row.appendChild(para);
+                    para = document.createElement("td");
+                    node = document.createTextNode(that.state.report.comparisonList[i].score);
+                    para.appendChild(node);
+                    row.appendChild(para);
+                    element.appendChild(row);
+                }
 			}
 		});
 		xhr.open("GET", endPoint);
@@ -117,24 +139,7 @@ class Check extends React.Component {
 		xhr.send(data);
 		document.getElementById("tabledata").innerHTML = null;
 
-		// Append new data
-		var element = document.getElementById("tabledata");
-		for (var i = 0; i < this.state.report.diffData.length; i++) {
-			var row = document.createElement("tr");
-			var para = document.createElement("td");
-			var node = document.createTextNode(this.state.report.diffData[i].file1);
-			para.appendChild(node);
-			row.appendChild(para);
-			para = document.createElement("td");
-			node = document.createTextNode(this.state.report.diffData[i].file2);
-			para.appendChild(node);
-			row.appendChild(para);
-			para = document.createElement("td");
-			node = document.createTextNode(this.state.report.diffData[i].percentage);
-			para.appendChild(node);
-			row.appendChild(para);
-		  element.appendChild(row);
-		}
+
 	}
 
 	/**
