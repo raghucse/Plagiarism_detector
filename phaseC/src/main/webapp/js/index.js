@@ -57,10 +57,8 @@ class Index extends React.Component {
                     var datan = null;
                     var xhrn = new XMLHttpRequest();
                     xhrn.withCredentials = true;
-                    var uid;
                     xhrn.addEventListener("readystatechange", function () {
                         if (this.readyState === 4) {
-                            uid = this.responseText
                             createCookie('uid',this.responseText);
                             window.location.replace('http://localhost:8080/home.html');
                         }
