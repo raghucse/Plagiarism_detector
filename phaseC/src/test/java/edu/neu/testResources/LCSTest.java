@@ -3,6 +3,7 @@ package edu.neu.testResources;
 import edu.neu.astgeneration.ASTUtils;
 import edu.neu.comparison.LCS;
 
+
 import org.junit.Test;
 
 import java.io.File;
@@ -43,6 +44,18 @@ public class LCSTest {
         LCS lcs = new LCS(new ASTUtils());
         double score = lcs.compare(f1, f1);
         assertEquals((Math.round(score*roundOff)/roundOff),actualValue,EPSILON);
+    }
+
+    @Test
+    public void testVeryDifferent() {
+        double EPSILON = 0.01;
+        double expectedScore = 0.197;
+        double roundOff = 10000.0;
+        File f1 = new File(getClass().getClassLoader().getResource("samplefile1.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("samplefile2.py").getFile());
+        LCS lcs = new LCS(new ASTUtils());
+        double score = lcs.compare(f1, f2);
+        assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
 
 

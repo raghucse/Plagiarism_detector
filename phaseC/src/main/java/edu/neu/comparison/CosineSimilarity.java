@@ -65,7 +65,14 @@ public class CosineSimilarity implements ASTBasedStrategy{
         // Calculate result
         int up = crossMul(vec1, vec2);
         double down = square(vec1) * square(vec2);
-        return up / down;
+        double score =  up / down;
+        double actualScore;
+        actualScore = (score-0.51)/0.86;
+
+        if(score == 1)
+            return score;
+        else
+            return actualScore;
     }
 
     private int crossMul(int[] A, int[] B) {
