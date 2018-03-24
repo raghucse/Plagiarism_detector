@@ -106,7 +106,7 @@ class Index extends React.Component {
 		data.append('password', this.state.password);
 		data.append('role', this.state.role);
 
-		fetch('http://localhost:8080/registration', {
+		fetch('/registration', {
 			method: 'POST',
 			body: data
 		});
