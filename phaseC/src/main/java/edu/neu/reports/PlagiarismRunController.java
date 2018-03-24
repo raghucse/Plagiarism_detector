@@ -28,13 +28,13 @@ public class PlagiarismRunController {
     @RequestMapping(value = "/plagiarism/run", method = RequestMethod.POST)
     public ResponseEntity<String> runPlagarism(@ModelAttribute PlagiarismRunRequest runReq) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        runReq.setUserId(userService.findByUsername(userName).getId());
         
         PlagiarismRun plagiarismRun = mapRequestToBean(runReq);
         Strategy comparisonStrategy = ComparisonStrategyFactory.getComparisonStrategy(Constants.DEFAULT_PLAGIARISM_STRATEGY, new ASTUtils());
         
         savePlagiarismRunToTable(plagiarismRun);
+        
+        plagiarismRun.setUserId(userService.findByUsername(userName).getId());
         
         boolean executionSubmitted = DetectionExecutor.getInstance().runPlagiarismCheck(plagiarismRun, comparisonStrategy);
         
@@ -47,7 +47,6 @@ public class PlagiarismRunController {
     
     private PlagiarismRun mapRequestToBean(PlagiarismRunRequest runReq) {
     		PlagiarismRun plagiarismRun = new PlagiarismRun();
-    		plagiarismRun.setUserId(runReq.getUserId());
     		plagiarismRun.setDescription(runReq.getDescription());
     		plagiarismRun.setGitUrls(runReq.getGitUrls());
     		return plagiarismRun;

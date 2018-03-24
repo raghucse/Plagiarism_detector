@@ -7,7 +7,6 @@ import edu.neu.comparison.LCS;
 import edu.neu.comparison.LVDistance;
 import edu.neu.comparison.STRATEGIES;
 import edu.neu.comparison.Strategy;
-import edu.neu.testResources.AlwaysTrueComparisonStrategy;
 
 public class ComparisonStrategyFactory {
 	
@@ -19,11 +18,10 @@ public class ComparisonStrategyFactory {
 		switch(strategy)
 		{
 			case COMPLEX1: return new ComplexStrategy1(astUtils);
-			case ALWAYS_TRUE: return new AlwaysTrueComparisonStrategy();
 			case COSINE: return new CosineSimilarity(astUtils);
 			case LEVENSHTEIN: return new LVDistance(astUtils);
 			case LCS: return new LCS(astUtils);
-			default: return new AlwaysTrueComparisonStrategy();
+			default: return new LCS(astUtils);
 		}
 	}
 }
