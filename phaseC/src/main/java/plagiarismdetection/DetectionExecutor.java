@@ -18,29 +18,30 @@ public class DetectionExecutor {
 	private static DetectionExecutor mInstance = null;
 	private long checkCount = 0;
 	
-	@Autowired
+
 	private ReportService reportService;
 	
-	private DetectionExecutor(int threadPoolSize) {
+	private DetectionExecutor(ReportService reportService, int threadPoolSize) {
+		this.reportService = reportService;
 		THREAD_POOL_SIZE = threadPoolSize;
 		log.info("Starting executor with "+THREAD_POOL_SIZE+ " threads");
 		this.executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 	}
 	
-	private DetectionExecutor() {
-		this(2);
+	private DetectionExecutor(ReportService reportService) {
+		this(reportService, 2);
 	}
 	
-	public static DetectionExecutor getInstance() {
+	public static DetectionExecutor getInstance(ReportService reportService) {
 		if(mInstance == null) {
-			mInstance = new DetectionExecutor();
+			mInstance = new DetectionExecutor(reportService);
 		}
 		return mInstance;
 	}
 	
-	public static DetectionExecutor getInstance(int n) {
+	public static DetectionExecutor getInstance(ReportService reportService, int n) {
 		if(mInstance == null) {
-			mInstance = new DetectionExecutor(n);
+			mInstance = new DetectionExecutor(reportService, n);
 		}
 		return mInstance;
 	}

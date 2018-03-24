@@ -21,6 +21,9 @@ public class PlagiarismRunController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReportService reportService;
     
     @Autowired
     private PlagiarismRunService plagiarismRunService;
@@ -36,7 +39,7 @@ public class PlagiarismRunController {
         
         plagiarismRun.setUserId(userService.findByUsername(userName).getId());
         
-        boolean executionSubmitted = DetectionExecutor.getInstance().runPlagiarismCheck(plagiarismRun, comparisonStrategy);
+        boolean executionSubmitted = DetectionExecutor.getInstance(reportService).runPlagiarismCheck(plagiarismRun, comparisonStrategy);
         
         if(!executionSubmitted) {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
