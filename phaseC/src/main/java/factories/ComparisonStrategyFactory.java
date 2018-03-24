@@ -10,9 +10,7 @@ import edu.neu.comparison.Strategy;
 
 public class ComparisonStrategyFactory {
 	
-	private ComparisonStrategyFactory() {
-		// hiding the implicit constructor
-	}
+	private ComparisonStrategyFactory() {}
 	
 	public static Strategy getComparisonStrategy(STRATEGIES strategy, ASTUtils astUtils) {
 		switch(strategy)

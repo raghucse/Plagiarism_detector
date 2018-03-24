@@ -10,7 +10,7 @@ import edu.neu.reports.ReportService;
 
 public class DetectionExecutor {
 	
-	private final int THREAD_POOL_SIZE; // defaults to 2
+	private final int threadPoolSize; // defaults to 2
 	private ExecutorService executor;
 	private static DetectionExecutor mInstance = null;
 	private long checkCount = 0;
@@ -20,20 +20,13 @@ public class DetectionExecutor {
 	
 	private DetectionExecutor(ReportService reportService, int threadPoolSize) {
 		this.reportService = reportService;
-		THREAD_POOL_SIZE = threadPoolSize;
-		Log.info("Starting executor with "+THREAD_POOL_SIZE+ " threads");
-		this.executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-	}
-	
-	private DetectionExecutor(ReportService reportService) {
-		this(reportService, 2);
+		this.threadPoolSize = threadPoolSize;
+		Log.info("Starting executor with "+threadPoolSize+ " threads");
+		this.executor = Executors.newFixedThreadPool(threadPoolSize);
 	}
 	
 	public static DetectionExecutor getInstance(ReportService reportService) {
-		if(mInstance == null) {
-			mInstance = new DetectionExecutor(reportService);
-		}
-		return mInstance;
+		return getInstance(reportService, 2);
 	}
 	
 	public static DetectionExecutor getInstance(ReportService reportService, int n) {
@@ -53,6 +46,11 @@ public class DetectionExecutor {
 	private synchronized String getUniqueCheckID() {
 		checkCount ++;
 		return checkCount+"";
+	}
+	
+	public void shutDown() {
+		Log.info("Stopping executor");
+		this.executor.shutdown();
 	}
 
 }
