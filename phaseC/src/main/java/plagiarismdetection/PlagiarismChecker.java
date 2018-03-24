@@ -56,8 +56,7 @@ public class PlagiarismChecker implements Runnable{
 			runStarted = true;
 			this.compareAllSubmissions(this.plagiarismRun);
 			report.setReportFile(SerializationUtils.serialize(reportContent));
-			Log.info(reportContent.getComparisonList()+"");
-			Log.info(reportContent.getComparisonList().size()+"");
+			Log.info("Report generated with "+reportContent.getComparisonList().size()+" comparisons");
 			report.setReportScore(reportContent.getComparisonList().get(0).getScore());
 			Log.info("Saving the report");
 			reportService.saveReport(report);
