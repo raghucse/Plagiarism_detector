@@ -14,6 +14,8 @@ public class PlagarismDetectorApplication {
 	}
 
 	public static void main(String[] args) {
+		Log.info("Starting the plagiarism detection application");
 		SpringApplication.run(PlagarismDetectorApplication.class, args);
+		Log.info("Done starting the plagiarism detection application");
 	}
 }

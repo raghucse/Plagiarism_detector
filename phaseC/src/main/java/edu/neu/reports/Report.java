@@ -2,6 +2,8 @@ package edu.neu.reports;
 
 import javax.persistence.*;
 
+import edu.neu.models.ReportContent;
+
 @Entity
 @Table(name="report")
 public class Report {
@@ -12,7 +14,7 @@ public class Report {
     private String name;
     private int owner;
     private double reportScore;
-    private byte[] reportFile;
+    private ReportContent reportFile;
 
     public int getId() {
         return id;
@@ -45,11 +47,11 @@ public class Report {
         this.reportScore = reportScore;
     }
     
-    public void setReportFile(byte[] data) {
-	    	this.reportFile = data;
+    public void setReportFile(ReportContent reportFile) {
+	    	this.reportFile = reportFile;
     }
 
-    public byte[] getReportFile() {
+    public ReportContent getReportFile() {
         return reportFile;
     }
 

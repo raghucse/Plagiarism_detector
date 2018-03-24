@@ -7,7 +7,6 @@ import java.util.List;
 import edu.neu.Log;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.util.SerializationUtils;
 
 import edu.neu.comparison.ComparisonReport;
 import edu.neu.comparison.Strategy;
@@ -55,9 +54,8 @@ public class PlagiarismChecker implements Runnable{
 			this.report = reportService.createNewEmptyReportWithNameAndOwner(plagiarismRun.getDescription(), plagiarismRun.getUserId());
 			runStarted = true;
 			this.compareAllSubmissions(this.plagiarismRun);
-			report.setReportFile(SerializationUtils.serialize(reportContent));
-			Log.info(reportContent.getComparisonList()+"");
-			Log.info(reportContent.getComparisonList().size()+"");
+			report.setReportFile(reportContent);
+			Log.info("Report generated with "+reportContent.getComparisonList().size()+" comparisons");
 			report.setReportScore(reportContent.getComparisonList().get(0).getScore());
 			Log.info("Saving the report");
 			reportService.saveReport(report);
@@ -67,6 +65,7 @@ public class PlagiarismChecker implements Runnable{
 		else {
 			log.error(Constants.P_CHECK_ERROR_STRING + " for id : "+checkID);
 			this.reportContent = new UnsuccessfulReportContent();
+			Log.info("Generated an unsuccessful report content");
 		}
 		Log.info("Done Completing plagiarism check run");
 		return runCompleted;
@@ -105,9 +104,6 @@ public class PlagiarismChecker implements Runnable{
 	}
 	
 	public ComparisonReport compareFiles(File f1, File f2) {
-		/*ComparisonReport cr = new ComparisonReport(f1.getName(), f2.getName());
-		cr.putScore(comparisonStrategy.getName(), comparisonStrategy.compare(f1, f2));
-		return cr;*/
 		return new ComparisonReport(f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2));
 	}
 	
