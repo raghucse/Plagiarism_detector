@@ -9,8 +9,8 @@ public class PlagiarismRunService {
     @Autowired
     private PlagiarismRunRepository plagiarismRunRepository;
 
-    public PlagiarismRun getPlagiarismRunByReportId(int plagiarismRunId){
-        return plagiarismRunRepository.findById(plagiarismRunId);
+    public PlagiarismRun getPlagiarismRunByReportId(int runId){
+        return plagiarismRunRepository.findByRunId(runId);
     }
     
     public PlagiarismRun savePlagiarismRun(PlagiarismRun plagiarismRun){
