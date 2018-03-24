@@ -132,11 +132,9 @@ class Index extends React.Component {
 							<td><input type="password" onChange={ ev => this.setState({ password: ev.target.value }) } /></td>
 						</tr>
 						<tr>
+						  <td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
 							<td><input className="button" type="submit" value="Submit"/></td>
 						</tr>
-						<tr>
-							<td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
-          	</tr>
 					</form>
 					</table>
 					<div className="toast-wrap">

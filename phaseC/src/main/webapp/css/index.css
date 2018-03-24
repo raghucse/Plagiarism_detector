@@ -44,7 +44,7 @@ table {
 	width: 350px;
 	height: 200px;
 	background-color: #e7e7e7;
-	margin-right: 10%;
+	margin-right: 15%;
 	text-align: right;
 }
 
@@ -112,4 +112,8 @@ span {
   50% { opacity: 1; z-index: 9999 }
   75% { opacity: 1; z-index: 9999 }
   100% { opacity: 0; z-index: 0 }
+}
+
+td {
+	text-align: center;
 }
