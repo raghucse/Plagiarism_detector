@@ -8,6 +8,11 @@ public class ComparisonReport implements Serializable{
 
 	String filename1;
 	String filename2;
+
+	public double getScore() {
+		return score;
+	}
+
 	double score;
 	//EnumMap<STRATEGIES, Double> scores;
 	
