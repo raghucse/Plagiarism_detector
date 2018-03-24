@@ -4,6 +4,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import edu.neu.Log;
+
 import java.util.ArrayList;
 
 public class AstPrinter {
@@ -15,9 +17,10 @@ public class AstPrinter {
     }
 
     public ArrayList<String> getASTStringeEq(RuleContext ctx) {
-
+    		Log.trace("Starting to build AST String List");
         ArrayList<String> ASTStringEquiv =  new ArrayList<String>();
         ASTStringEquiv = explore(ctx,ASTStringEquiv);
+        Log.trace("Done building AST String List");
         return ASTStringEquiv;
     }
 

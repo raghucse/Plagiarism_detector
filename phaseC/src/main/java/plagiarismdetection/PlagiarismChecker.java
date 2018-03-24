@@ -66,6 +66,7 @@ public class PlagiarismChecker implements Runnable{
 		else {
 			log.error(Constants.P_CHECK_ERROR_STRING + " for id : "+checkID);
 			this.reportContent = new UnsuccessfulReportContent();
+			Log.info("Generated an unsuccessful report content");
 		}
 		Log.info("Done Completing plagiarism check run");
 		return runCompleted;
