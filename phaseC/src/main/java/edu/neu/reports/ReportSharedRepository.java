@@ -17,10 +17,10 @@ public interface ReportSharedRepository extends JpaRepository<ReportShared, Long
 
     /**
      *
-     * @param user
+     * @param userId
      * @return ReportShared
      */
-    List<ReportShared> findByUser(int user);
+    List<ReportShared> findByUserId(int userId);
 
     @Query(value = "SELECT * FROM users where users.id IN ( SELECT userId from reportshared rs where rs.reportId = :reportId)",
             nativeQuery=true)

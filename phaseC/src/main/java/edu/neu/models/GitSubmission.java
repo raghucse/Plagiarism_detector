@@ -40,14 +40,16 @@ public class GitSubmission implements Submission{
 		                .setURI(remoteUrl)
 		                .setDirectory(localPath)
 		                .call()) {
-		        		
+					Log.info("Looping over files");
 			        for(File f : localPath.listFiles())
 			        {
-			        		if(!f.getName().equals(".git"))
-			        			files.add(f);
+			        		if(!f.getName().equals(".git")) {
+								Log.info("Visited file : "+f.getName());
+								files.add(f);
+							}
 			        }
 		        }
-				
+				Log.info("Done cloning " + remoteUrl + " to " + localPath);
 			} catch (Exception e) {
 				Log.error("Error git cloning" + e.getStackTrace());
 			}

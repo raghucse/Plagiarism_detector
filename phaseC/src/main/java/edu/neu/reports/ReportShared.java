@@ -10,14 +10,14 @@ public class ReportShared {
     private int id;
 
     private int reportId;
-    private int user;
+    private int userId;
 
-    public int getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(int user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getReportId() {
