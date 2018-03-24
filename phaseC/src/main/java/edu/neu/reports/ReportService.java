@@ -26,7 +26,11 @@ public class ReportService {
         return reportRepository.findById(reportId);
     }
 
-    public List<Report> getReportByOwnerId(int userId){
+    public List<Integer> getReportByOwnerId(int userId){
+        return reportRepository.findReportIdsByOwner(userId);
+    }
+
+    public List<Report> getReportIdsByOwner(int userId){
         return reportRepository.findByOwner(userId);
     }
 
@@ -39,7 +43,6 @@ public class ReportService {
     }
     
     public Report createNewEmptyReportWithNameAndOwner(String name, int ownerId) {
-    		System.out.println("THIS IS CALLED");
     		Report report = new Report();
     		report.setName(name);
     		report.setOwner(ownerId);

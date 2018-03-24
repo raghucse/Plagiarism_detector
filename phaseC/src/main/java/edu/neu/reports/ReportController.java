@@ -13,10 +13,18 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @RequestMapping(value = "/report/userId/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Report>> getReportsByOwner(@PathVariable("userId") int userId) {
+    @RequestMapping(value = "/report/user/reportIds/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Report>> getReportIdsByOwner(@PathVariable("userId") int userId) {
 
-        List<Report> result = reportService.getReportByOwnerId(userId);
+        List<Report> result = reportService.getReportIdsByOwner(userId);
+        return ResponseEntity.ok(result);
+    }
+
+
+    @RequestMapping(value = "/report/userId/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<List<Integer>> getReportsByOwner(@PathVariable("userId") int userId) {
+
+        List<Integer> result = reportService.getReportByOwnerId(userId);
         return ResponseEntity.ok(result);
     }
 
