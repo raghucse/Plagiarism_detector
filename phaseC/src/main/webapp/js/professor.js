@@ -10,12 +10,14 @@ class Check extends React.Component {
 		// REAL: var url = "/report/userId/"+readCookie('User');
 		var data = null;
 		var loadRuns = [-1];
-		var url = "report/user/reportIds/0"
+		console.log(document.cookie)
+		var url = "/report/userId/"+readCookie('uid')
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
 				loadRuns = this.responseText;
+				console.log(this.responseText);
 			}
 		});		
 		xhr.open("GET", url);
@@ -45,7 +47,7 @@ class Check extends React.Component {
 			runs: loadRuns,						// a list of all report IDs
 			statistics: loadRuns[0],	// by default the page loads the first report
 			report: obj,							// by default the page loads the first report
-			stuNum: 1,								// by default there is 1 student to add solution	
+			stuNum: 1,								// by default there is 1 student to add solution
 			userID: 0									// user ID in the session
 		}
 	}
