@@ -23,6 +23,7 @@ public class LVDistance implements ASTBasedStrategy{
 	@Override
 	public double compare(File f1, File f2) {
 		try {
+			astUtils = new ASTUtils();
 			return calculateLD(
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f1)),
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f2))
