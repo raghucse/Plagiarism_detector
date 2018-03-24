@@ -4,6 +4,8 @@ import edu.neu.astgeneration.ASTUtils;
 
 import org.junit.Test;
 import edu.neu.comparison.CosineSimilarity;
+import edu.neu.comparison.STRATEGIES;
+
 import java.io.File;
 
 import static org.junit.Assert.*;
@@ -43,6 +45,20 @@ public class CosineSimilarityTest {
         CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
         double score = cos.compare(f1, f2);
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
+    }
+    
+    
+    @Test
+    public void testBasicConstruction() {
+        CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
+        assertEquals(STRATEGIES.COSINE, cos.getName());
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testThrowsNullASTUtils() {
+        CosineSimilarity cos = new CosineSimilarity(null);
+        assertNull(cos.getASTUtils());
+        cos.compare(null, null);
     }
 
 }
