@@ -18,10 +18,10 @@ public class PlagiarismRunController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/plagiarism/run", method = RequestMethod.GET)
+    @RequestMapping(value = "/plagiarism/run", method = RequestMethod.POST)
     public ResponseEntity<String> runPlagarism(@ModelAttribute PlagiarismRunRequest runReq) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        runReq.setUserId(userService.findByUsername(userName).getId());
+        // runReq.setUserId(userService.findByUsername(userName).getId());
         return ResponseEntity.ok("Plagiarism run started");
     }
 }

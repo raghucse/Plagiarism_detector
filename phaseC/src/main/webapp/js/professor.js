@@ -9,14 +9,13 @@ class Check extends React.Component {
 		// Get all the report ID
 		// REAL: var url = "/report/userId/"+readCookie('User');
 		var data = null;
-		var loadRuns = [0, 1, 2];
-		var url = "/report/userId/0"
+		var loadRuns = [-1];
+		var url = "report/user/reportIds/0"
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-				console.log(this.responseText);
-				loadRuns = [0, 1, 2];
+				loadRuns = this.responseText;
 			}
 		});		
 		xhr.open("GET", url);
@@ -74,7 +73,7 @@ class Check extends React.Component {
 				<div className="row">
 					<div className="col">
 						<button className={ this.state.statistics == r ? "currentRun" : "futureRun" }
-						  onClick={ () => this.showStatistics(r) }>Run { r }</button>
+						  onClick={ () => this.showStatistics(r) } disabled={r == -1}>Run { r == -1 ? "" : r }</button>
 						</div>
 				</div>
 			);
@@ -169,8 +168,8 @@ class Check extends React.Component {
 		 *   sharedUsers: String array
 		 */
 		var data = new FormData();
-		data.append("runDescription", document.getElementById('run_description').value);
-		data.append("gitHubLinks", links);
+		data.append("description", document.getElementById('run_description').value);
+		data.append("gitUrls", links);
 		data.append("sharedUsers", []);
 		
 		// Post to end point
@@ -178,16 +177,19 @@ class Check extends React.Component {
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-
-				// Here the end point should return a report ID
-				console.log(this.responseText);
-				var tmp = this.state.runs;
-				tmp.push(9);
-				this.setState({ runs: tmp });
+				var text = this.responseText;
+				setTimeout(function() {
+					document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = text;
+					var toastTag = document.getElementsByClassName('toast-wrap')[0];
+					toastTag.className = toastTag.className.replace('toastAnimate', '');
+					setTimeout(function() {
+							toastTag.className = toastTag.className + ' toastAnimate';
+					}, 100);
+				}, 100);
 			}
 		});
 
-		xhr.open("POST", "END POINT");
+		xhr.open("POST", "http://localhost:8080/plagiarism/run");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
 		xhr.send(data);
@@ -213,6 +215,9 @@ class Check extends React.Component {
 									</table>
 									<table>
 										<div id="tabledata"></div>
+										<div className="toast-wrap">
+          						<span className="toast-msg"></span>
+        						</div>
 									</table>
 								</div>
 							</div>
