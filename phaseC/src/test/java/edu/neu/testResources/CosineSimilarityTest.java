@@ -20,7 +20,7 @@ public class CosineSimilarityTest {
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
         CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
-        double score = cos.compare(f1, f2);
+        double score = cos.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score * roundOff) / roundOff), actualValue, EPSILON);
     }
 
@@ -31,7 +31,7 @@ public class CosineSimilarityTest {
         double actualValue = 1.0;
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
-        double score = cos.compare(f1, f1);
+        double score = cos.compare(f1, f1).getTotalScore();
         assertEquals((Math.round(score * roundOff) / roundOff), actualValue, EPSILON);
     }
 
@@ -43,7 +43,7 @@ public class CosineSimilarityTest {
         File f1 = new File(getClass().getClassLoader().getResource("samplefile1.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("samplefile2.py").getFile());
         CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
-        double score = cos.compare(f1, f2);
+        double score = cos.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
     

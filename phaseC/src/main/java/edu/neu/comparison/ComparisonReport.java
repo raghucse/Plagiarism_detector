@@ -25,36 +25,40 @@ public class ComparisonReport implements Serializable{
     String filename1;
 	String filename2;
 
-	public double getScore() {
-		return score;
+	public Scores getScores() {
+		return scores;
+	}
+	
+	public void setScores(Scores scores) {
+		this.scores = scores;
 	}
 
-	double score;
+	Scores scores;
 	
 	public ComparisonReport() {
 	}
 	
-	public ComparisonReport(String filename1, String filename2, double score) {
+	public ComparisonReport(String filename1, String filename2, Scores scores) {
 		this.filename1 = filename1;
 		this.filename2 = filename2;
-		this.score = score;
+		this.scores = scores;
 	}
 	
 	@Override
 	public String toString() {
-		return this.filename1+":"+this.filename2+"|"+score;
+		return this.filename1+":"+this.filename2+"|"+scores;
 	}
 	
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		out.writeUTF(filename1);
 		out.writeUTF(filename2);
-		out.writeDouble(score);
+		out.writeObject(scores);
 	}
 	
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		filename1 = in.readUTF();
 		filename2 = in.readUTF();
-		score = in.readDouble();
+		scores = (Scores) in.readObject();
 	}
 	
 }

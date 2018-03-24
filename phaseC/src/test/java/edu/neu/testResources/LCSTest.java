@@ -27,7 +27,7 @@ public class LCSTest {
         File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
         
         LCS lcs = new LCS(new ASTUtils());
-        double score = lcs.compare(f1, f2);
+        double score = lcs.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff),actualValue,EPSILON);
     }
 
@@ -43,7 +43,7 @@ public class LCSTest {
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         
         LCS lcs = new LCS(new ASTUtils());
-        double score = lcs.compare(f1, f1);
+        double score = lcs.compare(f1, f1).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff),actualValue,EPSILON);
     }
 
@@ -55,7 +55,7 @@ public class LCSTest {
         File f1 = new File(getClass().getClassLoader().getResource("samplefile1.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("samplefile2.py").getFile());
         LCS lcs = new LCS(new ASTUtils());
-        double score = lcs.compare(f1, f2);
+        double score = lcs.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
     

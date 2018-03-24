@@ -21,17 +21,17 @@ public class LVDistance implements ASTBasedStrategy{
 	}
 
 	@Override
-	public double compare(File f1, File f2) {
+	public Scores compare(File f1, File f2) {
 		try {
-			return calculateLD(
+			double score = calculateLD(
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f1)),
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f2))
 					);
+			return new Scores(score, "LVDistance:"+score+ ";");
 		} catch (IOException e) {
 			Log.info("ERROR while reading files for comparison "+e.getStackTrace());
 		}
-		return 0;
-				
+		return new Scores(0, "LVDistance:"+0+ ";");
 	}
 	
 	@Override

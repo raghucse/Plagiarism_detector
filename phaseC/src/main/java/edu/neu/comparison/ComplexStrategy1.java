@@ -27,13 +27,14 @@ public class ComplexStrategy1 implements ASTBasedStrategy{
 	}
 
 	@Override
-	public double compare(File f1, File f2) {
+	public Scores compare(File f1, File f2) {
 		double computedScore = 0.0;
 		for(int i=0; i<simplerStrategies.length; i++) {
-			computedScore += weights[i] * simplerStrategies[i].compare(f1, f2);
+			computedScore += weights[i] * simplerStrategies[i].compare(f1, f2).getTotalScore();
 		}
 		computedScore /= DoubleStream.of(weights).sum();
-		return computedScore;
+		return new Scores(computedScore, "LCS:"+simplerStrategies[0]+ "; "+ "LVDistance:"+simplerStrategies[1]+ "; "+
+				"CosineSimilarity:"+simplerStrategies[2]+ ";");
 	}
 
 	@Override

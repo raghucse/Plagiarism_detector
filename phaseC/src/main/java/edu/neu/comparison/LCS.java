@@ -28,17 +28,17 @@ public class LCS implements ASTBasedStrategy{
 	}
 
 	@Override
-	public double compare(File f1, File f2) {
+	public Scores compare(File f1, File f2) {
 		try {
-			return calculateLCS(
+			double score = calculateLCS(
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f1)),
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f2))
 					);
+			return new Scores(score, "LCS:"+score+ ";");
 		} catch (IOException e) {
 			Log.info("ERROR while reading files for comparison "+e.getStackTrace());
 		}
-		return 0;
-				
+		return new Scores(0, "LCS:"+0+ ";");
 	}
 	
 	@Override

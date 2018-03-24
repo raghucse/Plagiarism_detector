@@ -19,7 +19,7 @@ public class ComplexStrategy1Test {
         File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
 
         ComplexStrategy1 complex = new ComplexStrategy1(new ASTUtils());
-        double score = complex.compare(f1, f2);
+        double score = complex.compare(f1, f2).getTotalScore();
         assertEquals(expectedValue, (Math.round(score * roundOff) / roundOff), EPSILON);
     }
 
@@ -30,7 +30,7 @@ public class ComplexStrategy1Test {
         double expectedValue = 1.0;
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         ComplexStrategy1 complex = new ComplexStrategy1(new ASTUtils());
-        double score = complex.compare(f1, f1);
+        double score = complex.compare(f1, f1).getTotalScore();
         assertEquals(expectedValue, (Math.round(score * roundOff) / roundOff), EPSILON);
     }
     @Test
@@ -41,7 +41,7 @@ public class ComplexStrategy1Test {
         File f1 = new File(getClass().getClassLoader().getResource("samplefile1.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("samplefile2.py").getFile());
         ComplexStrategy1 complex = new ComplexStrategy1(new ASTUtils());
-        double score = complex.compare(f1, f2);;
+        double score = complex.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
 
