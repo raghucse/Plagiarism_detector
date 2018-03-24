@@ -44,4 +44,14 @@ public class PlagarismDetectorApplicationTests{
 				.build();
 	}
 
+	@Test
+	public void testRegister() throws Exception {
+
+		mvc.perform(post("/registration")
+				.param("username","raghucse")
+				.param("password", "Test@1234"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.msg", is("registration successful")));
+	}
+
 }

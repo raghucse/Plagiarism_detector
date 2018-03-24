@@ -1,6 +1,7 @@
 package edu.neu.user;
 
 
+import edu.neu.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,10 +18,13 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ResponseEntity<ServerResponse> registration(@ModelAttribute ApplicationUser userForm) {
+        Log.info("Starting user registration");
+        Log.error("some error");
         userForm.setUsername(userForm.getUsername());
         userForm.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
         userForm.setRole(userForm.getRole());
         userService.save(userForm);
+        Log.info("User registration successful");
         return ResponseEntity.ok(new ServerResponse("registration successful"));
     }
 
