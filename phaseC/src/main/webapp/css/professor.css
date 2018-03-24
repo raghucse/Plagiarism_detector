@@ -104,7 +104,7 @@ tr, th, td {
 }
 
 th, td {
-	width: 100px;
+	width: 150px;
 }
 
 .toast-wrap {
@@ -133,4 +133,13 @@ th, td {
   50% { opacity: 1; z-index: 9999 }
   75% { opacity: 1; z-index: 9999 }
   100% { opacity: 0; z-index: 0 }
+}
+
+#warn {
+  background-color: red;
+  color: white;
+}
+
+#score {
+  width: 255px;
 }

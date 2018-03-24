@@ -4,5 +4,5 @@ import java.io.File;
 
 public interface Strategy {
 	public STRATEGIES getName();
-	public double compare(File f1, File f2);
+	public Scores compare(File f1, File f2);
 }

@@ -27,17 +27,17 @@ public class CosineSimilarity implements ASTBasedStrategy{
 	}
 
 	@Override
-	public double compare(File f1, File f2) {
+	public Scores compare(File f1, File f2) {
 		try {
-			return cosSim(
+			double score = cosSim(
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f1)),
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f2))
 					);
+			return new Scores(score, "CosineSimilarity:"+score+ ";");
 		} catch (IOException e) {
 			Log.info("ERROR while reading files for comparison "+e.getStackTrace());
 		}
-		return 0;
-				
+		return new Scores(0, "CosineSimilarity:"+0+ ";");
 	}
 	
 	@Override

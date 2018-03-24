@@ -124,11 +124,21 @@ class Check extends React.Component {
                     para = document.createElement("td");
                     node = document.createTextNode(that.state.report.comparisonList[i].filename2);
                     para.appendChild(node);
-                    row.appendChild(para);
+										row.appendChild(para);
+										
                     para = document.createElement("td");
-                    node = document.createTextNode(that.state.report.comparisonList[i].score);
+										node = document.createTextNode(that.state.report.comparisonList[i].scores.totalScore);										
+										if (Number(that.state.report.comparisonList[i].scores.totalScore) >= 0.8) {
+											para.id = "warn";
+										}
                     para.appendChild(node);
-                    row.appendChild(para);
+										row.appendChild(para);
+
+										para = document.createElement("td");
+										node = document.createTextNode(that.state.report.comparisonList[i].scores.subScores);
+                    para.appendChild(node);
+										row.appendChild(para);
+										
                     element.appendChild(row);
                 }
 			}
@@ -218,7 +228,7 @@ class Check extends React.Component {
 								<div className="col">
 									<table>
 										<tr>
-											<th>File 1</th><th>File 2</th><th>Similarity</th>
+											<th>File 1</th><th>File 2</th><th>Similarity</th><th id="score">Description</th>
 										</tr>
 									</table>
 									<table>

@@ -40,8 +40,8 @@ public class Example {
         LVDistance lvd = new LVDistance(new ASTUtils());
         LCS lcs = new LCS(new ASTUtils());
         
-        double lvdScore = lvd.compare(f1, f2);
-        double lcsScore = lcs.compare(f1, f2);
+        double lvdScore = lvd.compare(f1, f2).getTotalScore();
+        double lcsScore = lcs.compare(f1, f2).getTotalScore();
         
         System.out.println("Levenshtein Score: "+lvdScore);
         System.out.println("LCS Score : "+lcsScore);

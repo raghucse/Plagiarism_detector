@@ -22,7 +22,7 @@ public class LVDistanceTest {
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
         LVDistance lvDistance = new LVDistance(new ASTUtils());
-        double score = lvDistance.compare(f1, f2);
+        double score = lvDistance.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
 
@@ -33,7 +33,7 @@ public class LVDistanceTest {
         double roundOff = 10000.0;
         File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
         LVDistance lvDistance = new LVDistance(new ASTUtils());
-        double score = lvDistance.compare(f1, f1);
+        double score = lvDistance.compare(f1, f1).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
 
@@ -45,7 +45,7 @@ public class LVDistanceTest {
         File f1 = new File(getClass().getClassLoader().getResource("samplefile1.py").getFile());
         File f2 = new File(getClass().getClassLoader().getResource("samplefile2.py").getFile());
         LVDistance lvDistance = new LVDistance(new ASTUtils());
-        double score = lvDistance.compare(f1, f2);
+        double score = lvDistance.compare(f1, f2).getTotalScore();
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
 
