@@ -152,7 +152,7 @@ class Index extends React.Component {
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
 					<br />
-					<table>
+					<table id="temp">
 						<form onSubmit={ e => this.onRegisterSubmit(e) }>
 						<tr>
 							<td><span>Email</span></td>

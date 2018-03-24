@@ -44,7 +44,7 @@ table {
 	width: 350px;
 	height: 200px;
 	background-color: #e7e7e7;
-	margin-right: 15%;
+	margin-right: 16%;
 	text-align: right;
 }
 
@@ -116,4 +116,13 @@ span {
 
 td {
 	text-align: center;
+}
+
+#temp {
+	float: right;
+	width: 350px;
+	height: 200px;
+	background-color: #e7e7e7;
+	margin-right: 10%;
+	text-align: right;
 }
