@@ -120,6 +120,7 @@ class Index extends React.Component {
 						<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
 							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
 					</p>
+					<br/>
 					<table>
 					<form onSubmit={ e => this.onLogInSubmit(e) }>
 						<tr>
