@@ -1,6 +1,6 @@
 package edu.neu.user;
 
-public class userRequest {
+public class UserRequest {
     public String getUsername() {
         return username;
     }

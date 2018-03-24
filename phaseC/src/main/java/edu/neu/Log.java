@@ -5,6 +5,10 @@ import org.apache.log4j.Logger;
 
 public class Log {
     private static final Logger logger = LogManager.getLogger(Log.class);
+    
+    private Log() {
+    		// empty private constructor to hide the implicit private one
+    }
 
     public static void info(String message){
         logger.info(message);
