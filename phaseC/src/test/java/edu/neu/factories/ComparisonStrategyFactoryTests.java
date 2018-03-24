@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import edu.neu.Log;
 import edu.neu.astgeneration.ASTUtils;
 import edu.neu.comparison.ComplexStrategy1;
 import edu.neu.comparison.CosineSimilarity;
@@ -11,6 +12,7 @@ import edu.neu.comparison.LCS;
 import edu.neu.comparison.LVDistance;
 import edu.neu.comparison.STRATEGIES;
 import edu.neu.comparison.Strategy;
+import edu.neu.utils.Constants;
 import factories.ComparisonStrategyFactory;
 
 public class ComparisonStrategyFactoryTests {
@@ -43,6 +45,8 @@ public class ComparisonStrategyFactoryTests {
 	public void testComplex1() {
 		Strategy strategy = ComparisonStrategyFactory.getComparisonStrategy(STRATEGIES.COMPLEX1, new ASTUtils());
 		assertTrue(strategy instanceof ComplexStrategy1);
+		Log.info(Constants.P_CHECK_ERROR_STRING+"");
+		Log.info(Constants.DEFAULT_PLAGIARISM_STRATEGY+"");
 	}
 	
 }

@@ -1,12 +1,16 @@
 package edu.neu.testResources;
 
 import edu.neu.astgeneration.ASTUtils;
+import edu.neu.comparison.LCS;
 import edu.neu.comparison.LVDistance;
+import edu.neu.comparison.STRATEGIES;
+
 import org.junit.Test;
 
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class LVDistanceTest {
 
@@ -45,4 +49,17 @@ public class LVDistanceTest {
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
     }
 
+    @Test
+    public void testBasicConstruction() {
+    		LVDistance lvd = new LVDistance(new ASTUtils());
+        assertEquals(STRATEGIES.LEVENSHTEIN, lvd.getName());
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testThrowsNullASTUtils() {
+    		LVDistance lvd = new LVDistance(null);
+        assertNull(lvd.getASTUtils());
+        lvd.compare(null, null);
+    }
+    
 }

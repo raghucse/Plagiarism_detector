@@ -1,8 +1,9 @@
 package edu.neu.testResources;
 
 import edu.neu.astgeneration.ASTUtils;
+import edu.neu.comparison.CosineSimilarity;
 import edu.neu.comparison.LCS;
-
+import edu.neu.comparison.STRATEGIES;
 
 import org.junit.Test;
 
@@ -56,6 +57,19 @@ public class LCSTest {
         LCS lcs = new LCS(new ASTUtils());
         double score = lcs.compare(f1, f2);
         assertEquals((Math.round(score*roundOff)/roundOff), expectedScore,EPSILON);
+    }
+    
+    @Test
+    public void testBasicConstruction() {
+    		LCS lcs = new LCS(new ASTUtils());
+        assertEquals(STRATEGIES.LCS, lcs.getName());
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testThrowsNullASTUtils() {
+    		LCS lcs = new LCS(null);
+        assertNull(lcs.getASTUtils());
+        lcs.compare(null, null);
     }
 
 

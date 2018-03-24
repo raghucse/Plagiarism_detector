@@ -43,4 +43,16 @@ public class ReportContent implements Serializable{
 		return comparisonList;
 	}
 	
+	public String getReportMessage() {
+		return reportMessage;
+	}
+
+	public void setReportMessage(String reportMessage) {
+		this.reportMessage = reportMessage;
+	}
+
+	public void setComparisonList(List<ComparisonReport> comparisonList) {
+		this.comparisonList = comparisonList;
+	}
+	
 }
