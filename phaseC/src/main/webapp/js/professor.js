@@ -5,7 +5,7 @@ class Check extends React.Component {
 	 */
 	constructor() {
 		super();
-
+		var that = this;
 		// Get all the report ID
 		// REAL: var url = "/report/userId/"+readCookie('User');
 		var data = null;
@@ -18,6 +18,7 @@ class Check extends React.Component {
 			if (this.readyState === 4) {
 				loadRuns = this.responseText;
 				console.log(this.responseText);
+				that.setState({ runs: loadRuns });
 			}
 		});		
 		xhr.open("GET", url);
