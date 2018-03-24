@@ -4,6 +4,7 @@ import edu.neu.comparison.ComparisonReport;
 import edu.neu.models.DiffContent;
 import edu.neu.models.DiffTuple;
 import edu.neu.models.ReportContent;
+import edu.neu.models.UnsuccessfulReportContent;
 
 import org.junit.Test;
 import org.springframework.util.SerializationUtils;
@@ -35,6 +36,13 @@ public class ReportContentTests {
         assertEquals(cr1.getFilename1(), cr2.getFilename1());
         assertEquals(cr1.getFilename2(), cr2.getFilename2());
         assertEquals(cr1.getScore(), cr2.getScore(), 0.000001);
+    }
+    
+    @Test
+    public void testSerializeDeserializeUnsuccessfulReportContent() {
+    		UnsuccessfulReportContent rc1 = new UnsuccessfulReportContent();
+    		UnsuccessfulReportContent rc2 = (UnsuccessfulReportContent) SerializationUtils.deserialize(SerializationUtils.serialize(rc1));
+    		assertEquals(rc1.getReportMessage(), rc2.getReportMessage());
     }
 
 }
