@@ -19,9 +19,9 @@ h1 {
 
 .clickedButton {
 	width: 200px;
-	background-color: #e7e7e7;
+	background-color: lightgray;
 	color: #282e32;
-  border: 1px solid #e7e7e7;
+  border: 1px solid lightgray;
   font-family: Verdana,Arial,Helvetica,sans-serif;
   font-size: 15px;
   font-weight: bold;
@@ -43,6 +43,7 @@ h1 {
 
 .form {
 	margin-top: 1%;
+	width: 400px;
 }
 
 #email, #pwd, #crfmpwd {
@@ -52,4 +53,19 @@ h1 {
 	border: 1px solid #cccccc;
 	padding: 3%;
 	border-radius: 5px;
+}
+
+#indexcontain {
+	background-color: lightgray;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5%;
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+.subbtn {
+	margin-top: 15%;
+	width: 130%;
 }
