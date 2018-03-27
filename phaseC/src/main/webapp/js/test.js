@@ -2,7 +2,7 @@ class Application extends React.Component {
   constructor() {
     super();
     this.state = {
-      page: 1,
+      page: 0,
     }
   }
 
@@ -62,13 +62,46 @@ class Application extends React.Component {
   }
 
   /**
+   * Render the login UI.
+   */
+  renderLogin() {
+    return (
+      <div className="container">
+        { this.renderBanner() }
+        <div id="indexcontain">
+          <form onSubmit={ e => this.onLogInSubmit(e) }>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto sa">
+                <button type="submit" className="btn btn-primary subbtn">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * User logs in.
+   */
+  onLoginSubmit(e) {
+
+  }
+
+  /**
    * Render the main UI.
    */
   render() {
-    if (this.state.page == 0) {
+    if (this.state.page == 1) {
       return(this.renderRegistration());
-    } else if (this.state.page == 1) {
-      return(this.renderRegistration());
+    } else if (this.state.page == 0) {
+      return(this.renderLogin());
     } else {
       return(this.renderRegistration());
     }
