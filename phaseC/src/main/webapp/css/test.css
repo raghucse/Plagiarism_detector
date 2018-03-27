@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+body {
+	background-color: #336699;
+}
+
+h1 {
+	color: white;
+	font-weight: bold;
+	padding-top: 3%;
+	text-align: center;
+}
+
+.indexBanner {
+	margin-top: 3%;
+	padding-right: 0;
+  padding-left: 0;
+}
+
+.clickedButton {
+	width: 200px;
+	background-color: #e7e7e7;
+	color: #282e32;
+  border: 1px solid #e7e7e7;
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;	
+}
+
+.unclickedButton {
+	width: 200px;
+	background-color: #464c54;
+  border: 1px solid #464c54;
+	color: #ffebb5;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 15px;
+  font-weight: bold;
+  padding: 8px 14px;
+  text-decoration: none;
+}
+
+.form {
+	margin-top: 1%;
+}
+
+#email, #pwd, #crfmpwd {
+	width: 120%;
+  font-size: 100%; 
+  background-color: #f2f2f2; 
+	border: 1px solid #cccccc;
+	padding: 3%;
+	border-radius: 5px;
+}
