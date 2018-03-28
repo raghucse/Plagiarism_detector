@@ -21,4 +21,15 @@
 h4 {
 	text-align: center;
 	color: black;
+	margin-top: 1.5%;
+}
+
+#rundescription, #sharedusers, .git {
+	width: 100%;
+  font-size: 100%; 
+  background-color: #f2f2f2; 
+	border: 1px solid #cccccc;
+	padding: 1%;
+	border-radius: 5px;
+	margin-top: 1%;
 }

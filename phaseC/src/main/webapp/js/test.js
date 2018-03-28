@@ -3,7 +3,9 @@ class Application extends React.Component {
     super();
     this.state = {
       page: 3,
-      runs: []
+      runs: [],
+      statistic: -1,
+      student: 1
     }
   }
   
@@ -62,8 +64,7 @@ class Application extends React.Component {
     e.preventDefault();
 
     // Check if two passwords are same, or if there is one empty
-    if (document.getElementById("pwd").value != document.getElementById("crfmpwd").value ||
-        document.getElementById("pwd").value == "" || document.getElementById("crfmpwd").value == "") {
+    if ($("#pwd").val() != $("#crfmpwd").val() || $("#pwd").val() == "" || $("#crfmpwd").val() == "") {
       $('[data-toggle="popover"]').popover('show'); 
       setTimeout(function() {
         $('[data-toggle="popover"]').popover('hide'); 
@@ -76,8 +77,8 @@ class Application extends React.Component {
 
     // Send the data to the end point
     var data = new FormData();
-    data.append('username', document.getElementById("email").value);
-    data.append('password', document.getElementById("pwd").value);
+    data.append('username', $("#email").val()); 
+    data.append('password', $("#pwd").val());
     data.append('role', 'PROFESSOR');
     fetch('/registration', {
       method: 'POST',
@@ -123,8 +124,8 @@ class Application extends React.Component {
     var that = this;
     var xhr = new XMLHttpRequest();
     var data = JSON.stringify({
-      "username": document.getElementById("email").value,
-      "password": document.getElementById("pwd").value
+      "username": $("#email").val(),
+      "password": $("#pwd").val()
     });
     xhr.withCredentials = true;
 
@@ -182,32 +183,26 @@ class Application extends React.Component {
             </div>
           </div>
         </div>
-
-        <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div className="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
-                  &times;
-                </button>
-                <h4 className="modal-title" id="myModalLabel">
-                  模态框（Modal）标题
-                </h4>
+                <h5 className="modal-title" id="myModalLabel">Add New Run</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
               </div>
               <div className="modal-body">
-                在这里添加一些文本
+                <input type="text" id="rundescription" placeholder="Run Description"/>
+                <div id="students"></div>
+                <input type="text" id="sharedusers" placeholder="Shared Users"/>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-default" data-dismiss="modal">关闭
-                </button>
-                <button type="button" className="btn btn-primary">
-                  提交更改
-                </button>
+                <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() }>Run Check</button>
+                <button type="button" className="btn btn-primary" onClick={ () => this.addStudent() }>Add Student</button>
+                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     );
   }
@@ -225,6 +220,28 @@ class Application extends React.Component {
         </div>
       </div>
     );
+  }
+
+  /**
+   * Add a new student to the modal.
+   */
+  addStudent() {
+    var stu = this.state.student;
+    var newGit = "<input type='text' class='git'" + " id='" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/>"
+    $("#students").append(newGit);
+    stu += 1;
+    this.setState({ student: stu });
+  }
+
+  /**
+	 * Run the checks.
+	 */
+  runCheck() {
+    var links = [];
+    for (var i = 1; i < this.state.student; i++) {
+      var id = "#" + i.toString();
+      links.push($(id).val())
+    }
   }
 
   /**
