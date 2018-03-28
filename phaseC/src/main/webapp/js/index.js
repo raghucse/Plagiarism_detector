@@ -4,7 +4,6 @@ class Application extends React.Component {
     this.state = {
       page: 0,
       runs: [],
-      statistic: -1,
       student: 1
     }
   }
@@ -179,7 +178,7 @@ class Application extends React.Component {
           <div className="row justify-content-md-center">
             <div className="col-3 runs">{ this.renderSideColumn() }</div>
             <div className="col statistics">
-              <h4>{ this.state.runs.length == 0 ? "Cuurrently there are no runs." : "Select a run and check." }</h4>
+              <h4 id="title">{ this.state.runs.length == 0 ? "Cuurrently there are no runs." : "Select a run and check." }</h4>
               { this.state.runs.length == 0 ? "" : this.renderStatisticsTable() }
               <div className="container" id="sa"></div>
             </div>
@@ -210,9 +209,12 @@ class Application extends React.Component {
     );
   }
 
+  /**
+   * Render the table head.
+   */
   renderStatisticsTable() {
     return(
-      <div className="container statable" id="sa">
+      <div className="container statable" id="sat">
         <div className="row">
           <div className="col-2">File 1</div>
           <div className="col-2">File 2</div>
@@ -248,8 +250,23 @@ class Application extends React.Component {
           </div>
         </div>
         { runElements }
+        <div className="row">
+          <div className="col sider">
+            <button type="button" className="btn btn-danger btn-lg" onClick={ () => this.logout() }>Log out</button>
+          </div>
+        </div>
       </div>
     );
+  }
+
+  /**
+   * Log out.
+   */
+  logout() {
+    eraseCookie('UserName');
+    eraseCookie('Authorization');
+    eraseCookie('uid');
+    this.setState({ page: 0 });
   }
 
   /**
@@ -332,34 +349,27 @@ class Application extends React.Component {
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
-        console.log(result);
-                
+        var showing = "";
+        $("#title").text("Statistics of " + r.toString());
+    
         for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
-
-          
-          
           var row = "<div className='row'>";
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].filename1;
-          
           row += "</div>";
-
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].filename2;
           row += "</div>";
-
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].scores.totalScore;
           row += "</div>";
-
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].scores.subScores;
           row += "</div>";
-          
           row += "</div>";
-
-          $("#sa").append(row);
+          showing += row;
         }
+        $("#sa").html(showing);
 			}
 		});
 		xhr.open("GET", endPoint);
