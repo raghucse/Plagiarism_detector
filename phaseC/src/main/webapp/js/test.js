@@ -196,7 +196,8 @@ class Application extends React.Component {
                 <input type="text" id="sharedusers" placeholder="Shared Users"/>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() }>Run Check</button>
+                <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
+                  data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run Check</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.addStudent() }>Add Student</button>
                 <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
               </div>
@@ -216,6 +217,8 @@ class Application extends React.Component {
         <div className="row">
           <div className="col sider">
             <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Add New Run</button>
+
+            <button type="button" className="btn btn-primary" onClick={ () => this.showStatistic(0) }>Run 0</button>
           </div>
         </div>
       </div>
@@ -237,11 +240,56 @@ class Application extends React.Component {
 	 * Run the checks.
 	 */
   runCheck() {
+    // Append all Git Hub links together
     var links = [];
     for (var i = 1; i < this.state.student; i++) {
       var id = "#" + i.toString();
       links.push($(id).val())
     }
+
+    // Append all data together
+    var data = new FormData();
+		data.append("description", $("#rundescription").val()); 
+		data.append("gitUrls", links);
+    data.append("sharedUsers", []);
+    
+    // Post to end point
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        var text = this.responseText;        
+        $('[data-toggle="popover"]').popover('show'); 
+        setTimeout(function() {
+          $('[data-toggle="popover"]').popover('hide'); 
+        }, 2000);
+			}
+		});
+
+		xhr.open("POST", "/plagiarism/run");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+		xhr.send(data);
+  }
+
+  /**
+   * Show the statistic of a certain run.
+   */
+  showStatistic(r) {
+    var data = null;
+		var endPoint = "report/reportId/" + r.toString();
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        var result = JSON.parse(this.responseText);
+        console.log(result);
+			}
+		});
+		xhr.open("GET", endPoint);
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+		xhr.send(data);
   }
 
   /**
