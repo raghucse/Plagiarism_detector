@@ -58,7 +58,9 @@ class Application extends React.Component {
    * Register a user.
    */
   onRegistrationSubmit(e) {
-    e.preventDefault();    
+    e.preventDefault();
+
+    // Check if two passwords are same, or if there is one empty
     if (document.getElementById("pwd").value != document.getElementById("crfmpwd").value ||
         document.getElementById("pwd").value == "" || document.getElementById("crfmpwd").value == "") {
       $('[data-toggle="popover"]').popover('show'); 
@@ -68,7 +70,10 @@ class Application extends React.Component {
       return;
     }
 
+    // Disable the Bootstrap popover
     $('[data-toggle="popover"]').popover('hide');
+
+    // Send the data to the end point
     var data = new FormData();
     data.append('username', document.getElementById("email").value);
     data.append('password', document.getElementById("pwd").value);
@@ -112,37 +117,40 @@ class Application extends React.Component {
    */
   onLoginSubmit(e) {
     e.preventDefault();
+
+    // Form the JSON data which needs to be sent
+    var that = this;
+    var xhr = new XMLHttpRequest();
     var data = JSON.stringify({
       "username": document.getElementById("email").value,
       "password": document.getElementById("pwd").value
     });
-    var xhr = new XMLHttpRequest();
-    var that = this;
-
     xhr.withCredentials = true;
 
-    xhr.addEventListener("readystatechange", function () {
+    // Create a listener for setting cookie 
+    xhr.addEventListener("readystatechange", function() {
       if (this.readyState === 4) {
-        if(this.status == 200) {
-          createCookie('UserName',this.getResponseHeader('User'));
-          createCookie('Authorization',this.getResponseHeader('Authorization'));
+        if (this.status == 200) {
           var datan = null;
           var xhrn = new XMLHttpRequest();
           xhrn.withCredentials = true;
-          xhrn.addEventListener("readystatechange", function () {
+          createCookie('UserName',this.getResponseHeader('User'));
+          createCookie('Authorization',this.getResponseHeader('Authorization'));
+
+          // Add another listener for getting response.
+          xhrn.addEventListener("readystatechange", function() {
             if (this.readyState === 4) {
               $('[data-toggle="popover"]').popover('hide');
               createCookie('uid', this.responseText);
-              console.log(this.responseText);
-              console.log(that.state.page);
               that.setState({ page: 3 })
             }
           });
+
+          // Set cookie
           xhrn.open("GET", "/user?userName=" + readCookie('UserName'));
           xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
           xhrn.setRequestHeader("Cache-Control", "no-cache");
           xhrn.send(datan);
-
         } else {
           $('[data-toggle="popover"]').popover('show'); 
           setTimeout(function() {
@@ -153,9 +161,10 @@ class Application extends React.Component {
       }
     });
 
+    // Send data
     xhr.open("POST", "/login");
-        xhr.setRequestHeader("Cache-Control", "no-cache");
-        xhr.send(data);
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.send(data);
   }
 
   /**
@@ -163,7 +172,7 @@ class Application extends React.Component {
    */
   renderPlagiarismCheck() {
     return(
-      <div>sa</div>
+      <div>Log in already.</div>
     );
   }
 
