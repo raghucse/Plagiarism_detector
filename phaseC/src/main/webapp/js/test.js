@@ -5,7 +5,7 @@ class Application extends React.Component {
       page: 0,
     }
   }
-
+  
   /**
    * Render the banner.
    */
@@ -32,7 +32,7 @@ class Application extends React.Component {
       <div className="container">
         { this.renderBanner() }
         <div id="indexcontain">
-          <form onSubmit={ e => this.onLogInSubmit(e) }>
+          <form onSubmit={ e => this.onRegistrationSubmit(e) }>
             <div className="row justify-content-center form">
               <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
             </div>
@@ -43,8 +43,9 @@ class Application extends React.Component {
               <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password"/></div>
             </div>
             <div className="row justify-content-center form">
-              <div className="col-md-auto sa">
-                <button type="submit" className="btn btn-primary subbtn">Submit</button>
+              <div className="col-md-auto">
+                <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                  data-toggle="popover" data-placement="right" data-content="Check password!">Submit</button>
               </div>
             </div>
           </form>
@@ -57,8 +58,18 @@ class Application extends React.Component {
    * Register a user.
    */
   onRegistrationSubmit(e) {
-    e.preventDefault();
-    alert('sa');
+    e.preventDefault();    
+    if (document.getElementById("pwd").innerText != document.getElementById("crfmpwd").innerText ||
+        document.getElementById("pwd").value == "" || document.getElementById("crfmpwd").value == "") {
+      $('[data-toggle="popover"]').popover('show'); 
+      setTimeout(function() {
+        $('[data-toggle="popover"]').popover('hide'); 
+      }, 2000);
+      return;
+    } else {
+      $('[data-toggle="popover"]').popover('hide');
+      return;
+    }
   }
 
   /**
@@ -77,7 +88,7 @@ class Application extends React.Component {
               <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
             </div>
             <div className="row justify-content-center form">
-              <div className="col-md-auto sa">
+              <div className="col-md-auto">
                 <button type="submit" className="btn btn-primary subbtn">Submit</button>
               </div>
             </div>
@@ -95,6 +106,13 @@ class Application extends React.Component {
   }
 
   /**
+   * Render the plagiarism check UI.
+   */
+  renderPlagiarismCheck() {
+
+  }
+
+  /**
    * Render the main UI.
    */
   render() {
@@ -103,7 +121,7 @@ class Application extends React.Component {
     } else if (this.state.page == 0) {
       return(this.renderLogin());
     } else {
-      return(this.renderRegistration());
+      return(this.renderPlagiarismCheck());
     }
   }
 }
