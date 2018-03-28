@@ -59,17 +59,25 @@ class Application extends React.Component {
    */
   onRegistrationSubmit(e) {
     e.preventDefault();    
-    if (document.getElementById("pwd").innerText != document.getElementById("crfmpwd").innerText ||
+    if (document.getElementById("pwd").value != document.getElementById("crfmpwd").value ||
         document.getElementById("pwd").value == "" || document.getElementById("crfmpwd").value == "") {
       $('[data-toggle="popover"]').popover('show'); 
       setTimeout(function() {
         $('[data-toggle="popover"]').popover('hide'); 
       }, 2000);
       return;
-    } else {
-      $('[data-toggle="popover"]').popover('hide');
-      return;
     }
+
+    $('[data-toggle="popover"]').popover('hide');
+    var data = new FormData();
+    data.append('username', document.getElementById("email").value);
+    data.append('password', document.getElementById("pwd").value);
+    data.append('role', 'PROFESSOR');
+    fetch('/registration', {
+      method: 'POST',
+      body: data
+    });
+    this.setState({ page: 0 });
   }
 
   /**
@@ -80,7 +88,7 @@ class Application extends React.Component {
       <div className="container">
         { this.renderBanner() }
         <div id="indexcontain">
-          <form onSubmit={ e => this.onLogInSubmit(e) }>
+          <form onSubmit={ e => this.onLoginSubmit(e) }>
             <div className="row justify-content-center form">
               <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
             </div>
@@ -89,7 +97,8 @@ class Application extends React.Component {
             </div>
             <div className="row justify-content-center form">
               <div className="col-md-auto">
-                <button type="submit" className="btn btn-primary subbtn">Submit</button>
+                <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                  data-toggle="popover" data-placement="right" data-content="Invalid credential!">Submit</button>
               </div>
             </div>
           </form>
@@ -102,14 +111,56 @@ class Application extends React.Component {
    * User logs in.
    */
   onLoginSubmit(e) {
+    e.preventDefault();
 
+    console.log(document.getElementById("email").value);
+    console.log(document.getElementById("pwd").value);
+    
+    
+    var data = JSON.stringify({
+      "username": document.getElementById("email").value,
+      "password": document.getElementById("pwd").value
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        if(this.status == 200) {
+          createCookie('UserName',this.getResponseHeader('User'));
+          createCookie('Authorization',this.getResponseHeader('Authorization'));
+          var datan = null;
+          var xhrn = new XMLHttpRequest();
+          xhrn.withCredentials = true;
+          xhrn.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+              $('[data-toggle="popover"]').popover('hide');
+              createCookie('uid',this.responseText);
+              this.setState({ page: 3 });
+            }
+          });
+          xhrn.open("GET", "/user?userName="+readCookie('UserName'));
+          xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
+          xhrn.setRequestHeader("Cache-Control", "no-cache");
+          xhrn.send(datan);
+        } else {
+          $('[data-toggle="popover"]').popover('show'); 
+          setTimeout(function() {
+            $('[data-toggle="popover"]').popover('hide'); 
+          }, 2000);
+        }
+      }
+    });
   }
 
   /**
    * Render the plagiarism check UI.
    */
   renderPlagiarismCheck() {
-
+    return(
+      <div>sa</div>
+    );
   }
 
   /**
