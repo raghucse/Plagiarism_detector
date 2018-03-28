@@ -1,199 +1,390 @@
-class Index extends React.Component {
-
-	/** 
-	 * Constructor
-	 * 
-	 * The state contains:
-	 *   page: to show the log_in page or the register page
-	 *   email: the user's email address
-	 *   password: the user's password
-	 *   cfrm_pwd: confirm the password for register
-	 *   role: which role is the user
-	*/
-	constructor() {
-		super();
-		this.state = {
-			page: 0,
-			email: '',
-			password: '',
-			cfrm_pwd: '',
-			role: 'PROFESSOR'
-		}
-	}
-
-	/**
-   * Make a toast
-   * http://blog.csdn.net/yuetingzhuying/article/details/56489439
+class Application extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      page: 0,
+      runs: [],
+      statistic: -1,
+      student: 1
+    }
+  }
+  
+  /**
+   * Render the banner.
    */
-  toast(msg) {
-    setTimeout(function() {
-        document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = msg;
-        var toastTag = document.getElementsByClassName('toast-wrap')[0];
-        toastTag.className = toastTag.className.replace('toastAnimate', '');
-        setTimeout(function() {
-          toastTag.className = toastTag.className + ' toastAnimate';
-        }, 100);
-      }, 100);
-	}
-	
-	// Submit the form to login
-	// ec2-34-210-26-119.us-west-2.compute.amazonaws.com
-	onLogInSubmit(e) {
-		e.preventDefault();
-        var data = JSON.stringify({
-            "username": this.state.email,
-            "password": this.state.password
-        });
+  renderBanner() {
+    return(
+      <div className="row justify-content-center">
+        <div className="col-md-auto indexBanner">
+          <button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
+            onClick={ () => this.setState({ page: 0 }) }>Log In</button>
+        </div>
+        <div className="col-md-auto indexBanner">
+          <button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
+            onClick={ () => this.setState({ page: 1 }) }>Register</button>
+        </div>
+      </div>
+    );
+  }
 
+  /**
+   * Render the register UI.
+   */
+  renderRegistration() {
+    return (
+      <div className="container">
+        { this.renderBanner() }
+        <div id="indexcontain">
+          <form onSubmit={ e => this.onRegistrationSubmit(e) }>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto">
+                <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                  data-toggle="popover" data-placement="right" data-content="Check password!">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Register a user.
+   */
+  onRegistrationSubmit(e) {
+    e.preventDefault();
+
+    // Check if two passwords are same, or if there is one empty
+    if ($("#pwd").val() != $("#crfmpwd").val() || $("#pwd").val() == "" || $("#crfmpwd").val() == "") {
+      $('[data-toggle="popover"]').popover('show'); 
+      setTimeout(function() {
+        $('[data-toggle="popover"]').popover('hide'); 
+      }, 2000);
+      return;
+    }
+
+    // Disable the Bootstrap popover
+    $('[data-toggle="popover"]').popover('hide');
+
+    // Send the data to the end point
+    var data = new FormData();
+    data.append('username', $("#email").val()); 
+    data.append('password', $("#pwd").val());
+    data.append('role', 'PROFESSOR');
+    fetch('/registration', {
+      method: 'POST',
+      body: data
+    });
+    this.setState({ page: 0 });
+  }
+
+  /**
+   * Render the login UI.
+   */
+  renderLogin() {
+    return (
+      <div className="container">
+        { this.renderBanner() }
+        <div id="indexcontain">
+          <form onSubmit={ e => this.onLoginSubmit(e) }>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+            </div>
+            <div className="row justify-content-center form">
+              <div className="col-md-auto">
+                <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                  data-toggle="popover" data-placement="right" data-content="Invalid credential!">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * User logs in.
+   */
+  onLoginSubmit(e) {
+    e.preventDefault();
+
+    // Form the JSON data which needs to be sent
+    var that = this;
+    var xhr = new XMLHttpRequest();
+    var data = JSON.stringify({
+      "username": $("#email").val(),
+      "password": $("#pwd").val()
+    });
+    xhr.withCredentials = true;
+
+    // Create a listener for setting cookie 
+    xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        if (this.status == 200) {
+          var datan = null;
+          var xhrn = new XMLHttpRequest();
+          xhrn.withCredentials = true;
+          createCookie('UserName',this.getResponseHeader('User'));
+          createCookie('Authorization',this.getResponseHeader('Authorization'));
+
+          // Add another listener for getting response.
+          xhrn.addEventListener("readystatechange", function() {
+            if (this.readyState === 4) {
+              $('[data-toggle="popover"]').popover('hide');
+              createCookie('uid', this.responseText);
+              that.setState({ page: 3 })
+            }
+          });
+
+          // Set cookie
+          xhrn.open("GET", "/user?userName=" + readCookie('UserName'));
+          xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
+          xhrn.setRequestHeader("Cache-Control", "no-cache");
+          xhrn.send(datan);
+        } else {
+          $('[data-toggle="popover"]').popover('show'); 
+          setTimeout(function() {
+            $('[data-toggle="popover"]').popover('hide'); 
+          }, 2000);
+          return;
+        }
+      }
+    });
+
+    // Send data
+    xhr.open("POST", "/login");
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.send(data);
+  }
+
+  /**
+   * Render the plagiarism check UI.
+   */
+  renderPlagiarismCheck() {
+    return(
+      <div>
+        <div className="container pcheck">
+          <div className="row justify-content-md-center">
+            <div className="col-3 runs">{ this.renderSideColumn() }</div>
+            <div className="col statistics">
+              <h4>{ this.state.runs.length == 0 ? "Cuurrently there are no runs." : "Select a run and check." }</h4>
+              { this.state.runs.length == 0 ? "" : this.renderStatisticsTable() }
+              <div className="container" id="sa"></div>
+            </div>
+          </div>
+        </div>
+        <div className="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="myModalLabel">Add New Run</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+              </div>
+              <div className="modal-body">
+                <input type="text" id="rundescription" placeholder="Run Description"/>
+                <div id="students"></div>
+                <input type="text" id="sharedusers" placeholder="Shared Users"/>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
+                  data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run Check</button>
+                <button type="button" className="btn btn-primary" onClick={ () => this.addStudent() }>Add Student</button>
+                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderStatisticsTable() {
+    return(
+      <div className="container statable" id="sa">
+        <div className="row">
+          <div className="col-2">File 1</div>
+          <div className="col-2">File 2</div>
+          <div className="col-2">Percentage</div>
+          <div className="col-2">Description</div>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Render the plagiarism check side column.
+   * 
+   * <button type="button" className="btn btn-primary" onClick={ () => this.showStatistic(0) }>Run 0</button>
+   */
+  renderSideColumn() {
+    const runElements = [];
+    for (let r of this.state.runs) {
+      runElements.push(
+        <div className="row runelems">
+          <div className="col sider">
+            <button type="button" className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(r) }>Run { r }</button>
+          </div>
+        </div>
+      );
+    }
+
+    return(
+      <div className="container">
+        <div className="row">
+          <div className="col sider">
+            <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Add New Run</button>
+          </div>
+        </div>
+        { runElements }
+      </div>
+    );
+  }
+
+  /**
+   * Add a new student to the modal.
+   */
+  addStudent() {
+    var stu = this.state.student;
+    var newGit = "<input type='text' class='git'" + " id='" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/>"
+    $("#students").append(newGit);
+    stu += 1;
+    this.setState({ student: stu });    
+  }
+
+  /**
+	 * Run the checks.
+	 */
+  runCheck() {
+    
+    console.log(readCookie('Authorization'));
+    console.log(readCookie('uid'));
+
+    // Append all Git Hub links together
+    var links = [];
+    for (var i = 1; i < this.state.student; i++) {
+      var id = "#" + i.toString();
+      links.push($(id).val())
+    }
+
+    // Append all data together
+    var data = new FormData();
+		data.append("description", $("#rundescription").val()); 
+		data.append("gitUrls", links);
+    data.append("sharedUsers", []);
+    
+    // Post to end point
+    var xhr = new XMLHttpRequest();
+    var that = this;
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        var text = this.responseText;        
+        $('[data-toggle="popover"]').popover('show'); 
+        setTimeout(function() {
+          $('[data-toggle="popover"]').popover('hide'); 
+        }, 2000);
+        
+        // Update the state
+        var data = null;
+        var loadRuns = [];
+        var url = "/report/userId/" + readCookie('uid');
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-        	console.log(this)
-            if (this.readyState === 4) {
-                if(this.status == 200){
-                    createCookie('UserName',this.getResponseHeader('User'));
-                    createCookie('Authorization',this.getResponseHeader('Authorization'));
-                    var datan = null;
-                    var xhrn = new XMLHttpRequest();
-                    xhrn.withCredentials = true;
-                    xhrn.addEventListener("readystatechange", function () {
-                        if (this.readyState === 4) {
-                            createCookie('uid',this.responseText);
-                            window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/home.html');
-                        }
-                    });
-
-                    xhrn.open("GET", "/user?userName="+readCookie('UserName'));
-                    xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
-                    xhrn.setRequestHeader("Cache-Control", "no-cache");
-                    xhrn.send(datan);
-                }
-                else
-                    setTimeout(function() {
-                        document.getElementsByClassName('toast-wrap')[0].getElementsByClassName('toast-msg')[0].innerHTML = 'INVALID CREDENTIALS';
-                        var toastTag = document.getElementsByClassName('toast-wrap')[0];
-                        toastTag.className = toastTag.className.replace('toastAnimate', '');
-                        setTimeout(function() {
-                            toastTag.className = toastTag.className + ' toastAnimate';
-                        }, 100);
-                    }, 100);
-            }
-        });
-
-        xhr.open("POST", "/login");
+        xhr.addEventListener("readystatechange", function() {
+          if (this.readyState === 4) {
+            loadRuns = JSON.parse(this.responseText);
+            that.setState({ runs: loadRuns });
+          }
+        });		
+        xhr.open("GET", url);
         xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Authorization", readCookie('Authorization'));
         xhr.send(data);
-	}
-
-	// Submit the form to register
-	onRegisterSubmit(e) {
-		e.preventDefault();
-
-		if(this.state.cfrm_pwd != this.state.password) {
-			this.toast('Passwords must be same!');
-			return;
-		}
-
-		/**
-		 * Send the data to the registration end point.
-		 * 
-		 * Note: don't send JSON objects, instead, send FormData
-		*/
-		var data = new FormData();
-		data.append('username', this.state.email);
-		data.append('password', this.state.password);
-		data.append('role', this.state.role);
-
-		fetch('/registration', {
-			method: 'POST',
-			body: data
+			}
 		});
-		window.location.replace('http://ec2-34-210-26-119.us-west-2.compute.amazonaws.com:8080/index.html');
-	}
-	
-	// Rend	er the UI
-	render() {
-		if (this.state.page == 0) {
-			return(
-				<div>
-					<p>
-						<button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
-							onClick={ () => this.setState({ page: 1 }) }>Register</button>
-						<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
-							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
-					</p>
-					<br/><div>
-					<table>
-					<form onSubmit={ e => this.onLogInSubmit(e) }>
-						<tr>
-							<td><span>Email</span></td>
-							<td><input type="text" onChange={ ev => this.setState({ email: ev.target.value }) } /></td>
-						</tr>
-						<tr>
-							<td><span>Password</span></td>
-							<td><input type="password" onChange={ ev => this.setState({ password: ev.target.value }) } /></td>
-						</tr>
-						<tr>
-						  <td><a href="./mock/Home.html">View UI as non-wireframes</a></td>
-							<td><input className="button" type="submit" value="Submit"/></td>
-						</tr>
-					</form>
-					</table></div>
-					<div className="toast-wrap">
-          	<span className="toast-msg"></span>
-        	</div>
-				</div>
-			);
-		} else {
-			return(
-				<div>
-					<p>
-						<button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
-							onClick={ () => this.setState({ page: 1 }) }>Register</button>
-						<button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
-							onClick={ () => this.setState({ page: 0 }) }>Log In</button>&nbsp;<br/>
-					</p>
-					<br /><div>
-					<table id="temp">
-						<form onSubmit={ e => this.onRegisterSubmit(e) }>
-						<tr>
-							<td><span>Email</span></td>
-							<td><input type="email" onChange={ ev => this.setState({ email: ev.target.value }) } /></td>
-          	</tr>
-						<tr>
-							<td><span>Password</span></td>
-            	<td><input type="password" onChange={ ev => this.setState({ password: ev.target.value }) } /></td>
-          	</tr>
-						<tr>
-            	<td><span>Confirm Password</span></td>
-							<td><input type="password" onChange={ ev => this.setState({ cfrm_pwd: ev.target.value }) } /></td>
-          	</tr>
-          	<tr>
-            	<td><span>Role</span></td>
-            	<td>
-              	<select onChange={ ev => this.setState({ role: ev.target.value }) }>
-                	<option value ="PROFESSOR">Professor</option>
-                	<option value ="GRADER">Grader</option>
-                	<option value ="ADMINISTRATOR">Administrator</option>
-              	</select>
-            	</td>
-          	</tr>
-          	<tr>
-            	<td><input className="button" type="submit" value="Submit"/></td>
-						</tr>
-					</form>
-        	</table></div>
-					<div className="toast-wrap">
-          	<span className="toast-msg"></span>
-        	</div>
-				</div>
-			);
-		}
-	}
+
+		xhr.open("POST", "/plagiarism/run");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+		xhr.send(data);
+  }
+
+  /**
+   * Show the statistic of a certain run.
+   */
+  showStatistic(r) {    
+    var data = null;
+		var endPoint = "report/reportId/" + r.toString();
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        var result = JSON.parse(this.responseText);
+        console.log(result);
+                
+        for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
+
+          
+          
+          var row = "<div className='row'>";
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].filename1;
+          
+          row += "</div>";
+
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].filename2;
+          row += "</div>";
+
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].scores.totalScore;
+          row += "</div>";
+
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].scores.subScores;
+          row += "</div>";
+          
+          row += "</div>";
+
+          $("#sa").append(row);
+        }
+			}
+		});
+		xhr.open("GET", endPoint);
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+		xhr.send(data);
+  }
+
+  /**
+   * Render the main UI.
+   */
+  render() {
+    if (readCookie('UserName') != null && readCookie('UserName') != "") {
+      return(this.renderPlagiarismCheck());
+    } else {
+      if (this.state.page == 1) {
+        return(this.renderRegistration());
+      } else {
+        return(this.renderLogin());
+      }
+    }
+  }
 }
 
 ReactDOM.render(
-	<Index />,
+	<Application />,
 	document.getElementById('root')
 );
