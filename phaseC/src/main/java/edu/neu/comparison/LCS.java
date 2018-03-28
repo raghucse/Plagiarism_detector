@@ -1,11 +1,11 @@
 package edu.neu.comparison;
 
+import edu.neu.Log;
+import edu.neu.astgeneration.ASTUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import edu.neu.Log;
-import edu.neu.astgeneration.ASTUtils;
 /**
  * Implementing another comparison strategy by using the Longest
  * Common Subsequence (LCS) technique.
@@ -17,17 +17,34 @@ import edu.neu.astgeneration.ASTUtils;
 public class LCS implements ASTBasedStrategy{
 
 	private ASTUtils astUtils;
-	
+
+	/**
+	 * The constructor is used to set the astUtils parameter
+	 * @param astUtils is an object of the ASTUtils class which
+	 *                 determines the value to be set for the local astUtils
+	 *                 variable
+	 */
 	public LCS(ASTUtils astUtils) {
 		this.astUtils = astUtils;
 	}
-	
-	@Override
+
+
+	/**
+	 * Returns the name of the strategy to be used for comparison
+	 * @return LCS as the value as Longest Common Subsequence technique
+	 * 		   will be used for comparison
+	 */
 	public STRATEGIES getName() {
 		return STRATEGIES.LCS;
 	}
 
-	@Override
+	/**
+	 * This function is used to compare two files using LCS Strategy
+	 * @param f1 is the first file
+	 * @param f2 is the second file
+	 * @return the score generated after implementing the longest common
+	 *         subsequence strategy
+	 */
 	public Scores compare(File f1, File f2) {
 		try {
 			double score = calculateLCS(
@@ -40,8 +57,10 @@ public class LCS implements ASTBasedStrategy{
 		}
 		return new Scores(0, "LCS:"+0+ ";");
 	}
-	
-	@Override
+
+	/**
+	 * @return Returns the astUtils value
+	 */
 	public ASTUtils getASTUtils() {
 		return astUtils;
 	}

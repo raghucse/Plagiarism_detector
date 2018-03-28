@@ -1,25 +1,35 @@
 package edu.neu.models;
 
+import edu.neu.Log;
+import org.eclipse.jgit.api.Git;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-
-import edu.neu.Log;
-
+/**
+ * This class is used to retrieve all the files
+ * from the GitHub URL.
+ */
 public class GitSubmission implements Submission{
 	
 	private String gitURL;
 	private List<File> files;
-	
+
+	/**
+	 * The constructor is used to assign the GitHub url
+	 * to the gitURL variable
+	 * @param gitURL
+	 */
 	public GitSubmission(String gitURL) {
 		this.gitURL = gitURL;
 	}
 
-	@Override
+	/**
+	 * This function is used to retrieve all the files
+	 * from the specified GitHub URL
+	 * @return the list of files that are retrieved
+	 */
 	public List<File> getFiles() {
 		// To implement git clone and return a list of files
 		
