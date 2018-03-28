@@ -3,7 +3,7 @@ class Application extends React.Component {
     super();
     this.state = {
       page: 0,
-      runs: [1, 2, 3],
+      runs: [],
       statistic: -1,
       student: 1
     }
@@ -180,6 +180,8 @@ class Application extends React.Component {
             <div className="col-3 runs">{ this.renderSideColumn() }</div>
             <div className="col statistics">
               <h4>{ this.state.runs.length == 0 ? "Cuurrently there are no runs." : "Select a run and check." }</h4>
+              { this.state.runs.length == 0 ? "" : this.renderStatisticsTable() }
+              <div className="container" id="sa"></div>
             </div>
           </div>
         </div>
@@ -208,6 +210,19 @@ class Application extends React.Component {
     );
   }
 
+  renderStatisticsTable() {
+    return(
+      <div className="container statable" id="sa">
+        <div className="row">
+          <div className="col-2">File 1</div>
+          <div className="col-2">File 2</div>
+          <div className="col-2">Percentage</div>
+          <div className="col-2">Description</div>
+        </div>
+      </div>
+    );
+  }
+
   /**
    * Render the plagiarism check side column.
    * 
@@ -219,7 +234,7 @@ class Application extends React.Component {
       runElements.push(
         <div className="row runelems">
           <div className="col sider">
-            <button type="button" className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistics(r) }>Run { r }</button>
+            <button type="button" className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(r) }>Run { r }</button>
           </div>
         </div>
       );
@@ -252,10 +267,10 @@ class Application extends React.Component {
 	 * Run the checks.
 	 */
   runCheck() {
-
+    
     console.log(readCookie('Authorization'));
     console.log(readCookie('uid'));
-    
+
     // Append all Git Hub links together
     var links = [];
     for (var i = 1; i < this.state.student; i++) {
@@ -270,7 +285,8 @@ class Application extends React.Component {
     data.append("sharedUsers", []);
     
     // Post to end point
-		var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
+    var that = this;
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
@@ -279,6 +295,23 @@ class Application extends React.Component {
         setTimeout(function() {
           $('[data-toggle="popover"]').popover('hide'); 
         }, 2000);
+        
+        // Update the state
+        var data = null;
+        var loadRuns = [];
+        var url = "/report/userId/" + readCookie('uid');
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function() {
+          if (this.readyState === 4) {
+            loadRuns = JSON.parse(this.responseText);
+            that.setState({ runs: loadRuns });
+          }
+        });		
+        xhr.open("GET", url);
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Authorization", readCookie('Authorization'));
+        xhr.send(data);
 			}
 		});
 
@@ -300,6 +333,33 @@ class Application extends React.Component {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
         console.log(result);
+                
+        for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
+
+          
+          
+          var row = "<div className='row'>";
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].filename1;
+          
+          row += "</div>";
+
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].filename2;
+          row += "</div>";
+
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].scores.totalScore;
+          row += "</div>";
+
+          row += "<div className='col-2'>"
+          row += result.reportFile.comparisonList[i].scores.subScores;
+          row += "</div>";
+          
+          row += "</div>";
+
+          $("#sa").append(row);
+        }
 			}
 		});
 		xhr.open("GET", endPoint);
