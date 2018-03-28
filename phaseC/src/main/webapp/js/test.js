@@ -2,7 +2,8 @@ class Application extends React.Component {
   constructor() {
     super();
     this.state = {
-      page: 0,
+      page: 3,
+      runs: []
     }
   }
   
@@ -172,7 +173,57 @@ class Application extends React.Component {
    */
   renderPlagiarismCheck() {
     return(
-      <div>Log in already.</div>
+      <div>
+        <div className="container pcheck">
+          <div className="row justify-content-md-center">
+            <div className="col-3 runs">{ this.renderSideColumn() }</div>
+            <div className="col statistics">
+              <h4>{ this.state.runs.length == 0 ? "Cuurrently there are no runs." : "Select a run and check." }</h4>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <h4 className="modal-title" id="myModalLabel">
+                  模态框（Modal）标题
+                </h4>
+              </div>
+              <div className="modal-body">
+                在这里添加一些文本
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" className="btn btn-primary">
+                  提交更改
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+
+  /**
+   * Render the plagiarism check side column.
+   */
+  renderSideColumn() {
+    return(
+      <div className="container">
+        <div className="row">
+          <div className="col sider">
+            <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Add New Run</button>
+          </div>
+        </div>
+      </div>
     );
   }
 
