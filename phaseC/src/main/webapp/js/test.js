@@ -112,17 +112,13 @@ class Application extends React.Component {
    */
   onLoginSubmit(e) {
     e.preventDefault();
-
-    console.log(document.getElementById("email").value);
-    console.log(document.getElementById("pwd").value);
-    
-    
     var data = JSON.stringify({
       "username": document.getElementById("email").value,
       "password": document.getElementById("pwd").value
     });
-
     var xhr = new XMLHttpRequest();
+    var that = this;
+
     xhr.withCredentials = true;
 
     xhr.addEventListener("readystatechange", function () {
@@ -136,22 +132,30 @@ class Application extends React.Component {
           xhrn.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
               $('[data-toggle="popover"]').popover('hide');
-              createCookie('uid',this.responseText);
-              this.setState({ page: 3 });
+              createCookie('uid', this.responseText);
+              console.log(this.responseText);
+              console.log(that.state.page);
+              that.setState({ page: 3 })
             }
           });
-          xhrn.open("GET", "/user?userName="+readCookie('UserName'));
+          xhrn.open("GET", "/user?userName=" + readCookie('UserName'));
           xhrn.setRequestHeader("Authorization", readCookie('Authorization'));
           xhrn.setRequestHeader("Cache-Control", "no-cache");
           xhrn.send(datan);
+
         } else {
           $('[data-toggle="popover"]').popover('show'); 
           setTimeout(function() {
             $('[data-toggle="popover"]').popover('hide'); 
           }, 2000);
+          return;
         }
       }
     });
+
+    xhr.open("POST", "/login");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.send(data);
   }
 
   /**
