@@ -3,7 +3,7 @@ class Application extends React.Component {
     super();
     this.state = {
       page: 0,
-      runs: [],
+      runs: [1, 2, 3],
       statistic: -1,
       student: 1
     }
@@ -210,17 +210,29 @@ class Application extends React.Component {
 
   /**
    * Render the plagiarism check side column.
+   * 
+   * <button type="button" className="btn btn-primary" onClick={ () => this.showStatistic(0) }>Run 0</button>
    */
   renderSideColumn() {
+    const runElements = [];
+    for (let r of this.state.runs) {
+      runElements.push(
+        <div className="row runelems">
+          <div className="col sider">
+            <button type="button" className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistics(r) }>Run { r }</button>
+          </div>
+        </div>
+      );
+    }
+
     return(
       <div className="container">
         <div className="row">
           <div className="col sider">
             <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Add New Run</button>
-
-            <button type="button" className="btn btn-primary" onClick={ () => this.showStatistic(0) }>Run 0</button>
           </div>
         </div>
+        { runElements }
       </div>
     );
   }
@@ -240,6 +252,10 @@ class Application extends React.Component {
 	 * Run the checks.
 	 */
   runCheck() {
+
+    console.log(readCookie('Authorization'));
+    console.log(readCookie('uid'));
+    
     // Append all Git Hub links together
     var links = [];
     for (var i = 1; i < this.state.student; i++) {
@@ -275,7 +291,7 @@ class Application extends React.Component {
   /**
    * Show the statistic of a certain run.
    */
-  showStatistic(r) {
+  showStatistic(r) {    
     var data = null;
 		var endPoint = "report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
@@ -296,15 +312,6 @@ class Application extends React.Component {
    * Render the main UI.
    */
   render() {
-    /*
-    if (this.state.page == 1 && readCookie('UserName') == null) {
-      return(this.renderRegistration());
-    } else if (this.state.page == 0 && readCookie('UserName') == null) {
-      return(this.renderLogin());
-    } else {
-      
-    }*/
-
     if (readCookie('UserName') != null && readCookie('UserName') != "") {
       return(this.renderPlagiarismCheck());
     } else {
