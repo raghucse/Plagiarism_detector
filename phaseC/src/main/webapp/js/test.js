@@ -2,7 +2,7 @@ class Application extends React.Component {
   constructor() {
     super();
     this.state = {
-      page: 3,
+      page: 0,
       runs: [],
       statistic: -1,
       student: 1
@@ -233,7 +233,7 @@ class Application extends React.Component {
     var newGit = "<input type='text' class='git'" + " id='" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/>"
     $("#students").append(newGit);
     stu += 1;
-    this.setState({ student: stu });
+    this.setState({ student: stu });    
   }
 
   /**
@@ -296,12 +296,23 @@ class Application extends React.Component {
    * Render the main UI.
    */
   render() {
-    if (this.state.page == 1) {
+    /*
+    if (this.state.page == 1 && readCookie('UserName') == null) {
       return(this.renderRegistration());
-    } else if (this.state.page == 0) {
+    } else if (this.state.page == 0 && readCookie('UserName') == null) {
       return(this.renderLogin());
     } else {
+      
+    }*/
+
+    if (readCookie('UserName') != null && readCookie('UserName') != "") {
       return(this.renderPlagiarismCheck());
+    } else {
+      if (this.state.page == 1) {
+        return(this.renderRegistration());
+      } else {
+        return(this.renderLogin());
+      }
     }
   }
 }
