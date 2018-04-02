@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
 body {
-	background-color: #336699;
+	background-color: white;
 }
 
 h1 {
-	color: white;
+	color: black;
 	font-weight: bold;
 	padding-top: 3%;
 	text-align: center;

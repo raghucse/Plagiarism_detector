@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+.top {
+	background-color: #553f7a;
+	color: white;	
+	font-size: 125%;
+	padding-top: 1%;
+	height: 55px;
+}
+
+.logout {
+	margin-bottom: 5%;
+	margin-top: -2%;
+}
+
 .statistics {
 	vertical-align: middle;
 	background-color: white;

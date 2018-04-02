@@ -7,7 +7,24 @@ class Application extends React.Component {
       student: 1
     }
   }
-  
+  /**
+   * Render the navigation bar.
+   */
+  renderNav() {
+    return(
+      <div>
+        <div className="row justify-content-end top">
+        <div className="col-6">Plagiarism Checker</div>
+          <div className="col-3"> { readCookie('UserName') == null ? "" : "Welcome " + readCookie('UserName') }</div>
+          <div className="col-2">
+            { readCookie('UserName') == null ? "" :
+              <button type="button" className="btn btn-danger logout" onClick={ () => this.logout() }>Log out</button> }
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   /**
    * Render the banner.
    */
@@ -31,26 +48,29 @@ class Application extends React.Component {
    */
   renderRegistration() {
     return (
-      <div className="container">
-        { this.renderBanner() }
-        <div id="indexcontain">
-          <form onSubmit={ e => this.onRegistrationSubmit(e) }>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
-            </div>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
-            </div>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password"/></div>
-            </div>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto">
-                <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
-                  data-toggle="popover" data-placement="right" data-content="Check password!">Submit</button>
+      <div>
+        { this.renderNav() }
+        <div className="container">
+          { this.renderBanner() }
+          <div id="indexcontain">
+            <form onSubmit={ e => this.onRegistrationSubmit(e) }>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
               </div>
-            </div>
-          </form>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+              </div>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password"/></div>
+              </div>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto">
+                  <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                    data-toggle="popover" data-placement="right" data-content="Check password!">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
@@ -91,23 +111,26 @@ class Application extends React.Component {
    */
   renderLogin() {
     return (
-      <div className="container">
-        { this.renderBanner() }
-        <div id="indexcontain">
-          <form onSubmit={ e => this.onLoginSubmit(e) }>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
-            </div>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
-            </div>
-            <div className="row justify-content-center form">
-              <div className="col-md-auto">
-                <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
-                  data-toggle="popover" data-placement="right" data-content="Invalid credential!">Submit</button>
+      <div>
+        { this.renderNav() }
+        <div className="container">
+          { this.renderBanner() }
+          <div id="indexcontain">
+            <form onSubmit={ e => this.onLoginSubmit(e) }>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
               </div>
-            </div>
-          </form>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+              </div>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto">
+                  <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                    data-toggle="popover" data-placement="right" data-content="Invalid credential!">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
@@ -174,6 +197,7 @@ class Application extends React.Component {
   renderPlagiarismCheck() {
     return(
       <div>
+        { this.renderNav() }
         <div className="container pcheck">
           <div className="row justify-content-md-center">
             <div className="col-3 runs">{ this.renderSideColumn() }</div>
@@ -192,11 +216,33 @@ class Application extends React.Component {
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
               </div>
               <div className="modal-body">
+                <div id="students"></div><hr/>  
                 <input type="text" id="rundescription" placeholder="Run Description"/>
-                <div id="students"></div>
-                <input type="text" id="sharedusers" placeholder="Shared Users"/>
+                <div id="advanced"><hr />
+                  <div className="container">
+                    <div className="row">
+                      <div className="col"><p>How do you want the startegies weighted?</p></div>
+                    </div>
+                    <div className="row">
+                      <div className="col-3">Levenshtein</div>
+                      <div className="col-md-auto"><div id="slider1"></div></div>
+                      <div className="col-md-auto"><div id="value1"></div></div>
+                    </div>
+                    <div className="row">
+                      <div className="col-3">LCS</div>
+                      <div className="col-md-auto"><div id="slider2"></div></div>
+                      <div className="col-md-auto"><div id="value2"></div></div>
+                    </div>
+                    <div className="row">
+                      <div className="col-3">Cosine</div>
+                      <div className="col-md-auto"><div id="slider3"></div></div>
+                      <div className="col-md-auto"><div id="value3"></div></div>
+                    </div>
+                  </div>   
+                </div>
               </div>
               <div className="modal-footer">
+                <button type="button" className="btn btn-primary" onClick={ () => this.advancedSettings() }>Advanced</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
                   data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run Check</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.addStudent() }>Add Student</button>
@@ -246,17 +292,35 @@ class Application extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col sider">
-            <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Add New Run</button>
+            <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal"
+            onClick={ () => $("#advanced").hide() }>Add New Run</button>
           </div>
         </div>
         { runElements }
-        <div className="row">
-          <div className="col sider">
-            <button type="button" className="btn btn-danger btn-lg" onClick={ () => this.logout() }>Log out</button>
-          </div>
-        </div>
       </div>
     );
+  }
+
+  /**
+   * Advanced settings in modal.
+   */
+  advancedSettings() {
+    $('#slider1').slider({ min: 0, max: 100 });
+    $('#slider1').change(function() {
+      $('#value1').html($('#slider1').slider('getValue') + "%");
+    });
+    $('#value1').html($('#slider1').slider('getValue') + "%");
+    $('#slider2').slider({ min: 0, max: 100 });
+    $('#slider2').change(function() {
+      $('#value2').html($('#slider2').slider('getValue') + "%");
+    });
+    $('#value2').html($('#slider2').slider('getValue') + "%");
+    $('#slider3').slider({ min: 0, max: 100 });
+    $('#slider3').change(function() {
+      $('#value3').html($('#slider3').slider('getValue') + "%");
+    });
+    $('#value3').html($('#slider3').slider('getValue') + "%");
+    $('#advanced').show();
   }
 
   /**
