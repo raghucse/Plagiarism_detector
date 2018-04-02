@@ -2,6 +2,7 @@ package edu.neu;
 
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.sort;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -22,7 +23,7 @@ import edu.neu.user.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
-public class PlagarismDetectorApplicationTests extends AbstractMvcTest{
+public class PlagarismDetectorApplicationTests extends AbstractMvc{
 
 	private MockMvc mvc;
 
@@ -65,12 +66,7 @@ public class PlagarismDetectorApplicationTests extends AbstractMvcTest{
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());*/
 
-        final String token2 = extractToken(login("sa@example.com", "123456"));
-		final String token = extractToken(login("admin", "pass"));
-
-
-        System.out.println(token);
-        System.out.println(token2);
+		System.out.println("TOKEN: "+getToken());
 	}
 
 }

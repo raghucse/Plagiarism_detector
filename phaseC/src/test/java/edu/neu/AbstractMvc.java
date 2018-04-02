@@ -37,13 +37,23 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties = {"spring.data.mongodb.port=27018"})
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
 @Ignore
-public class AbstractMvcTest {
+public class AbstractMvc {
     protected MockMvc mockMvc;
 
     private ObjectMapper mapper = new ObjectMapper();
     private static Set<Class> inited = new HashSet<>();
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    private String token;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -59,6 +69,9 @@ public class AbstractMvcTest {
             doInit();
             inited.add(getClass());
         }
+
+        register("sa@example.com","123456","PROFESSOR");
+        extractToken(login("sa@example.com", "123456"));
     }
 
     protected void doInit() throws Exception {
@@ -67,6 +80,16 @@ public class AbstractMvcTest {
     protected String json(Object o) throws IOException {
         return mapper.writeValueAsString(o);
     }
+
+    protected void register(String username, String password, String role) throws Exception {
+        mockMvc.perform(post("/registration")
+                .param("username",username)
+                .param("password", password)
+                .param("role",role))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.msg", is("registration successful")));
+    }
+
 
     protected ResultActions login(String username, String password) throws Exception {
         final AuthenticationRequest auth = new AuthenticationRequest();
@@ -85,12 +108,8 @@ public class AbstractMvcTest {
         return result;
     }
 
-    protected String extractToken(ResultActions result) throws UnsupportedEncodingException {
-       return result.andReturn().getResponse().getHeader("Authorization");
-    }
-
-    @Test
-    public void someTest(){
+    protected void extractToken(ResultActions result) throws UnsupportedEncodingException {
+       setToken(result.andReturn().getResponse().getHeader("Authorization"));
 
     }
 
