@@ -1,26 +1,18 @@
 package edu.neu;
 
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.sort;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.junit.Before;
-import org.junit.Ignore;
+import edu.neu.reports.PlagiarismRunRequest;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.web.servlet.MockMvc;
-import edu.neu.user.*;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlagarismDetectorApplicationTests extends AbstractMvc{
@@ -37,6 +29,27 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 
 		login("raghu@neu.com", "Test@1234").andExpect(status().isOk());
 
+	}
+
+	@Test
+	public void testRunPlagiarism() throws Exception {
+		List<String> gitUrls = new ArrayList<>();
+
+		gitUrls.add("https://github.com/bharat94/testRepo1.git");
+		gitUrls.add("https://github.com/bharat94/testRepo2.git");
+
+		PlagiarismRunRequest plagRun = new PlagiarismRunRequest();
+		plagRun.setDescription("Sample run");
+		plagRun.setGitUrls(gitUrls);
+        plagRun.setSharedUsers(new ArrayList<>());
+		ResultActions result = mockMvc.perform(
+				post("/plagiarism/run")
+						.header("Authorization", getToken())
+						.param("description",json(plagRun))
+						.param("gitUrls", json(gitUrls))
+						.param("sharedUsers", json(new ArrayList<>()))
+						.contentType(MediaType.APPLICATION_JSON));
+		assertEquals("Plagiarism run started",result.andReturn().getResponse().getContentAsString());
 	}
 
 }
