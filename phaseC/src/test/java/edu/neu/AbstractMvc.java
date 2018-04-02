@@ -91,10 +91,6 @@ public class AbstractMvc {
 
 
     protected ResultActions login(String username, String password) throws Exception {
-        final AuthenticationRequest auth = new AuthenticationRequest();
-        auth.setUserName(username);
-        auth.setPassword(password);
-
         ApplicationUser user = new ApplicationUser();
         user.setUsername(username);
         user.setPassword(password);
