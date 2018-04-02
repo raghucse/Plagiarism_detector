@@ -42,14 +42,17 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 		plagRun.setDescription("Sample run");
 		plagRun.setGitUrls(gitUrls);
         plagRun.setSharedUsers(new ArrayList<>());
+		System.out.println("Git utrl:: "+json(gitUrls));
 		ResultActions result = mockMvc.perform(
 				post("/plagiarism/run")
 						.header("Authorization", getToken())
-						.param("description",json(plagRun))
-						.param("gitUrls", json(gitUrls))
-						.param("sharedUsers", json(new ArrayList<>()))
-						.contentType(MediaType.APPLICATION_JSON));
+						.param("description",plagRun.getDescription())
+						.param("gitUrls", "https://github.com/bharat94/testRepo1.git, https://github.com/bharat94/testRepo2.git")
+						.param("sharedUsers", json(new ArrayList<>()))	);
+		Thread.sleep(5000);
 		assertEquals("Plagiarism run started",result.andReturn().getResponse().getContentAsString());
+
+
 	}
 
 }
