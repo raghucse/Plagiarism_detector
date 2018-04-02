@@ -1,5 +1,8 @@
 package edu.neu.Security;
 
+/**
+ * defines constants used in JWT authentication
+ */
 public class SecurityConstants {
 
     public static final String SECRET = "SecretKeyToGenJWTs";
