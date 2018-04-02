@@ -12,8 +12,6 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,7 +35,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
+//@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
+@TestPropertySource(locations = {"classpath:test.properties"})
 @Ignore
 public class AbstractMvc {
     protected MockMvc mockMvc;
