@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Controller which provides endpoints to trigger plagiarism
+ */
 @Controller
 public class PlagiarismRunController {
 
@@ -28,6 +31,11 @@ public class PlagiarismRunController {
     @Autowired
     private PlagiarismRunService plagiarismRunService;
 
+    /**
+     * End point to trigger plagiarism
+     * @param runReq contains git links against which plagiarism should be run
+     * @return
+     */
     @RequestMapping(value = "/plagiarism/run", method = RequestMethod.POST)
     public ResponseEntity<String> runPlagarism(@ModelAttribute PlagiarismRunRequest runReq) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
