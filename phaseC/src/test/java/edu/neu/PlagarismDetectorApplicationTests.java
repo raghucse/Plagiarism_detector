@@ -54,4 +54,34 @@ public class PlagarismDetectorApplicationTests{
 				.andExpect(jsonPath("$.msg", is("registration successful")));
 	}
 
+
+	@Test
+	public void testReport() throws Exception {
+
+		mvc.perform(post("/registration")
+				.param("username","raghucse")
+				.param("password", "Test@1234"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.msg", is("registration successful")));
+	}
+
+
+	@Test
+	public void testLogin() throws Exception {
+
+		ApplicationUser user = new ApplicationUser();
+		user.setUsername("raghu");
+		user.setPassword("Test@1234");
+		user.setRole(Role.PROFESSOR);
+
+		when(userService.findByUsername("raghu")).thenReturn(user);
+
+		mvc.perform(post("/login")
+				.param("username", "raghu")
+				.param("password","Test@1234")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.msg", is("login successful")));
+	}
+
 }
