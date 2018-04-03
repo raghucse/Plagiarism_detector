@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -35,8 +33,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-//@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
-@TestPropertySource(locations = {"classpath:test.properties"})
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
 @Ignore
 public class AbstractMvc {
     protected MockMvc mockMvc;
@@ -68,9 +65,6 @@ public class AbstractMvc {
             doInit();
             inited.add(getClass());
         }
-
-        register("sa@example.com","123456","PROFESSOR");
-        extractToken(login("sa@example.com", "123456"));
     }
 
     protected void doInit() throws Exception {

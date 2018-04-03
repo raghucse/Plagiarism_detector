@@ -1,6 +1,7 @@
 package edu.neu;
 
 
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,7 +30,8 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 
 	@Test
 	public void testRunPlagiarism() throws Exception {
-
+        register("sa@example.com","123456","PROFESSOR");
+        extractToken(login("sa@example.com", "123456"));
 
 		ResultActions result = mockMvc.perform(
 				post("/plagiarism/run")
@@ -46,7 +48,8 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 		ResultActions resultReport = mockMvc.perform(get("/report/user/reportIds/{userId}", "1")
 						.header("Authorization", getToken()));
 		resultReport.andExpect(status().isOk());
-		assertEquals(res,resultReport.andReturn().getResponse().getContentAsString());
+
+		assertTrue(resultReport.andReturn().getResponse().getContentAsString().contains("0.1612665072227597"));
 
 	}
 
