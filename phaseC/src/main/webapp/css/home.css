@@ -15,7 +15,12 @@
 
 .statistics {
 	vertical-align: middle;
-	background-color: white;
+	background-color: wheat;
+}
+
+#chart{
+	width: 600px;
+	height: 400px;
 }
 
 .pcheck {

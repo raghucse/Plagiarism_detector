@@ -202,9 +202,10 @@ class Application extends React.Component {
           <div className="row justify-content-md-center">
             <div className="col-3 runs">{ this.renderSideColumn() }</div>
             <div className="col statistics">
-              <h4 id="title">{ this.state.runs.length == 0 ? "Cuurrently there are no runs." : "Select a run and check." }</h4>
-              { this.state.runs.length == 0 ? "" : this.renderStatisticsTable() }
-              <div className="container" id="sa"></div>
+              <h4 id="title">{ this.state.runs.length == 0 ? "Currently there are no runs." : "Select a run and check." }</h4>
+              <div className="container" id="sa">
+              </div>
+              <div id="chart"></div>
             </div>
           </div>
         </div>
@@ -244,28 +245,12 @@ class Application extends React.Component {
               <div className="modal-footer">
                 <button type="button" className="btn btn-primary" onClick={ () => this.advancedSettings() }>Advanced</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
-                  data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run Check</button>
+                  data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.addStudent() }>Add Student</button>
                 <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * Render the table head.
-   */
-  renderStatisticsTable() {
-    return(
-      <div className="container statable" id="sat">
-        <div className="row">
-          <div className="col-2">File 1</div>
-          <div className="col-2">File 2</div>
-          <div className="col-2">Percentage</div>
-          <div className="col-2">Description</div>
         </div>
       </div>
     );
@@ -294,6 +279,7 @@ class Application extends React.Component {
           <div className="col sider">
             <button type="button" className="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal"
             onClick={ () => $("#advanced").hide() }>Add New Run</button>
+            <hr />Run History<hr />
           </div>
         </div>
         { runElements }
@@ -305,17 +291,17 @@ class Application extends React.Component {
    * Advanced settings in modal.
    */
   advancedSettings() {
-    $('#slider1').slider({ min: 0, max: 100 });
-    $('#slider1').change(function() {
+    $('#slider1').slider({ min: 0, max: 100, value: 50 });
+    $('#slider1').change(function(slideEvt, ui) {
       $('#value1').html($('#slider1').slider('getValue') + "%");
     });
     $('#value1').html($('#slider1').slider('getValue') + "%");
-    $('#slider2').slider({ min: 0, max: 100 });
+    $('#slider2').slider({ min: 0, max: 100, value: 50 });
     $('#slider2').change(function() {
       $('#value2').html($('#slider2').slider('getValue') + "%");
     });
     $('#value2').html($('#slider2').slider('getValue') + "%");
-    $('#slider3').slider({ min: 0, max: 100 });
+    $('#slider3').slider({ min: 0, max: 100, value: 50 });
     $('#slider3').change(function() {
       $('#value3').html($('#slider3').slider('getValue') + "%");
     });
@@ -409,14 +395,28 @@ class Application extends React.Component {
     var data = null;
 		var endPoint = "report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;
+    xhr.withCredentials = true;
+    
+    var sim = 0;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
         var showing = "";
         $("#title").text("Statistics of " + r.toString());
     
+        
         for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
+
+          var row = "<div class='row'>";
+          row += "<div class='btn-group'>";
+          row += "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>";
+          row += result.reportFile.comparisonList[i].filename1 + " vs. " + result.reportFile.comparisonList[i].filename2 + "<span class='caret'></span>"
+          row += "</button><ul class='dropdown-menu'>";
+          row += "sa";
+          row += "</ul></div></div>";
+          showing += row;
+
+          /*
           var row = "<div className='row'>";
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].filename1;
@@ -426,14 +426,67 @@ class Application extends React.Component {
           row += "</div>";
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].scores.totalScore;
+          sim = result.reportFile.comparisonList[i].scores.totalScore;
           row += "</div>";
           row += "<div className='col-2'>"
           row += result.reportFile.comparisonList[i].scores.subScores;
           row += "</div>";
           row += "</div>";
           showing += row;
+          */
         }
         $("#sa").html(showing);
+        
+
+/*
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data:['Similar','Diff']
+        },
+        series: [
+            {
+                name:'Sta',
+                type:'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:Number(sim), name:'Similar'},
+                    {value:1-Number(sim), name:'Diff'}
+                ]
+            }
+        ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);*/
+
 			}
 		});
 		xhr.open("GET", endPoint);
