@@ -404,89 +404,68 @@ class Application extends React.Component {
         var showing = "";
         $("#title").text("Statistics of " + r.toString());
     
-        
         for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
-
-          var row = "<div class='row'>";
+          var row = "<div class='row' id='dropdown'>";
+          sim = result.reportFile.comparisonList[i].scores.totalScore;
           row += "<div class='btn-group'>";
           row += "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>";
           row += result.reportFile.comparisonList[i].filename1 + " vs. " + result.reportFile.comparisonList[i].filename2 + "<span class='caret'></span>"
           row += "</button><ul class='dropdown-menu'>";
-          row += "sa";
+          row += "<div id='chart1'></div>";
           row += "</ul></div></div>";
           showing += row;
 
           /*
-          var row = "<div className='row'>";
-          row += "<div className='col-2'>"
-          row += result.reportFile.comparisonList[i].filename1;
-          row += "</div>";
-          row += "<div className='col-2'>"
-          row += result.reportFile.comparisonList[i].filename2;
-          row += "</div>";
-          row += "<div className='col-2'>"
-          row += result.reportFile.comparisonList[i].scores.totalScore;
-          sim = result.reportFile.comparisonList[i].scores.totalScore;
-          row += "</div>";
-          row += "<div className='col-2'>"
-          row += result.reportFile.comparisonList[i].scores.subScores;
-          row += "</div>";
-          row += "</div>";
-          showing += row;
+            row += result.reportFile.comparisonList[i].filename1;
+            row += result.reportFile.comparisonList[i].filename2;
+            row += result.reportFile.comparisonList[i].scores.totalScore;
+            sim = result.reportFile.comparisonList[i].scores.totalScore;
+            row += result.reportFile.comparisonList[i].scores.subScores;
           */
         }
-        $("#sa").html(showing);
-        
 
-/*
         var myChart = echarts.init(document.getElementById('chart'));
-
-        // 指定图表的配置项和数据
-        var option = {
-          tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
-        },
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data:['Similar','Diff']
-        },
-        series: [
-            {
-                name:'Sta',
-                type:'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
+          var option = {
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+              orient: 'vertical',
+              x: 'left',
+              data:['Similar','Diff']
+            },
+            series: [{
+              name:'Statistic',
+              type:'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
                 },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data:[
-                    {value:Number(sim), name:'Similar'},
-                    {value:1-Number(sim), name:'Diff'}
-                ]
-            }
-        ]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);*/
-
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '30',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value: Number(sim), name:'Similarity'},
+                {value: 1 - Number(sim), name:'Different'}
+              ]
+            }]
+          };
+        myChart.setOption(option);
+        $("#sa").html(showing);
 			}
 		});
 		xhr.open("GET", endPoint);

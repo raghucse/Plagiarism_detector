@@ -54,3 +54,12 @@ h4 {
 .runbtn {
 	width: 68%;
 }
+
+#dropdown {
+	margin-top: 3px;
+}
+
+#chart1, #chart2 {
+	width: 600px;
+	height: 400px;
+}
