@@ -1,32 +1,52 @@
 package edu.neu.comparison;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
 import edu.neu.Log;
 import edu.neu.astgeneration.ASTUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Calculate the cosine similarity between two AST trees
  *
  * @author Junhao Qu
- * @see https://en.wikipedia.org/wiki/Cosine_similarity
  */
 public class CosineSimilarity implements ASTBasedStrategy{
 	
 	private ASTUtils astUtils;
-	
+
+    /**
+     * The constructor is used to set the astUtils parameter
+     * @param astUtils is an object of the ASTUtils class which
+     *                 determines the value to be set for the local astUtils
+     *                 variable
+     */
 	public CosineSimilarity(ASTUtils astUtils) {
 		this.astUtils = astUtils;
 	}
-	
-	@Override
+
+
+    /**
+     * Returns the name of the strategy to be used for comparison
+     * @return cosine as the value as cosine similarity will be used
+     *         for comparison
+     */
 	public STRATEGIES getName() {
 		return STRATEGIES.COSINE;
 	}
 
-	@Override
+
+    /**
+     * This function is used to compare two files using cosine similarity
+     * @param f1 is the first file
+     * @param f2 is the second file
+     * @return the score generated after implementing the cosine similarity
+     *         measure strategy
+     */
 	public Scores compare(File f1, File f2) {
 		try {
 			double score = cosSim(
@@ -39,11 +59,20 @@ public class CosineSimilarity implements ASTBasedStrategy{
 		}
 		return new Scores(0, "CosineSimilarity:"+0+ ";");
 	}
-	
-	@Override
+
+    /**
+     * @return Returns the astUtils value
+     */
 	public ASTUtils getASTUtils() {
 		return astUtils;
 	}
+
+    /**
+     * This function is used to calculate the cosine similarity measure
+     * @param tree1 is AST tree of the first file
+     * @param tree2 is the AST tree of the second file
+     * @return returns a similarity value
+     */
 
     public double cosSim(ArrayList<String> tree1, ArrayList<String> tree2) {
 
@@ -75,6 +104,12 @@ public class CosineSimilarity implements ASTBasedStrategy{
             return actualScore;
     }
 
+    /**
+     * This function is used to perform cross multiplication
+     * @param arrayA integer array of the first file
+     * @param arrayB integer array of the second file
+     * @return cross multiplication value of the two integer arrays
+     */
     private int crossMul(int[] arrayA, int[] arrayB) {
         int res = 0;
         for (int i = 0; i < arrayA.length; i++) {
@@ -83,6 +118,11 @@ public class CosineSimilarity implements ASTBasedStrategy{
         return res;
     }
 
+    /**
+     * Calculates the square of the values
+     * @param arrayA is an integer array
+     * @return the square of the values
+     */
     private double square(int[] arrayA) {
         int res = 0;
         for (int i : arrayA) {

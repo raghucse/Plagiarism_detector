@@ -12,10 +12,21 @@ public class AstPrinter {
 
     private boolean ignoringWrappers = true;
 
+    /**
+     * Determines whether the wrapper is to be ignored
+     * @param ignoringWrappers is the boolean value which when set to true,
+     *                         the wrapper is to be ignored, else its not to
+     *                         be ignored
+     */
     public void setIgnoringWrappers(boolean ignoringWrappers) {
         this.ignoringWrappers = ignoringWrappers;
     }
 
+    /**
+     * Creates a flattened string version of the tree
+     * @param ctx is the object of RuleContext class
+     * @return returns a flattened list of the AST
+     */
     public ArrayList<String> getASTStringeEq(RuleContext ctx) {
     		Log.trace("Starting to build AST String List");
         ArrayList<String> astStringEquiv =  new ArrayList<>();
@@ -25,6 +36,12 @@ public class AstPrinter {
     }
 
 
+    /**
+     * This function is used to parse the rule context so as to get the AST
+     * @param ctx is the object of the RuleContext class
+     * @param astStringEquiv is the list which maintains the flattened
+     *                       string version of the generated AST
+     */
     private void explore(RuleContext ctx, ArrayList<String> astStringEquiv){
 
         String ruleName = Python3Parser.ruleNames[ctx.getRuleIndex()];
