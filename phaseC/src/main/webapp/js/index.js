@@ -4,7 +4,13 @@ class Application extends React.Component {
     this.state = {
       page: 0,
       runs: [],
-      student: 1
+      student: 1,
+
+      email: "",
+      name: "",
+      password: "",
+      cfrm: "",
+      role: ""
     }
   }
   /**
@@ -33,18 +39,26 @@ class Application extends React.Component {
       <div className="row justify-content-center">
         <div className="col-md-auto indexBanner">
           <button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
-            onClick={ () => this.setState({ page: 0 }) }>Log In</button>
+            onClick={ () => this.setState({ page: 0 }) }>{ this.state.page == 0 ? "▶" : "" }Log In</button>
         </div>
         <div className="col-md-auto indexBanner">
           <button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
-            onClick={ () => this.setState({ page: 1 }) }>Register</button>
+            onClick={ () => this.setState({ page: 1 }) }>{ this.state.page == 1 ? "▶" : "" }Register</button>
         </div>
       </div>
     );
   }
 
   /**
+   * Enabled 
+   */
+  enableRegisterButton() {
+    return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "" && this.state.role != "");
+  }
+
+  /**
    * Render the register UI.
+   * 
    */
   renderRegistration() {
     return (
@@ -53,20 +67,41 @@ class Application extends React.Component {
         <div className="container">
           { this.renderBanner() }
           <div id="indexcontain">
+            <div className="row justify-content-center reg_slogan_col">
+              <div className="col-md-auto"><span id="reg_slogan">User Registration</span></div>
+            </div>
             <form onSubmit={ e => this.onRegistrationSubmit(e) }>
               <div className="row justify-content-center form">
-                <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
+                <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
+                <div className="col-md-auto"><input type="email" id="email" placeholder="user@example.com" onChange={ () => this.setState({ email: $('#email').val() }) }/></div>
+                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
-                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+                <div className="col-md-auto index_label"><span className="index_label_text">Name</span></div>
+                <div className="col-md-auto"><input type="text" id="name" placeholder="David Jackson" onChange={ () => this.setState({ name: $('#name').val() }) }/></div>
+                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
-                <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password"/></div>
+                <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
+                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password" onChange={ () => this.setState({ password: $('#pwd').val() }) }/></div>
+                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+              </div>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto index_label"><span className="index_label_text">Confirm</span></div>
+                <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password" onChange={ () => this.setState({ cfrm: $('#crfmpwd').val() }) }/></div>
+                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+              </div>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto index_label_role">
+                  <span className="index_label_text">I am: </span>&nbsp;&nbsp;
+                  <input type="radio" name="role" value="PROFESSOR" onChange={ () => this.setState({ role: $('[name="role"]:checked').val() }) } />&nbsp;<span className="index_label_text">Professor</span>&nbsp;&nbsp;
+                  <input type="radio" name="role" value="GRADER" onChange={ () => this.setState({ role: $('[name="role"]:checked').val() }) } />&nbsp;<span className="index_label_text">Grader&nbsp;&nbsp;&nbsp;&nbsp;*</span>
+                </div>
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
-                  <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
-                    data-toggle="popover" data-placement="right" data-content="Check password!">Submit</button>
+                  <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" disabled={ this.enableRegisterButton() }
+                    data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Register</button>
                 </div>
               </div>
             </form>
@@ -116,17 +151,29 @@ class Application extends React.Component {
         <div className="container">
           { this.renderBanner() }
           <div id="indexcontain">
+            <div className="row justify-content-center reg_slogan_col">
+              <div className="col-md-auto"><span id="reg_slogan">User Login</span></div>
+            </div>
             <form onSubmit={ e => this.onLoginSubmit(e) }>
               <div className="row justify-content-center form">
+                <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
                 <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
+                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
+                <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
                 <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+              </div>
+              <div className="row justify-content-center form">
+                <div className="col-md-auto index_label_role">
+                  <input id="admin" type="checkbox"/>&nbsp;&nbsp;<span className="index_label_text">I Am Admin</span>&nbsp;&nbsp;
+                </div>
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
                   <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
-                    data-toggle="popover" data-placement="right" data-content="Invalid credential!">Submit</button>
+                    data-toggle="popover" data-placement="right" data-content="Invalid credential!">Log In</button>
                 </div>
               </div>
             </form>
