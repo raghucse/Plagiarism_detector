@@ -50,10 +50,17 @@ class Application extends React.Component {
   }
 
   /**
-   * Enabled 
+   * Enabled the register button.
    */
   enableRegisterButton() {
     return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "" && this.state.role != "");
+  }
+
+  /**
+   * Enabled the log in button.
+   */
+  enableLoginButton() {
+    return !(this.state.email != "" && this.state.name);
   }
 
   /**
@@ -157,12 +164,12 @@ class Application extends React.Component {
             <form onSubmit={ e => this.onLoginSubmit(e) }>
               <div className="row justify-content-center form">
                 <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
-                <div className="col-md-auto"><input type="email" id="email" placeholder="Email"/></div>
+                <div className="col-md-auto"><input type="email" id="email" placeholder="Email" onChange={ () => this.setState({ email: $('#email').val() }) }/></div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
-                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password"/></div>
+                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password" onChange={ () => this.setState({ password: $('#pwd').val() }) }/></div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
@@ -172,7 +179,7 @@ class Application extends React.Component {
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
-                  <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body"
+                  <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" disabled={ this.enableLoginButton() }
                     data-toggle="popover" data-placement="right" data-content="Invalid credential!">Log In</button>
                 </div>
               </div>
