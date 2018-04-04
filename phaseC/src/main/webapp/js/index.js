@@ -1,6 +1,31 @@
 class Application extends React.Component {
   constructor() {
     super();
+
+    // Request all report IDs under the user's name
+    var data = null;
+    var that = this;
+		var loadRuns = [];
+		var url = "/report/userId/" + readCookie('uid')
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+				loadRuns = JSON.parse(this.responseText);
+				that.setState({ runs: loadRuns });
+			}
+		});		
+		xhr.open("GET", url);
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", readCookie('Authorization'));
+    xhr.send(data);
+    
+    /**
+     * page: login/register
+     * runs: report IDs under the user's name
+     * student: number of student when adding Git Repo
+     * other attributes = login/register cache
+     */
     this.state = {
       page: 0,
       runs: [],
@@ -10,9 +35,7 @@ class Application extends React.Component {
       name: "",
       password: "",
       cfrm: "",
-      role: "",
-
-      nullStu: 0
+      role: ""
     }
   }
   /**
@@ -327,30 +350,11 @@ class Application extends React.Component {
     );
   }
 
-  countNullStudent() {
-    for (var i = 1; i < this.state.student; i++) {
-      if ($('hw' + i.toString()).val() == 0) {
-        var temp = this.state.nullStu;
-        temp += 1;
-        this.setState({ nullStu: temp });
-      } else if ($('nm' + i.toString()).val() == 0) {
-        var temp = this.state.nullStu;
-        temp += 1;
-        this.setState({ nullStu: temp });
-      } 
-    }
-  }
-
   /**
    * Disabling different components for step 2.
    */
   disableStep2(type) {
-
-
-    // var result = (this.state.nullStu == 0);
-
     var result = this.state.student == 1;
-
     switch (type) {
       case 'text':
         return result ? "true" : null;
