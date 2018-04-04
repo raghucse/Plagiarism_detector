@@ -272,7 +272,6 @@ class Application extends React.Component {
               </div>
               <div className="modal-body">
                 <h5>Step 1: Add Student (GitHub Repo)<button type="button" className="btn btn-primary add_student" onClick={ () => this.addStudent() }>Add Student</button></h5>
-                
                 <div id="students"></div><hr/>  
                 <input type="text" id="rundescription" placeholder="Run Description"/>
                 <div id="advanced"><hr />
@@ -314,8 +313,6 @@ class Application extends React.Component {
 
   /**
    * Render the plagiarism check side column.
-   * 
-   * <button type="button" className="btn btn-primary" onClick={ () => this.showStatistic(0) }>Run 0</button>
    */
   renderSideColumn() {
     const runElements = [];
@@ -376,18 +373,26 @@ class Application extends React.Component {
   }
 
   /**
+   * Remove a student from the modal.
+   */
+  removeStudent() {
+
+  }
+
+  /**
    * Add a new student to the modal.
    */
   addStudent() {
     var stu = this.state.student;
-    var newGit = "<input type='text' class='git'" + " id='hw" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/> ";
-    newGit += "<input type='text' class='nm'" + " id='nm" + stu.toString() + "' placeholder='Student " + stu.toString() + " Name'/> ";
-    newGit += "<button class='removestudent' onClick='this.removeStudent(" + stu.toString() + ")'>&times;</button>";
-
-    // "<button id='removestudent' onClick='this.removeStudent(" + stu.toString() + ") '>&times;</button>"
+    var newGit = "<div id='stu" + stu.toString() + "'>"
+    newGit += "<input type='text' class='git'" + " id='hw" + stu.toString() + "' placeholder='Student GitHub Link'/> ";
+    newGit += "<input type='text' class='nm'" + " id='nm" + stu.toString() + "' placeholder='Student Name'/> ";
+    // newGit += "<button class='removestudent' id='remove" + stu.toString() + "'>&times;</button></div>";
+    // $("#remove").attr("click", this.removeStudent());
+    newGit += "<button class='removestudent' id='remove'>&times;</button></div>";
     $("#students").append(newGit);
     stu += 1;
-    this.setState({ student: stu });    
+    this.setState({ student: stu });
   }
 
   /**
