@@ -37,7 +37,7 @@ h4 {
 	margin-top: 1.5%;
 }
 
-#rundescription, #sharedusers, .git {
+#rundescription, #sharedusers {
 	width: 100%;
   font-size: 100%; 
   background-color: #f2f2f2; 
@@ -45,6 +45,29 @@ h4 {
 	padding: 1%;
 	border-radius: 5px;
 	margin-top: 1%;
+}
+
+.git, .nm {
+	width: 45%;
+  font-size: 100%; 
+  background-color: #f2f2f2; 
+	border: 1px solid #cccccc;
+	padding: 1%;
+	border-radius: 5px;
+	margin-top: 1%;
+}
+
+.removestudent {
+	width: 5%;
+	color: gray;
+	background-color: white;
+	border: none;
+}
+
+.removestudent:hover {
+	width: 5%;
+	color: black;
+	background-color: lightcoral;
 }
 
 .runelems {

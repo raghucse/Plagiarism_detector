@@ -380,7 +380,11 @@ class Application extends React.Component {
    */
   addStudent() {
     var stu = this.state.student;
-    var newGit = "<input type='text' class='git'" + " id='" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/>"
+    var newGit = "<input type='text' class='git'" + " id='hw" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/> ";
+    newGit += "<input type='text' class='nm'" + " id='nm" + stu.toString() + "' placeholder='Student " + stu.toString() + " Name'/> ";
+    newGit += "<button class='removestudent' onClick='this.removeStudent(" + stu.toString() + ")'>&times;</button>";
+
+    // "<button id='removestudent' onClick='this.removeStudent(" + stu.toString() + ") '>&times;</button>"
     $("#students").append(newGit);
     stu += 1;
     this.setState({ student: stu });    
