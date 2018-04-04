@@ -48,7 +48,7 @@ h4 {
 }
 
 .git, .nm {
-	width: 45%;
+	width: 46.5%;
   font-size: 100%; 
   background-color: #f2f2f2; 
 	border: 1px solid #cccccc;
@@ -99,4 +99,9 @@ h4 {
 
 h5 {
 	padding-bottom: 1%;
+}
+
+.runCheck {
+	width: 100%;
+	margin-top: 2%;
 }

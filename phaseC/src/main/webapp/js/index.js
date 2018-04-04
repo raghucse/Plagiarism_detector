@@ -10,7 +10,9 @@ class Application extends React.Component {
       name: "",
       password: "",
       cfrm: "",
-      role: ""
+      role: "",
+
+      nullStu: 0
     }
   }
   /**
@@ -174,7 +176,7 @@ class Application extends React.Component {
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto index_label_role">
-                  <input id="admin" type="checkbox"/>&nbsp;&nbsp;<span className="index_label_text">I Am Admin</span>&nbsp;&nbsp;
+                  <input id="admin" type="checkbox"/>&nbsp;&nbsp;<span className="index_label_text">I am Admin</span>&nbsp;&nbsp;
                 </div>
               </div>
               <div className="row justify-content-center form">
@@ -270,24 +272,28 @@ class Application extends React.Component {
                 <h5 className="modal-title" id="myModalLabel">Add New Run</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
-              <div className="modal-body">
+              <div className="modal-body"> {this.countNullStudent()}
                 <h5>Step 1: Add Student (GitHub Repo)<button type="button" className="btn btn-primary add_student" onClick={ () => this.addStudent() }>Add Student</button></h5>
                 <div id="students"></div><hr/>
                 <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
-                <div className="container">
                   <div className="row">
                     <div className="col-3 step2label">Run ID:</div>
                     <div className="col">
-                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Disabled now, add and fill in students first" : "Run ID" }disabled={ this.disableStep2('text') }/>
+                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Disabled, add & fill in students first" : "Run ID" }disabled={ this.disableStep2('text') }/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
-                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Disabled now, add and fill in students first" : "Run Description" } disabled={ this.disableStep2('text') }/>
+                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Disabled, add & fill in students first" : "Run Description" } disabled={ this.disableStep2('text') }/>
                     </div>
                   </div>
-                </div>
+                  <div className="row">
+                    <div className="col">
+                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableStep2('btn') }
+                        data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
+                    </div>
+                  </div>
                 <div id="advanced"><hr />
                   <div className="container">
                     <div className="row">
@@ -312,9 +318,7 @@ class Application extends React.Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
-                  data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
-                <button type="button" className="btn btn-default" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
+                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
               </div>
             </div>
           </div>
@@ -323,12 +327,29 @@ class Application extends React.Component {
     );
   }
 
+  countNullStudent() {
+    for (var i = 1; i < this.state.student; i++) {
+      if ($('hw' + i.toString()).val() == 0) {
+        var temp = this.state.nullStu;
+        temp += 1;
+        this.setState({ nullStu: temp });
+      } else if ($('nm' + i.toString()).val() == 0) {
+        var temp = this.state.nullStu;
+        temp += 1;
+        this.setState({ nullStu: temp });
+      } 
+    }
+  }
+
   /**
    * Disabling different components for step 2.
    */
   disableStep2(type) {
 
-    var result = (this.state.student == 1);
+
+    // var result = (this.state.nullStu == 0);
+
+    var result = this.state.student == 1;
 
     switch (type) {
       case 'text':
@@ -422,8 +443,8 @@ class Application extends React.Component {
   addStudent() {
     var stu = this.state.student;
     var newGit = "<div id='stu" + stu.toString() + "'>"
-    newGit += "<input type='text' class='git'" + " id='hw" + stu.toString() + "' placeholder='Student GitHub Link'/> ";
-    newGit += "<input type='text' class='nm'" + " id='nm" + stu.toString() + "' placeholder='Student Name'/> ";
+    newGit += "<input type='text' class='git'" + " id='hw" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/> ";
+    newGit += "<input type='text' class='nm'" + " id='nm" + stu.toString() + "' placeholder='Student " + stu.toString() + " Name'/> ";
     // newGit += "<button class='removestudent' id='remove" + stu.toString() + "'>&times;</button></div>";
     // $("#remove").attr("click", this.removeStudent());
     newGit += "<button class='removestudent' id='remove'>&times;</button></div>";
