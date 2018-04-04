@@ -272,8 +272,22 @@ class Application extends React.Component {
               </div>
               <div className="modal-body">
                 <h5>Step 1: Add Student (GitHub Repo)<button type="button" className="btn btn-primary add_student" onClick={ () => this.addStudent() }>Add Student</button></h5>
-                <div id="students"></div><hr/>  
-                <input type="text" id="rundescription" placeholder="Run Description"/>
+                <div id="students"></div><hr/>
+                <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-3 step2label">Run ID:</div>
+                    <div className="col">
+                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Disabled now, add and fill in students first" : "Run ID" }disabled={ this.disableStep2('text') }/>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-3 step2label">Description:</div>
+                    <div className="col">
+                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Disabled now, add and fill in students first" : "Run Description" } disabled={ this.disableStep2('text') }/>
+                    </div>
+                  </div>
+                </div>
                 <div id="advanced"><hr />
                   <div className="container">
                     <div className="row">
@@ -298,7 +312,6 @@ class Application extends React.Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={ () => this.advancedSettings() }>Advanced</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
                   data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
@@ -308,6 +321,23 @@ class Application extends React.Component {
         </div>
       </div>
     );
+  }
+
+  /**
+   * Disabling different components for step 2.
+   */
+  disableStep2(type) {
+
+    var result = (this.state.student == 1);
+
+    switch (type) {
+      case 'text':
+        return result ? "true" : null;
+        break;
+      case 'btn':
+      default:
+        return result;
+    }
   }
 
   /**
