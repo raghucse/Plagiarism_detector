@@ -295,7 +295,7 @@ class Application extends React.Component {
                 <h5 className="modal-title" id="myModalLabel">Add New Run</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
-              <div className="modal-body"> {this.countNullStudent()}
+              <div className="modal-body">
                 <h5>Step 1: Add Student (GitHub Repo)<button type="button" className="btn btn-primary add_student" onClick={ () => this.addStudent() }>Add Student</button></h5>
                 <div id="students"></div><hr/>
                 <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
@@ -314,7 +314,7 @@ class Application extends React.Component {
                   <div className="row">
                     <div className="col">
                       <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableStep2('btn') }
-                        data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
+                        data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed in 2 secs">Run</button>
                     </div>
                   </div>
                 <div id="advanced"><hr />
@@ -465,6 +465,12 @@ class Application extends React.Component {
     console.log(readCookie('Authorization'));
     console.log(readCookie('uid'));
 
+    // Disable run button and close the window
+    $(".runCheck").attr("disabled", true);
+    setTimeout(function() {
+      $('#myModal').modal('hide');
+    }, 2000);
+    
     // Append all Git Hub links together
     var links = [];
     for (var i = 1; i < this.state.student; i++) {
@@ -542,13 +548,7 @@ class Application extends React.Component {
           row += "</ul></div></div>";
           showing += row;
 
-          /*
-            row += result.reportFile.comparisonList[i].filename1;
-            row += result.reportFile.comparisonList[i].filename2;
-            row += result.reportFile.comparisonList[i].scores.totalScore;
-            sim = result.reportFile.comparisonList[i].scores.totalScore;
-            row += result.reportFile.comparisonList[i].scores.subScores;
-          */
+         
         }
 
         var myChart = echarts.init(document.getElementById('chart'));
