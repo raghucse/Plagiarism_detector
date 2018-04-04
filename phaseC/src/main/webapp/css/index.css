@@ -46,7 +46,7 @@ h1 {
 	width: 400px;
 }
 
-#email, #pwd, #crfmpwd {
+#email, #pwd, #crfmpwd, #name {
 	width: 120%;
   font-size: 100%; 
   background-color: #f2f2f2; 
@@ -61,11 +61,45 @@ h1 {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 0.5%;
-	padding-top: 3%;
+	padding-top: 2%;
 	padding-bottom: 3%;
 }
 
 .subbtn {
 	margin-top: 15%;
 	width: 130%;
+}
+
+#reg_slogan {
+	font-size: 130%;
+	font-weight: bold;
+	color: #464c54;
+}
+
+.reg_slogan_col {
+	margin-bottom: 3%;
+}
+
+.index_label_text {
+	font-size: 105%;
+}
+
+.index_label {
+	width: 25%;
+	padding-top: 1.5%;
+}
+
+.index_star {
+	width: 5%;
+	padding-top: 1.5%;
+}
+
+.index_label_role {
+	margin-left: 10%;
+	padding-left: 5%;
+	padding-top: 3%;
+}
+
+.index_label_text_star {
+	margin-top: 2%;
 }
