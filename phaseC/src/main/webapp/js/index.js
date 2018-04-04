@@ -35,7 +35,10 @@ class Application extends React.Component {
       name: "",
       password: "",
       cfrm: "",
-      role: ""
+      role: "",
+
+      runID: "",
+      runDescription: ""
     }
   }
   /**
@@ -302,19 +305,23 @@ class Application extends React.Component {
                   <div className="row">
                     <div className="col-3 step2label">Run ID:</div>
                     <div className="col">
-                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Disabled, add & fill in students first" : "Run ID" }disabled={ this.disableStep2('text') }/>
+                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run ID" }
+                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runID: $('#runid').val() }) }/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
-                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Disabled, add & fill in students first" : "Run Description" } disabled={ this.disableStep2('text') }/>
+                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
+                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col">
-                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableStep2('btn') }
-                        data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed in 2 secs">Run</button>
+                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
+                        data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed in 2 secs">
+                        { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run ID and a description" : "Run" }
+                      </button>
                     </div>
                   </div>
                 <div id="advanced"><hr />
@@ -363,6 +370,13 @@ class Application extends React.Component {
       default:
         return result;
     }
+  }
+
+  /**
+   * Disabling different components for the final run.
+   */
+  disableFinalRun() {        
+    return !(!this.disableStep2('btn') && this.state.runID.length != 0 && this.state.runDescription.length != 0);
   }
 
   /**
