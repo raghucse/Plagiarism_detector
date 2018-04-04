@@ -301,14 +301,21 @@ class Application extends React.Component {
                 <button type="button" className="btn btn-primary" onClick={ () => this.advancedSettings() }>Advanced</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
                   data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
-                
-                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" className="btn btn-default" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  /**
+   * Reset students for the cancel button in modal.
+   */
+  resetStudent() {
+    this.setState({ student: 1 });
+    document.getElementById('students').innerHTML = null;
   }
 
   /**
