@@ -3,6 +3,7 @@ class Application extends React.Component {
     super();
 
     // Request all report IDs under the user's name
+    /*
     var data = null;
     var that = this;
 		var loadRuns = [];
@@ -19,12 +20,16 @@ class Application extends React.Component {
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", readCookie('Authorization'));
     xhr.send(data);
+    */
+
+   var loadRuns = [1, 2];
+   this.setState({ runs: loadRuns });
     
     /**
      * page: login/register
      * runs: report IDs under the user's name
      * student: number of student when adding Git Repo
-     * other attributes = login/register cache
+     * other attributes: login/register/report cache
      */
     this.state = {
       page: 0,
@@ -42,7 +47,7 @@ class Application extends React.Component {
     }
   }
   /**
-   * Render the navigation bar.
+   * Render the navigation bar UI.
    */
   renderNav() {
     return(
@@ -60,7 +65,7 @@ class Application extends React.Component {
   }
 
   /**
-   * Render the banner.
+   * Render the banner UI.
    */
   renderBanner() {
     return(
@@ -78,22 +83,7 @@ class Application extends React.Component {
   }
 
   /**
-   * Enabled the register button.
-   */
-  enableRegisterButton() {
-    return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "" && this.state.role != "");
-  }
-
-  /**
-   * Enabled the log in button.
-   */
-  enableLoginButton() {
-    return !(this.state.email != "" && this.state.name);
-  }
-
-  /**
-   * Render the register UI.
-   * 
+   * Render the user registration UI.
    */
   renderRegistration() {
     return (
@@ -147,7 +137,7 @@ class Application extends React.Component {
   }
 
   /**
-   * Register a user.
+   * Send the user registration request to the end point.
    */
   onRegistrationSubmit(e) {
     e.preventDefault();
@@ -165,19 +155,45 @@ class Application extends React.Component {
     $('[data-toggle="popover"]').popover('hide');
 
     // Send the data to the end point
-    var data = new FormData();
-    data.append('username', $("#email").val()); 
-    data.append('password', $("#pwd").val());
-    data.append('role', 'PROFESSOR');
-    fetch('/registration', {
-      method: 'POST',
-      body: data
+    /*
+      var data = new FormData();
+      data.append('email', this.state.email);
+      data.append('username', this.state.name);
+      data.append('password', this.state.password);
+      data.append('role', this.state.role);
+      fetch('/registration', {
+        method: 'POST',
+        body: data
+      });
+    */
+
+    // Clear registration cache
+    this.setState({
+      page: 0,
+      email: "",
+      name: "",
+      password: "",
+      cfrm: "",
+      role: ""
     });
-    this.setState({ page: 0 });
   }
 
   /**
-   * Render the login UI.
+   * Enabled the register button.
+   */
+  enableRegisterButton() {
+    return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "" && this.state.role != "");
+  }
+
+  /**
+   * Enabled the log in button.
+   */
+  enableLoginButton() {
+    return !(this.state.email != "" && this.state.password != "");
+  }
+
+  /**
+   * Render the user login UI.
    */
   renderLogin() {
     return (
@@ -219,17 +235,18 @@ class Application extends React.Component {
   }
 
   /**
-   * User logs in.
+   * Send the user login request to the end point.
    */
   onLoginSubmit(e) {
     e.preventDefault();
 
+    /*
     // Form the JSON data which needs to be sent
     var that = this;
     var xhr = new XMLHttpRequest();
     var data = JSON.stringify({
-      "username": $("#email").val(),
-      "password": $("#pwd").val()
+      "username": this.state.email,
+      "password": this.state.password
     });
     xhr.withCredentials = true;
 
@@ -270,7 +287,10 @@ class Application extends React.Component {
     // Send data
     xhr.open("POST", "/login");
     xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.send(data);
+    xhr.send(data); */
+    createCookie('UserName', 'Test');
+    this.setState({ page: 3 })
+    location.reload();
   }
 
   /**
@@ -313,6 +333,13 @@ class Application extends React.Component {
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
                       <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
+                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-3 step2label">Share With:</div>
+                    <div className="col">
+                      <input type="text" id="sharedusers" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Enter the name, separed by ','" }
                         disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
@@ -385,6 +412,12 @@ class Application extends React.Component {
   resetStudent() {
     this.setState({ student: 1 });
     document.getElementById('students').innerHTML = null;
+    $('#runid').val('');
+    $('#rundescription').val('');
+    $('#sharedusers').val('');
+    $("#slider1").val(50).slider("refresh");
+    $("#slider2").val(50).slider("refresh");
+    $("#slider3").val(50).slider("refresh");
   }
 
   /**
@@ -451,9 +484,7 @@ class Application extends React.Component {
   /**
    * Remove a student from the modal.
    */
-  removeStudent() {
-
-  }
+  removeStudent() { }
 
   /**
    * Add a new student to the modal.
@@ -551,6 +582,7 @@ class Application extends React.Component {
         var showing = "";
         $("#title").text("Statistics of " + r.toString());
     
+        /*
         for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
           var row = "<div class='row' id='dropdown'>";
           sim = result.reportFile.comparisonList[i].scores.totalScore;
@@ -561,51 +593,11 @@ class Application extends React.Component {
           row += "<div id='chart1'></div>";
           row += "</ul></div></div>";
           showing += row;
+          
 
          
-        }
+        }*/
 
-        var myChart = echarts.init(document.getElementById('chart'));
-          var option = {
-            tooltip: {
-              trigger: 'item',
-              formatter: "{a} <br/>{b}: {c} ({d}%)"
-            },
-            legend: {
-              orient: 'vertical',
-              x: 'left',
-              data:['Similar','Diff']
-            },
-            series: [{
-              name:'Statistic',
-              type:'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '30',
-                    fontWeight: 'bold'
-                  }
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data:[
-                {value: Number(sim), name:'Similarity'},
-                {value: 1 - Number(sim), name:'Different'}
-              ]
-            }]
-          };
-        myChart.setOption(option);
         $("#sa").html(showing);
 			}
 		});
