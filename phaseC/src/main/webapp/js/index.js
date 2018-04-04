@@ -268,9 +268,11 @@ class Application extends React.Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="myModalLabel">Add New Run</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div className="modal-body">
+                <h5>Step 1: Add Student (GitHub Repo)<button type="button" className="btn btn-primary add_student" onClick={ () => this.addStudent() }>Add Student</button></h5>
+                
                 <div id="students"></div><hr/>  
                 <input type="text" id="rundescription" placeholder="Run Description"/>
                 <div id="advanced"><hr />
@@ -300,7 +302,7 @@ class Application extends React.Component {
                 <button type="button" className="btn btn-primary" onClick={ () => this.advancedSettings() }>Advanced</button>
                 <button type="button" className="btn btn-primary" onClick={ () => this.runCheck() } title="Information" data-container="body"
                   data-toggle="popover" data-placement="right" data-content="Check started, close the window">Run</button>
-                <button type="button" className="btn btn-primary" onClick={ () => this.addStudent() }>Add Student</button>
+                
                 <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
               </div>
             </div>

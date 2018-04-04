@@ -63,3 +63,8 @@ h4 {
 	width: 600px;
 	height: 400px;
 }
+
+.add_student {
+	float: right;
+	margin-top: -1.5%;
+}
