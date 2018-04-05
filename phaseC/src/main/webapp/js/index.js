@@ -32,7 +32,8 @@ class Application extends React.Component {
      * other attributes: login/register/report cache
      */
     this.state = {
-      page: 0,
+      page: 4,
+      admin: 0,
       runs: [],
       student: 1,
 
@@ -593,9 +594,6 @@ class Application extends React.Component {
           row += "<div id='chart1'></div>";
           row += "</ul></div></div>";
           showing += row;
-          
-
-         
         }*/
 
         $("#sa").html(showing);
@@ -611,8 +609,12 @@ class Application extends React.Component {
    * Render the main UI.
    */
   render() {
-    if (readCookie('UserName') != null && readCookie('UserName') != "") {
+    if (readCookie('UserName') != null && readCookie('UserName') != "" && this.state.page != 4) {
       return(this.renderPlagiarismCheck());
+    } else if (this.state.page == 4) {
+      return(
+        <div>{ this.renderNav() }<Admin /></div>
+      );
     } else {
       if (this.state.page == 1) {
         return(this.renderRegistration());
