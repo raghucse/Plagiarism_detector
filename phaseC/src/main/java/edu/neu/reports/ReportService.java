@@ -91,4 +91,9 @@ public class ReportService {
     		return saveReport(report);
     }
 
+    public long totalReportCount()
+    {
+        return reportRepository.count();
+    }
+
 }

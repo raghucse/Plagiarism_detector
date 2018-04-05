@@ -46,6 +46,4 @@ public class UserController {
         ApplicationUser user = userService.findByUsername(userName);
         return ResponseEntity.ok(user.getId());
     }
-
-
 }

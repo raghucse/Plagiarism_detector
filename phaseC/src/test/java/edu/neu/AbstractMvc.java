@@ -22,10 +22,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,16 +39,6 @@ public class AbstractMvc {
 
     private ObjectMapper mapper = new ObjectMapper();
     private static Set<Class> inited = new HashSet<>();
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    private String token;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -97,9 +86,22 @@ public class AbstractMvc {
         return result;
     }
 
-    protected void extractToken(ResultActions result) throws UnsupportedEncodingException {
-       setToken(result.andReturn().getResponse().getHeader("Authorization"));
+    protected String extractToken(ResultActions result) throws UnsupportedEncodingException {
+       return result.andReturn().getResponse().getHeader("Authorization");
 
     }
+
+    protected String extractUserName(ResultActions result) throws UnsupportedEncodingException {
+        return result.andReturn().getResponse().getHeader("User");
+    }
+
+    protected String getUserId(String userName, String token) throws Exception {
+        String url = "/user?userName="+userName;
+        ResultActions result = mockMvc.perform(get(url)
+                .header("Authorization", token));
+        return result.andReturn().getResponse().getContentAsString();
+
+    }
+
 
 }
