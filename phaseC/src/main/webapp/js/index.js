@@ -83,6 +83,9 @@ class Application extends React.Component {
     );
   }
 
+  /**
+   * Erasing cache when switching pages.
+   */
   prepareForLoginOrReg(_page) {
     $('#email').val('');
     $('#name').val('');
@@ -236,7 +239,9 @@ class Application extends React.Component {
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
-                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password" onChange={ () => this.setState({ password: $('#pwd').val() }) }/></div>
+                <div className="col-md-auto">
+                  <input type="password" id="pwd" placeholder="Password" onChange={ () => this.setState({ password: $('#pwd').val() }) }/>
+                </div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
@@ -539,19 +544,34 @@ class Application extends React.Component {
       $('#myModal').modal('hide');
     }, 2000);
     
-    // Append all Git Hub links together
+    // Append all GitHub links & student names together
     var links = [];
     for (var i = 1; i < this.state.student; i++) {
-      var id = "#" + i.toString();
+      var id = "#hw" + i.toString();
       links.push($(id).val())
+    }
+    var names = [];
+    for (var i = 1; i < this.state.student; i++) {
+      var nm = "#nm" + i.toString();
+      names.push($(nm).val())
     }
 
     // Append all data together
     var data = new FormData();
-		data.append("description", $("#rundescription").val()); 
-		data.append("gitUrls", links);
-    data.append("sharedUsers", []);
-    
+    data.append("runID", $('#runid').val());
+    data.append("createdUserID", readCookie('uid'));
+    data.append("description", $("#rundescription").val()); 
+    data.append("sharedUsers", $("#sharedusers").val());
+
+    var weight = [];
+    weight.push($('#slider1').val())
+    weight.push($('#slider2').val())
+    weight.push($('#slider3').val())
+    data.append("strategiesWeight", weight);
+    data.append("gitUrls", links);
+    data.append("studentNames", names);
+
+    /*
     // Post to end point
     var xhr = new XMLHttpRequest();
     var that = this;
@@ -586,13 +606,21 @@ class Application extends React.Component {
 		xhr.open("POST", "/plagiarism/run");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
-		xhr.send(data);
+    xhr.send(data);*/
+    
+    var test = ["sample_run"];
+    this.setState({
+      runs: test
+    });
+    location.reload;
   }
 
   /**
    * Show the statistic of a certain run.
    */
-  showStatistic(r) {    
+  showStatistic(r) {
+    
+    /*
     var data = null;
 		var endPoint = "report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
@@ -605,7 +633,7 @@ class Application extends React.Component {
         var showing = "";
         $("#title").text("Statistics of " + r.toString());
     
-        /*
+        
         for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
           var row = "<div class='row' id='dropdown'>";
           sim = result.reportFile.comparisonList[i].scores.totalScore;
@@ -616,7 +644,7 @@ class Application extends React.Component {
           row += "<div id='chart1'></div>";
           row += "</ul></div></div>";
           showing += row;
-        }*/
+        }
 
         $("#sa").html(showing);
 			}
@@ -624,7 +652,64 @@ class Application extends React.Component {
 		xhr.open("GET", endPoint);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
-		xhr.send(data);
+    xhr.send(data);*/
+
+
+    var result = new Object();
+
+    
+    result.data = [];
+    var res1 = new Object();
+    res1.student1 = "Student 01";
+    res1.student2 = "Student 02";
+    res1.file1 = "File 01";
+    res1.file2 = "File 02";
+    res1.percentage = 0.7;
+    res1.severity = "Medium";
+    res1.gitDiff = "TBD";
+    result.data.push(res1);
+
+    var res2 = new Object();
+    res2.student1 = "Student 03";
+    res2.student2 = "Student 04";
+    res2.file1 = "File 03";
+    res2.file2 = "File 04";
+    res2.percentage = 0.9;
+    res2.severity = "High";
+    res2.gitDiff = "TBD";
+    result.data.push(res2);
+
+    result.description = "Sample Description";
+    result.time = "2018-04-01 00:00:00"
+    result.createdUser = "Junhao";
+
+
+    var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
+    finalShowing += "<div class='row'><p>Created Time: " + result.time + "</p></div>";
+    finalShowing += "<div class='row'><p>Created By: " + result.createdUser + "</p></div>";
+
+
+    finalShowing += "<table class='table'><thead><tr>" + 
+      "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
+      "</tr></thead><tbody>";
+
+    for (var i = 0; i < result.data.length; i++) {
+      var row = "<tr>";
+      row += "<td>" + result.data[i].student1 + "</td>";
+      row += "<td>" + result.data[i].student2 + "</td>";
+      row += "<td>" + result.data[i].file1 + "</td>";
+      row += "<td>" + result.data[i].file2 + "</td>";
+      row += "<td>" + result.data[i].percentage + "</td>";
+      row += "<td>" + result.data[i].severity + "</td>";
+      row += "<td>" + result.data[i].gitDiff + "</td>";
+      row += "</tr>"
+      finalShowing += row;
+    }
+
+    finalShowing += "</tbody></table>";
+    $("#sa").html(finalShowing);
+
+
   }
 
   /**
