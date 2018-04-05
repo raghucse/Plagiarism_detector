@@ -700,13 +700,32 @@ class Application extends React.Component {
       row += "<td>" + result.data[i].file1 + "</td>";
       row += "<td>" + result.data[i].file2 + "</td>";
       row += "<td>" + result.data[i].percentage + "</td>";
-      row += "<td>" + result.data[i].severity + "</td>";
-      row += "<td>" + result.data[i].gitDiff + "</td>";
+      row += "<td id='" + result.data[i].severity + "'>" + result.data[i].severity + "</td>";
+
+
+      /**
+       
+
+  
+    
+    Sample GitDiff Data</div></div></td>
+
+
+       */
+      // row += "<td>" + result.data[i].gitDiff + "</td>";
+
+      row += "<td><div class='dropdown'>" +
+        "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+        "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
+        "Sample GitDiff Data</div></div></td>";
+
+
       row += "</tr>"
       finalShowing += row;
     }
 
     finalShowing += "</tbody></table>";
+    $("#title").text("Statistics of the " + r);
     $("#sa").html(finalShowing);
 
 
