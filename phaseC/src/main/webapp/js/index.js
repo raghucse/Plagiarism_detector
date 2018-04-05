@@ -32,7 +32,7 @@ class Application extends React.Component {
      * other attributes: login/register/report cache
      */
     this.state = {
-      page: 4,
+      page: 0,
       admin: 0,
       runs: [],
       student: 1,
@@ -73,14 +73,31 @@ class Application extends React.Component {
       <div className="row justify-content-center">
         <div className="col-md-auto indexBanner">
           <button className={ this.state.page == 0 ? "clickedButton" : "unclickedButton" }
-            onClick={ () => this.setState({ page: 0 }) }>{ this.state.page == 0 ? "▶" : "" }Log In</button>
+            onClick={ () => this.prepareForLoginOrReg(0) }>{ this.state.page == 0 ? "▶" : "" }Log In</button>
         </div>
         <div className="col-md-auto indexBanner">
           <button className={ this.state.page == 1 ? "clickedButton" : "unclickedButton" }
-            onClick={ () => this.setState({ page: 1 }) }>{ this.state.page == 1 ? "▶" : "" }Register</button>
+            onClick={ () => this.prepareForLoginOrReg(1) }>{ this.state.page == 1 ? "▶" : "" }Register</button>
         </div>
       </div>
     );
+  }
+
+  prepareForLoginOrReg(_page) {
+    $('#email').val('');
+    $('#name').val('');
+    $('#pwd').val('');
+    $('#crfmpwd').val('');
+    $('#email').val('');
+    $('[name="role"]:checked').val('');
+    this.setState({
+      page: _page,
+      email: "",
+      name: "",
+      password: "",
+      cfrm: "",
+      role: "",
+    });
   }
 
   /**
@@ -156,19 +173,24 @@ class Application extends React.Component {
     $('[data-toggle="popover"]').popover('hide');
 
     // Send the data to the end point
-    /*
-      var data = new FormData();
-      data.append('email', this.state.email);
-      data.append('username', this.state.name);
-      data.append('password', this.state.password);
-      data.append('role', this.state.role);
-      fetch('/registration', {
-        method: 'POST',
-        body: data
-      });
-    */
+    var data = new FormData();
+    // data.append('email', this.state.email);
+    // data.append('username', this.state.name);
+    data.append('username', this.state.email);
+    data.append('password', this.state.password);
+    data.append('role', this.state.role);
+    fetch('/registration', {
+      method: 'POST',
+      body: data
+    });
 
     // Clear registration cache
+    $('#email').val('');
+    $('#name').val('');
+    $('#pwd').val('');
+    $('#crfmpwd').val('');
+    $('#email').val('');
+    $('[name="role"]:checked').val('');
     this.setState({
       page: 0,
       email: "",
@@ -241,7 +263,6 @@ class Application extends React.Component {
   onLoginSubmit(e) {
     e.preventDefault();
 
-    /*
     // Form the JSON data which needs to be sent
     var that = this;
     var xhr = new XMLHttpRequest();
@@ -258,15 +279,19 @@ class Application extends React.Component {
           var datan = null;
           var xhrn = new XMLHttpRequest();
           xhrn.withCredentials = true;
-          createCookie('UserName',this.getResponseHeader('User'));
-          createCookie('Authorization',this.getResponseHeader('Authorization'));
+          createCookie('UserName', this.getResponseHeader('User'));
+          createCookie('Authorization', this.getResponseHeader('Authorization'));
 
           // Add another listener for getting response.
           xhrn.addEventListener("readystatechange", function() {
             if (this.readyState === 4) {
               $('[data-toggle="popover"]').popover('hide');
               createCookie('uid', this.responseText);
-              that.setState({ page: 3 })
+              if ($('#admin').is(":checked")) {
+                that.setState({ page: 4 })
+              } else {
+                that.setState({ page: 3 })
+              }
             }
           });
 
@@ -288,10 +313,7 @@ class Application extends React.Component {
     // Send data
     xhr.open("POST", "/login");
     xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.send(data); */
-    createCookie('UserName', 'Test');
-    this.setState({ page: 3 })
-    location.reload();
+    xhr.send(data);
   }
 
   /**
