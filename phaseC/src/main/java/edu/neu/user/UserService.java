@@ -16,4 +16,6 @@ public interface UserService {
      * @return returns the user found against the specified username
      */
     public ApplicationUser findByUsername(String username);
+
+    public long totalUserCount();
 }
