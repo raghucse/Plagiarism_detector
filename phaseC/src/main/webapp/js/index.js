@@ -32,7 +32,7 @@ class Application extends React.Component {
      * other attributes: login/register/report cache
      */
     this.state = {
-      page: 4,
+      page: 0,
       admin: 0,
       runs: [],
       student: 1,
@@ -129,7 +129,7 @@ class Application extends React.Component {
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
-                <div className="col-md-auto"><input type="password" id="pwd" placeholder="Password" onChange={ () => this.setState({ password: $('#pwd').val() }) }/></div>
+                <div className="col-md-auto"><input type="password" id="pwd" placeholder="6 to 15 characters" onChange={ () => this.setState({ password: $('#pwd').val() }) }/></div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
@@ -147,7 +147,7 @@ class Application extends React.Component {
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
                   <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" disabled={ this.enableRegisterButton() }
-                    data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Register</button>
+                    data-toggle="popover" data-placement="right" data-content="Passwords don't match!">{ !this.enableRegisterButton() ? "Register" : "Please fill in the form"}</button>
                 </div>
               </div>
             </form>
@@ -165,6 +165,15 @@ class Application extends React.Component {
 
     // Check if two passwords are same, or if there is one empty
     if ($("#pwd").val() != $("#crfmpwd").val() || $("#pwd").val() == "" || $("#crfmpwd").val() == "") {
+      $('[data-toggle="popover"]').popover('show'); 
+      setTimeout(function() {
+        $('[data-toggle="popover"]').popover('hide'); 
+      }, 2000);
+      return;
+    }
+
+    if ($("#pwd").val().length < 6 || $("#pwd").val().length > 15) {
+      $('[data-toggle="popover"]').attr('data-content', 'Invalid password length!')
       $('[data-toggle="popover"]').popover('show'); 
       setTimeout(function() {
         $('[data-toggle="popover"]').popover('hide'); 
@@ -252,7 +261,7 @@ class Application extends React.Component {
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
                   <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" disabled={ this.enableLoginButton() }
-                    data-toggle="popover" data-placement="right" data-content="Invalid credential!">Log In</button>
+                    data-toggle="popover" data-placement="right" data-content="Invalid credential!">{ !this.enableLoginButton() ? "Log In" : "Please fill in the form"}</button>
                 </div>
               </div>
             </form>
