@@ -412,7 +412,7 @@ class Application extends React.Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
+                <button type="button" className="btn btn-danger cancel" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
               </div>
             </div>
           </div>
@@ -549,6 +549,7 @@ class Application extends React.Component {
 
     // Disable run button and close the window
     $(".runCheck").attr("disabled", true);
+    $(".cancel").attr("disabled", true);
     setTimeout(function() {
       $('#myModal').modal('hide');
     }, 2000);
