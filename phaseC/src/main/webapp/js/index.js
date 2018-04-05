@@ -22,8 +22,8 @@ class Application extends React.Component {
     xhr.send(data);
     */
 
-   var loadRuns = [1, 2];
-   this.setState({ runs: loadRuns });
+   var loadRuns = ["sample"];
+   // this.setState({ runs: loadRuns });
     
     /**
      * page: login/register
@@ -34,7 +34,7 @@ class Application extends React.Component {
     this.state = {
       page: 0,
       admin: 0,
-      runs: [],
+      runs: loadRuns,
       student: 1,
 
       email: "",
@@ -362,7 +362,7 @@ class Application extends React.Component {
                   <div className="row">
                     <div className="col-3 step2label">Run ID:</div>
                     <div className="col">
-                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run ID" }
+                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run ID, 1 to 8 letters" }
                         disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runID: $('#runid').val() }) }/>
                     </div>
                   </div>
@@ -440,7 +440,7 @@ class Application extends React.Component {
    * Disabling different components for the final run.
    */
   disableFinalRun() {        
-    return !(!this.disableStep2('btn') && this.state.runID.length != 0 && this.state.runDescription.length != 0);
+    return !(!this.disableStep2('btn') && (this.state.runID.length > 0 && this.state.runID.length <= 8) && this.state.runDescription.length != 0);
   }
 
   /**
@@ -618,7 +618,7 @@ class Application extends React.Component {
 		xhr.setRequestHeader("Authorization", document.cookie);
     xhr.send(data);*/
     
-    var test = ["sample_run"];
+    var test = ["sample"];
     this.setState({
       runs: test
     });

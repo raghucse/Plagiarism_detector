@@ -106,15 +106,15 @@ h5 {
 }
 
 #High {
-	background-color: red;
+	background-color: lightcoral;
 }
 
 #Medium {
-	background-color: yellow;
+	background-color: lightyellow;
 }
 
 #Low {
-	background-color: green;
+	background-color: lightseagreen;
 }
 
 #dropdownMenuButton {
