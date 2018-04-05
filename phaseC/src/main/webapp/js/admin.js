@@ -32,17 +32,13 @@ class Admin extends React.Component {
     var that = this;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-        
         that.getMemoryChart(data)
         that.getReportChart(data)
 			}
 		});
-
 		xhr.open("GET", "");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.send(datas);
-
-    
   }
 
   /**
@@ -56,59 +52,62 @@ class Admin extends React.Component {
         formatter: "{a} <br/>{b}: {c} ({d}%)"
       },
       legend: {
-          orient: 'vertical',
-          x: 'left',
-          data:['Allocated','Free']
+        orient: 'vertical',
+        x: 'left',
+        data:['Allocated', 'Free']
       },
       series: [
-          {
-            name:'Memory',
-            type:'pie',
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
+        {
+          name: 'Memory Statistics',
+          type: 'pie',
+          radius: ['50%', '80%'],
+          voidLabelOverlap: false,
             label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '30',
+                  fontWeight: 'bold'
                 }
+              }
             },
             labelLine: {
-                normal: {
-                    show: false
-                }
+              normal: {
+                show: false
+              }
             },
             data:[
-              { value: data.serverDetails.allocatedMemory, name:'Allocated'},
+              {value: data.serverDetails.allocatedMemory, name:'Allocated'},
               {value:data.serverDetails.freeMemory, name:'Free'}
             ]
-        }
-      ]
-    };
-    myChart.setOption(option);
+          }
+        ]
+      };
+      myChart.setOption(option);
   }
 
+  /**
+   * Show the report chart.
+   */
   getReportChart(data) {
     var myChart = echarts.init(document.getElementById("reportChart"));
     var option = {
       xAxis: {
-          type: 'category',
-          data: ['User', 'Report']
+        type: 'category',
+        data: ['User', 'Report']
       },
       yAxis: {
-          type: 'value'
+        type: 'value'
       },
       series: [{
-          data: [data.appInfo.numberOfUsers, data.appInfo.numberOfreports],
-          type: 'bar'
+        data: [data.appInfo.numberOfUsers, data.appInfo.numberOfreports],
+        type: 'bar'
       }]
-  };
+    };
     myChart.setOption(option);
   }
 
@@ -186,7 +185,7 @@ class Admin extends React.Component {
               </button>
             </div>
             <div className="col-md-auto indexBanner">
-              <button className={ this.state.admin == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ admin: 1 }) }>
+              <button disabled className={ this.state.admin == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ admin: 1 }) }>
               { this.state.admin == 1 ? "▶" : "" }Account Request
               </button>
             </div>
