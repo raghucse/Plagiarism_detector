@@ -2,6 +2,7 @@ class Admin extends React.Component {
   constructor() {
     super();
 
+    // Simulation data
     var data = new Object();
 
     var _osDetails = new Object();
@@ -22,23 +23,29 @@ class Admin extends React.Component {
     _serverDetails.availableProcessors = 4;
     data.serverDetails = _serverDetails;
 
+    // Set state
     this.state = {
       usage: data,
       admin: 0
     }
 
+    // Ping end point
     var datas = null;
     var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
     var that = this;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-        that.getMemoryChart(data)
-        that.getReportChart(data)
+        var new_data = JSON.parse(this.responseText);
+        that.setState({ usage: new_data });
+        that.getMemoryChart(new_data);
+        that.getReportChart(new_data);
 			}
 		});
-		xhr.open("GET", "");
+    xhr.open("GET", "/stats");
+    xhr.setRequestHeader("Authorization", readCookie('Authorization'));
 		xhr.setRequestHeader("Cache-Control", "no-cache");
-		xhr.send(datas);
+    xhr.send(datas);
   }
 
   /**

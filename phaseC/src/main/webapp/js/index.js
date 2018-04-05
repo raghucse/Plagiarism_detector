@@ -32,7 +32,7 @@ class Application extends React.Component {
      * other attributes: login/register/report cache
      */
     this.state = {
-      page: 0,
+      page: 4,
       admin: 0,
       runs: [],
       student: 1,
