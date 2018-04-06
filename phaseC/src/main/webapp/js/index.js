@@ -44,7 +44,8 @@ class Application extends React.Component {
       role: "",
 
       runID: "",
-      runDescription: ""
+      runDescription: "",
+      showModal: true
     }
   }
   /**
@@ -53,16 +54,35 @@ class Application extends React.Component {
   renderNav() {
     return(
       <div>
-        <div className="row justify-content-end top">
-        <div className="col-6">Plagiarism Checker</div>
-          <div className="col-3"> { readCookie('UserName') == null ? "" : "Welcome " + readCookie('UserName') }</div>
-          <div className="col-2">
+        <div className="row align-items-center top">
+          <div className="col-md-auto"></div>
+          <div className="col ">Plagiarism Checker</div>
+          <div className="col"></div>
+          <div className="col"></div>
+          <div className="col-md-auto">{ readCookie('UserName') == null ? "" : "Welcome " + this.truncateUserName(readCookie('UserName')) }</div>
+          <div className="col-md-auto">
             { readCookie('UserName') == null ? "" :
               <button type="button" className="btn btn-danger logout" onClick={ () => this.logout() }>Log out</button> }
           </div>
+          <div className="col-md-auto"></div>
         </div>
       </div>
     );
+  }
+
+  /**
+   * Get the user name out of the email
+   */
+  truncateUserName(email) {
+    var res = "";
+    for (var i = 0; i < email.length; i++) {
+      if (email.charAt(i) != '@') {
+        res += email.charAt(i);
+      } else {
+        break;
+      }
+    }
+    return res;
   }
 
   /**
@@ -380,6 +400,28 @@ class Application extends React.Component {
                         disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
+                  <div id="advanced"><hr />
+                    <h5>Step 3: Adjust Startegies Weight
+                      <button type="button" className="btn btn-primary advanced" onClick={ () => this.resetSliders() }>Reset</button>
+                    </h5>
+                    <div className="container">
+                      <div className="row advancedSlider">
+                        <div className="col-3">Levenshtein</div>
+                        <div className="col-md-auto"><div id="slider1"></div></div>
+                        <div className="col-md-auto"><div id="value1"></div></div>
+                      </div>
+                      <div className="row">
+                        <div className="col-3">LCS</div>
+                        <div className="col-md-auto"><div id="slider2"></div></div>
+                        <div className="col-md-auto"><div id="value2"></div></div>
+                      </div>
+                      <div className="row">
+                        <div className="col-3">Cosine</div>
+                        <div className="col-md-auto"><div id="slider3"></div></div>
+                        <div className="col-md-auto"><div id="value3"></div></div>
+                      </div>
+                    </div><hr />   
+                  </div>
                   <div className="row">
                     <div className="col">
                       <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
@@ -388,28 +430,6 @@ class Application extends React.Component {
                       </button>
                     </div>
                   </div>
-                <div id="advanced"><hr />
-                  <div className="container">
-                    <div className="row">
-                      <div className="col"><p>How do you want the startegies weighted?</p></div>
-                    </div>
-                    <div className="row">
-                      <div className="col-3">Levenshtein</div>
-                      <div className="col-md-auto"><div id="slider1"></div></div>
-                      <div className="col-md-auto"><div id="value1"></div></div>
-                    </div>
-                    <div className="row">
-                      <div className="col-3">LCS</div>
-                      <div className="col-md-auto"><div id="slider2"></div></div>
-                      <div className="col-md-auto"><div id="value2"></div></div>
-                    </div>
-                    <div className="row">
-                      <div className="col-3">Cosine</div>
-                      <div className="col-md-auto"><div id="slider3"></div></div>
-                      <div className="col-md-auto"><div id="value3"></div></div>
-                    </div>
-                  </div>   
-                </div>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-danger cancel" data-dismiss="modal" onClick={ () => this.resetStudent() }>Cancel</button>
@@ -490,22 +510,40 @@ class Application extends React.Component {
    * Advanced settings in modal.
    */
   advancedSettings() {
-    $('#slider1').slider({ min: 0, max: 100, value: 50 });
-    $('#slider1').change(function(slideEvt, ui) {
+    if (this.state.showModal) {
+      $('#slider1').slider({ min: 0, max: 100, value: 50 });
+      $('#slider1').change(function(slideEvt, ui) {
+        $('#value1').html($('#slider1').slider('getValue') + "%");
+      });
       $('#value1').html($('#slider1').slider('getValue') + "%");
-    });
-    $('#value1').html($('#slider1').slider('getValue') + "%");
-    $('#slider2').slider({ min: 0, max: 100, value: 50 });
-    $('#slider2').change(function() {
+      $('#slider2').slider({ min: 0, max: 100, value: 50 });
+      $('#slider2').change(function() {
+        $('#value2').html($('#slider2').slider('getValue') + "%");
+      });
       $('#value2').html($('#slider2').slider('getValue') + "%");
-    });
-    $('#value2').html($('#slider2').slider('getValue') + "%");
-    $('#slider3').slider({ min: 0, max: 100, value: 50 });
-    $('#slider3').change(function() {
+      $('#slider3').slider({ min: 0, max: 100, value: 50 });
+      $('#slider3').change(function() {
+        $('#value3').html($('#slider3').slider('getValue') + "%");
+      });
       $('#value3').html($('#slider3').slider('getValue') + "%");
-    });
+      $('#advanced').show();
+      this.setState({ showModal: false });
+    } else {
+      $('#advanced').hide();
+      this.setState({ showModal: true });
+    }
+  }
+
+  /**
+   * Reset all sliders
+   */
+  resetSliders() {
+    $("#slider1").val(50).slider("refresh");
+    $("#slider2").val(50).slider("refresh");
+    $("#slider3").val(50).slider("refresh");
+    $('#value1').html($('#slider1').slider('getValue') + "%");
+    $('#value2').html($('#slider2').slider('getValue') + "%");
     $('#value3').html($('#slider3').slider('getValue') + "%");
-    $('#advanced').show();
   }
 
   /**

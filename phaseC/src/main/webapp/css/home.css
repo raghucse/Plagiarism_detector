@@ -4,13 +4,11 @@
 	background-color: #553f7a;
 	color: white;	
 	font-size: 125%;
-	padding-top: 0.8%;
 	height: 55px;
 }
 
 .logout {
-	margin-bottom: 5%;
-	margin-top: -2%;
+	
 }
 
 .statistics {
@@ -106,11 +104,11 @@ h5 {
 }
 
 #High {
-	background-color: lightcoral;
+	background-color: tomato;
 }
 
 #Medium {
-	background-color: lightyellow;
+	background-color: yellow;
 }
 
 #Low {
@@ -126,4 +124,8 @@ h5 {
 #gitdiffdata {
 	width: 800%;
 	height: 400px;
+}
+
+.advancedSlider {
+	padding-top: 1.2%;
 }
