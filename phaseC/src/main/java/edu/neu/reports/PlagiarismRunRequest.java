@@ -90,7 +90,7 @@ public class PlagiarismRunRequest {
 	 * Returns the strategy weights 
 	 * @return : The strategy weights
 	 */
-	public List<Float> getStrategiesWeight() {
+	public List<Double> getStrategiesWeight() {
 		return strategiesWeight;
 	}
 
@@ -98,7 +98,7 @@ public class PlagiarismRunRequest {
 	 * Sets the weights of the strategies
 	 * @param strategiesWeight : the strategies weights
 	 */
-	public void setStrategiesWeight(List<Float> strategiesWeight) {
+	public void setStrategiesWeight(List<Double> strategiesWeight) {
 		this.strategiesWeight = strategiesWeight;
 	}
 
@@ -138,7 +138,7 @@ public class PlagiarismRunRequest {
     private String createdUserID;
     private String description;
     private List<String> sharedUsers = new ArrayList<>();
-    private List<Float> strategiesWeight = new ArrayList<>();
+    private List<Double> strategiesWeight = new ArrayList<>();
     private List<String> strategiesNames = new ArrayList<>();
     private List<String> gitUrls = new ArrayList<>();
     private List<String> studentNames = new ArrayList<>();

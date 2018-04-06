@@ -59,7 +59,7 @@ public class PlagiarismRunController {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-        return ResponseEntity.ok("Plagiarism run started with weights : "+runReq.getStrategiesWeight());
+        return ResponseEntity.ok("Plagiarism run started with weights : "+comparisonStrategy.getWeights()[0]+", "+comparisonStrategy.getWeights()[1] + ", "+ comparisonStrategy.getWeights()[2]);
     }
     
     private PlagiarismRun mapRequestToBean(PlagiarismRunRequest runReq) {
@@ -73,7 +73,7 @@ public class PlagiarismRunController {
     		plagiarismRunService.savePlagiarismRun(plagiarismRun);
     }
     
-    private void setWeights(ComplexStrategy1 strategy, List<String> strategyNames, List<Float> strategyWeights) {
+    private void setWeights(ComplexStrategy1 strategy, List<String> strategyNames, List<Double> strategyWeights) {
     		if(strategyNames.size() != strategyWeights.size()) {
     			return; // invalid weights and names received
     		}

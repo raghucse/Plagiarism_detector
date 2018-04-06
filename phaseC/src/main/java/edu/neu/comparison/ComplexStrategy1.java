@@ -70,7 +70,7 @@ public class ComplexStrategy1 implements ASTBasedStrategy{
 	 * Set the LCS weight to the one specified
 	 * @param weight : The new weight of LCS
 	 */
-	public void setLCSWeight(float weight) {
+	public void setLCSWeight(double weight) {
 		weights[0] = weight;
 	}
 	
@@ -78,7 +78,7 @@ public class ComplexStrategy1 implements ASTBasedStrategy{
 	 * Set the LVD weight to the one specified
 	 * @param weight : The new weight of LVD
 	 */
-	public void setLVDWeight(float weight) {
+	public void setLVDWeight(double weight) {
 		weights[1] = weight;
 	}
 	
@@ -86,8 +86,12 @@ public class ComplexStrategy1 implements ASTBasedStrategy{
 	 * Set the Cosine weight to the one specified
 	 * @param weight : The new weight of Cosine
 	 */
-	public void setCosineWeight(float weight) {
+	public void setCosineWeight(double weight) {
 		weights[2] = weight;
+	}
+	
+	public double[] getWeights() {
+		return weights;
 	}
 
 }
