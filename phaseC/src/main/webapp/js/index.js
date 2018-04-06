@@ -761,7 +761,6 @@ class Application extends React.Component {
 
     var result = new Object();
 
-    
     result.data = [];
     var res1 = new Object();
     res1.student1 = "Student 01";
