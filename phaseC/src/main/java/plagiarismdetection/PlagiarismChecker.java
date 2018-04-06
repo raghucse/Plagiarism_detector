@@ -147,9 +147,9 @@ public class PlagiarismChecker implements Runnable{
 	}
 	
 	/**
-	 * 
-	 * @param submission1
-	 * @param submission2
+	 * Compares two submissions and adds their results to report content
+	 * @param submission1 : The first submission
+	 * @param submission2 : The second submission
 	 */
 	public void compareSubmissions(Submission submission1, Submission submission2) {
 		Log.info("Getting submission Files and comparing them");
@@ -162,14 +162,28 @@ public class PlagiarismChecker implements Runnable{
 		Log.info("Done comparing getting submission Files and comparing them");
 	}
 	
+	/**
+	 * Compare two files and return the comparison report
+	 * @param f1 : File 1
+	 * @param f2 : File 2
+	 * @return : The comparison report containing the comparison report for the files
+	 */
 	public ComparisonReport compareFiles(File f1, File f2) {
 		return new ComparisonReport(f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2));
 	}
 	
+	/**
+	 * Return whether the check started or not
+	 * @return : whether run started or not
+	 */
 	public boolean didRunStart() {
 		return runStarted;
 	}
 	
+	/**
+	 * Return the number of comparisons done
+	 * @return : num comparisons
+	 */
 	public int getNumComparisons() {
 		return reportContent.getComparisonList().size();
 	}
