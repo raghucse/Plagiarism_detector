@@ -59,7 +59,7 @@ public class PlagiarismRunController {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-        return ResponseEntity.ok("Plagiarism run started");
+        return ResponseEntity.ok("Plagiarism run started with weights : "+runReq.getStrategiesWeight());
     }
     
     private PlagiarismRun mapRequestToBean(PlagiarismRunRequest runReq) {
