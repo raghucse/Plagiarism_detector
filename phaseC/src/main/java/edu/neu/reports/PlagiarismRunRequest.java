@@ -54,8 +54,93 @@ public class PlagiarismRunRequest {
         this.sharedUsers = sharedUsers;
     }
 
-    private String description;
-    private List<String> gitUrls = new ArrayList<>();
-    private List<String> sharedUsers = new ArrayList<>();
+    
+    /**
+     * @return Returns the run id
+     */
+    public String getRunID() {
+		return runID;
+	}
 
+    /**
+     * Sets the run id
+     * @param runID : the run id
+     */
+	public void setRunID(String runID) {
+		this.runID = runID;
+	}
+
+	/**
+	 * Returns the created user id
+	 * @return : the created user id
+	 */
+	public String getCreatedUserID() {
+		return createdUserID;
+	}
+
+	/**
+	 * Sets the created user id
+	 * @param createdUserID : The created user id
+	 */
+	public void setCreatedUserID(String createdUserID) {
+		this.createdUserID = createdUserID;
+	}
+
+	/**
+	 * Returns the strategy weights 
+	 * @return : The strategy weights
+	 */
+	public List<Float> getStrategiesWeight() {
+		return strategiesWeight;
+	}
+
+	/**
+	 * Sets the weights of the strategies
+	 * @param strategiesWeight : the strategies weights
+	 */
+	public void setStrategiesWeight(List<Float> strategiesWeight) {
+		this.strategiesWeight = strategiesWeight;
+	}
+
+	/**
+	 * Returns the strategies names
+	 * @return : The strategies names
+	 */
+	public List<String> getStrategiesNames() {
+		return strategiesNames;
+	}
+
+	/**
+	 * Sets the strategies names
+	 * @param strategiesNames : the strategies names
+	 */
+	public void setStrategiesNames(List<String> strategiesNames) {
+		this.strategiesNames = strategiesNames;
+	}
+
+	/**
+	 * Returns the student names
+	 * @return : the student names
+	 */
+	public List<String> getStudentNames() {
+		return studentNames;
+	}
+
+	/**
+	 * Sets the student names
+	 * @param studentNames : the student names
+	 */
+	public void setStudentNames(List<String> studentNames) {
+		this.studentNames = studentNames;
+	}
+
+	private String runID;
+    private String createdUserID;
+    private String description;
+    private List<String> sharedUsers = new ArrayList<>();
+    private List<Float> strategiesWeight = new ArrayList<>();
+    private List<String> strategiesNames = new ArrayList<>();
+    private List<String> gitUrls = new ArrayList<>();
+    private List<String> studentNames = new ArrayList<>();
+    
 }
