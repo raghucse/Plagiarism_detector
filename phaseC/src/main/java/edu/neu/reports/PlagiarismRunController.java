@@ -1,11 +1,14 @@
 package edu.neu.reports;
 
 import edu.neu.astgeneration.ASTUtils;
+import edu.neu.comparison.ComplexStrategy1;
 import edu.neu.comparison.Strategy;
 import edu.neu.user.UserService;
 import edu.neu.utils.Constants;
 import factories.ComparisonStrategyFactory;
 import plagiarismdetection.DetectionExecutor;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +44,10 @@ public class PlagiarismRunController {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         
         PlagiarismRun plagiarismRun = mapRequestToBean(runReq);
-        Strategy comparisonStrategy = ComparisonStrategyFactory.getComparisonStrategy(Constants.DEFAULT_PLAGIARISM_STRATEGY, new ASTUtils());
+        ComplexStrategy1 comparisonStrategy = (ComplexStrategy1) ComparisonStrategyFactory.getComparisonStrategy(Constants.DEFAULT_PLAGIARISM_STRATEGY, new ASTUtils());
+        
+        // set the incoming weights from the request to the strategy
+        setWeights(comparisonStrategy, runReq.getStrategiesNames(), runReq.getStrategiesWeight());
         
         savePlagiarismRunToTable(plagiarismRun);
         
@@ -65,6 +71,23 @@ public class PlagiarismRunController {
     
     private void savePlagiarismRunToTable(PlagiarismRun plagiarismRun) {
     		plagiarismRunService.savePlagiarismRun(plagiarismRun);
+    }
+    
+    private void setWeights(ComplexStrategy1 strategy, List<String> strategyNames, List<Float> strategyWeights) {
+    		if(strategyNames.size() != strategyWeights.size()) {
+    			return; // invalid weights and names received
+    		}
+    		for(int i=0; i<strategyNames.size(); i++) {
+    			if(strategyNames.get(i).equals("LCS")) {
+    				strategy.setLCSWeight(strategyWeights.get(i));
+    			}
+    			else if(strategyNames.get(i).equals("LEVENSHTEIN")) {
+    				strategy.setLVDWeight(strategyWeights.get(i));
+    			}
+    			else if(strategyNames.get(i).equals("COSINE")) {
+    				strategy.setCosineWeight(strategyWeights.get(i));
+    			}
+    		}
     }
 
 }
