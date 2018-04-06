@@ -460,7 +460,7 @@ class Application extends React.Component {
   /**
    * Disabling different components for the final run.
    */
-  disableFinalRun() {        
+  disableFinalRun() {
     return !(!this.disableStep2('btn') && (this.state.runID.length > 0 && this.state.runID.length <= 8) && this.state.runDescription.length != 0);
   }
 
@@ -623,6 +623,22 @@ class Application extends React.Component {
     console.log(readCookie('Authorization'));
     console.log(readCookie('uid'));
 
+    var res = true;
+    for (var i = 1; i < this.state.student; i++) {
+      res &= $("#hw" + i.toString()).val() != "";
+      res &= $("#nm" + i.toString()).val() != "";
+    }
+
+    if (!res) {
+      $('[data-toggle="popover"]').attr('data-content', 'Incomplete student information!')
+      $('[data-toggle="popover"]').popover('show'); 
+      setTimeout(function() {
+        $('[data-toggle="popover"]').popover('hide'); 
+      }, 2000);
+      $('[data-toggle="popover"]').attr('data-content', 'Check started, the window will be closed in 2 secs!')
+      return;
+    }
+
     // Disable run button and close the window
     $(".runCheck").attr("disabled", true);
     $(".cancel").attr("disabled", true);
@@ -696,7 +712,8 @@ class Application extends React.Component {
     
     var test = ["sample"];
     this.setState({
-      runs: test
+      runs: test,
+      student: 1
     });
     location.reload;
   }
