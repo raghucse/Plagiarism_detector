@@ -7,10 +7,6 @@
 	height: 55px;
 }
 
-.logout {
-	
-}
-
 .statistics {
 	vertical-align: middle;
 }
@@ -126,6 +122,6 @@ h5 {
 	height: 400px;
 }
 
-.advancedSlider {
-	padding-top: 1.2%;
+.advancedSlider, .advancedSlider2, .advancedSlider3 {
+	padding-top: 5%;
 }

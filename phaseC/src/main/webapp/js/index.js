@@ -48,6 +48,7 @@ class Application extends React.Component {
       showModal: true
     }
   }
+
   /**
    * Render the navigation bar UI.
    */
@@ -410,12 +411,12 @@ class Application extends React.Component {
                         <div className="col-md-auto"><div id="slider1"></div></div>
                         <div className="col-md-auto"><div id="value1"></div></div>
                       </div>
-                      <div className="row">
+                      <div className="row advancedSlider2">
                         <div className="col-3">LCS</div>
                         <div className="col-md-auto"><div id="slider2"></div></div>
                         <div className="col-md-auto"><div id="value2"></div></div>
                       </div>
-                      <div className="row">
+                      <div className="row advancedSlider3">
                         <div className="col-3">Cosine</div>
                         <div className="col-md-auto"><div id="slider3"></div></div>
                         <div className="col-md-auto"><div id="value3"></div></div>
@@ -511,18 +512,55 @@ class Application extends React.Component {
    */
   advancedSettings() {
     if (this.state.showModal) {
-      $('#slider1').slider({ min: 0, max: 100, value: 50 });
+      $('#slider1').slider({ min: 0, max: 100, step: 1, value: 33 });
+      $('#slider2').slider({ min: 0, max: 100, step: 1, value: 33 });
+      $('#slider3').slider({ min: 0, max: 100, step: 1, value: 33 });
+
+      var slider1val = $('#slider1').slider('getValue');
+      var slider2val = $('#slider2').slider('getValue');
+      var slider3val = $('#slider3').slider('getValue');
+
       $('#slider1').change(function(slideEvt, ui) {
+        var diff = $(this).slider('getValue') - slider1val;
+        $('#slider2').slider('refresh');
+        $('#slider2').slider('setValue', slider2val - diff / 2, true);
+        $('#slider3').slider('refresh');
+        $('#slider3').slider('setValue', slider3val - diff / 2, true);
+        slider1val = $('#slider1').slider('getValue');
+        slider2val -= diff / 2;
+        slider3val -= diff / 2;
         $('#value1').html($('#slider1').slider('getValue') + "%");
+        $('#value2').html($('#slider2').slider('getValue') + "%");
+        $('#value3').html($('#slider3').slider('getValue') + "%");
       });
       $('#value1').html($('#slider1').slider('getValue') + "%");
-      $('#slider2').slider({ min: 0, max: 100, value: 50 });
+
       $('#slider2').change(function() {
+        var diff = $(this).slider('getValue') - slider2val;
+        $('#slider1').slider('refresh');
+        $('#slider1').slider('setValue', slider1val - diff / 2, true);
+        $('#slider3').slider('refresh');
+        $('#slider3').slider('setValue', slider3val - diff / 2, true);
+        slider2val = $('#slider2').slider('getValue');
+        slider1val -= diff / 2;
+        slider3val -= diff / 2;
+        $('#value1').html($('#slider1').slider('getValue') + "%");
         $('#value2').html($('#slider2').slider('getValue') + "%");
+        $('#value3').html($('#slider3').slider('getValue') + "%");
       });
       $('#value2').html($('#slider2').slider('getValue') + "%");
-      $('#slider3').slider({ min: 0, max: 100, value: 50 });
+      
       $('#slider3').change(function() {
+        var diff = $(this).slider('getValue') - slider3val;
+        $('#slider1').slider('refresh');
+        $('#slider1').slider('setValue', slider1val - diff / 2, true);
+        $('#slider2').slider('refresh');
+        $('#slider2').slider('setValue', slider2val - diff / 2, true);
+        slider3val = $('#slider3').slider('getValue');
+        slider1val -= diff / 2;
+        slider2val -= diff / 2;
+        $('#value1').html($('#slider1').slider('getValue') + "%");
+        $('#value2').html($('#slider2').slider('getValue') + "%");
         $('#value3').html($('#slider3').slider('getValue') + "%");
       });
       $('#value3').html($('#slider3').slider('getValue') + "%");
