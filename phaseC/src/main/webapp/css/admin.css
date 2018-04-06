@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+h3 {
+	text-align: center;
+	padding-top: 3%;
+	padding-bottom: 1.5%;
+}
+
+.adminWrapper {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.admintable, #adminchart {
+	width: 50%;
+}
+
+#usageChart, #reportChart {
+	width: 450px;
+	height: 300px;
+}
