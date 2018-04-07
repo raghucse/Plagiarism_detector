@@ -687,6 +687,7 @@ class Application extends React.Component {
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
     xhr.send(data);
+    location.reload;
   }
 
   /**
@@ -714,7 +715,7 @@ class Application extends React.Component {
 
         for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
           var row = "<tr>";
-          row += "<td>" + "rtudent1" + "</td>";
+          row += "<td>" + "Student1" + "</td>";
           row += "<td>" + "Student2" + "</td>";
           row += "<td>" + result.reportFile.comparisonList[i].filename1 + "</td>";
           row += "<td>" + result.reportFile.comparisonList[i].filename2 + "</td>";
