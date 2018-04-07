@@ -1,8 +1,8 @@
 package edu.neu.reports;
 
+import edu.neu.Log;
 import edu.neu.astgeneration.ASTUtils;
 import edu.neu.comparison.ComplexStrategy1;
-import edu.neu.comparison.Strategy;
 import edu.neu.user.UserService;
 import edu.neu.utils.Constants;
 import factories.ComparisonStrategyFactory;
@@ -60,8 +60,9 @@ public class PlagiarismRunController {
         if(!executionSubmitted) {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        return ResponseEntity.ok("Plagiarism run started with weights : "+comparisonStrategy.getWeights()[0]+", "+comparisonStrategy.getWeights()[1] + ", "+ comparisonStrategy.getWeights()[2]);
+        
+        Log.info("Plagiarism run started with weights : "+comparisonStrategy.getWeights()[0]+", "+comparisonStrategy.getWeights()[1] + ", "+ comparisonStrategy.getWeights()[2]);
+        return ResponseEntity.ok("Plagiarism run started");
     }
     
     /**
