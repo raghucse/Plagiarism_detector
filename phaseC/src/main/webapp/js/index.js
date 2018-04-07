@@ -193,6 +193,7 @@ class Application extends React.Component {
       return;
     }
 
+    // Check password length validity
     if ($("#pwd").val().length < 6 || $("#pwd").val().length > 15) {
       $('[data-toggle="popover"]').attr('data-content', 'Invalid password length!')
       $('[data-toggle="popover"]').popover('show'); 
@@ -207,8 +208,6 @@ class Application extends React.Component {
 
     // Send the data to the end point
     var data = new FormData();
-    // data.append('email', this.state.email);
-    // data.append('username', this.state.name);
     data.append('username', this.state.email);
     data.append('password', this.state.password);
     data.append('role', this.state.role);
@@ -321,8 +320,9 @@ class Application extends React.Component {
           xhrn.addEventListener("readystatechange", function() {
             if (this.readyState === 4) {
               $('[data-toggle="popover"]').popover('hide');
-              createCookie('uid', this.responseText);
-              if ($('#admin').is(":checked")) {
+              var result = JSON.parse(this.responseText);
+              createCookie('uid', result.uid);
+              if (result.role == 'ADMIN') {
                 that.setState({ page: 4 })
               } else {
                 that.setState({ page: 3 })
@@ -664,29 +664,32 @@ class Application extends React.Component {
     data.append("runID", $('#runid').val());
     data.append("createdUserID", readCookie('uid'));
     data.append("description", $("#rundescription").val()); 
-    data.append("sharedUsers", $("#sharedusers").val());
+    data.append("sharedUsers", []);
 
     var weight = [];
-    weight.push($('#slider1').val())
-    weight.push($('#slider2').val())
-    weight.push($('#slider3').val())
+    $('#slider1').val().length != 0 ? weight.push($('#slider1').val() / 100) : weight.push(0.34);
+    $('#slider2').val().length != 0 ? weight.push($('#slider2').val() / 100) : weight.push(0.33);
+    $('#slider3').val().length != 0 ? weight.push($('#slider3').val() / 100) : weight.push(0.33);
     data.append("strategiesWeight", weight);
+    data.append("strategiesNames", ["LEVENSHTEIN", "LCS", "COSINE"]);
     data.append("gitUrls", links);
     data.append("studentNames", names);
-
-    /*
+    
     // Post to end point
     var xhr = new XMLHttpRequest();
     var that = this;
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-        var text = this.responseText;        
+        var text = this.responseText; 
+        console.log(text);
+               
         $('[data-toggle="popover"]').popover('show'); 
         setTimeout(function() {
           $('[data-toggle="popover"]').popover('hide'); 
         }, 2000);
         
+        /*
         // Update the state
         var data = null;
         var loadRuns = [];
@@ -702,21 +705,24 @@ class Application extends React.Component {
         xhr.open("GET", url);
         xhr.setRequestHeader("Cache-Control", "no-cache");
         xhr.setRequestHeader("Authorization", readCookie('Authorization'));
-        xhr.send(data);
+        xhr.send(data);*/
+
+
 			}
 		});
 
 		xhr.open("POST", "/plagiarism/run");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
-    xhr.send(data);*/
+    xhr.send(data);
     
+    /*
     var test = ["sample"];
     this.setState({
       runs: test,
       student: 1
     });
-    location.reload;
+    location.reload;*/
   }
 
   /**
