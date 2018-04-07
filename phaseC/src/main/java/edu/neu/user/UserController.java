@@ -39,11 +39,14 @@ public class UserController {
     /**
      * Fetch user id
      * @param userName username of the user
-     * @return user id for the user
+     * @return user id and role for the user
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public ResponseEntity<Integer> userDetails(@RequestParam("userName") String userName) {
+    public ResponseEntity<UserInfoRes> userDetails(@RequestParam("userName") String userName) {
         ApplicationUser user = userService.findByUsername(userName);
-        return ResponseEntity.ok(user.getId());
+        UserInfoRes userInfoRes = new UserInfoRes();
+        userInfoRes.setUid(user.getId());
+        userInfoRes.setRole(user.getRole());
+        return ResponseEntity.ok(userInfoRes);
     }
 }
