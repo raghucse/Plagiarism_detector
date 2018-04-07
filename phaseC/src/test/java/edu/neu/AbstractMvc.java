@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
+//@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
 @Ignore
 public class AbstractMvc {
     protected MockMvc mockMvc;
@@ -68,8 +68,7 @@ public class AbstractMvc {
                 .param("username",username)
                 .param("password", password)
                 .param("role",role))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.msg", is("registration successful")));
+                .andExpect(status().isOk());
     }
 
 

@@ -27,8 +27,7 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 				.param("username","raghu@neu.com")
 				.param("password", "Test@1234")
 				.param("role", "PROFESSOR"))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.msg", is("registration successful")));
+				.andExpect(status().isOk());
 
 		login("raghu@neu.com", "Test@1234").andExpect(status().isOk());
 

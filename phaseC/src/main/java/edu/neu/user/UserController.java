@@ -28,6 +28,11 @@ public class UserController {
     public ResponseEntity<ServerResponse> registration(@ModelAttribute ApplicationUser userForm) {
         Log.info("Starting user registration");
         Log.error("errooorrr");
+
+        if(userService.findByUsername(userForm.getUsername()) != null){
+            return ResponseEntity.ok(new ServerResponse("user already registered"));
+        }
+
         userForm.setUsername(userForm.getUsername());
         userForm.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
         userForm.setRole(userForm.getRole());
