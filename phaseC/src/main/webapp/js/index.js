@@ -2,26 +2,6 @@ class Application extends React.Component {
   constructor() {
     super();
 
-    // Request all report IDs under the user's name
-    if (readCookie('uid') != null) {
-      var data = null;
-      var that = this;
-      var loadRuns = [];
-      var url = "/report/userId/" + readCookie('uid')
-      var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
-      xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-          loadRuns = JSON.parse(this.responseText);
-          that.setState({ runs: loadRuns });
-        }
-      });		
-      xhr.open("GET", url);
-      xhr.setRequestHeader("Cache-Control", "no-cache");
-      xhr.setRequestHeader("Authorization", readCookie('Authorization'));
-      xhr.send(data);
-    }
-    
     /**
      * page: login/register
      * runs: report IDs under the user's name
@@ -43,6 +23,28 @@ class Application extends React.Component {
       runID: "",
       runDescription: "",
       showModal: true
+    }
+
+    // Request all report IDs under the user's name
+    if (readCookie('uid') != null) {
+      var data = null;
+      var that = this;
+      var loadRuns = [];
+      var url = "/report/userId/" + readCookie('uid')
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          loadRuns = JSON.parse(this.responseText);
+          console.log('sa', loadRuns);
+          
+          that.setState({ runs: loadRuns });
+        }
+      });		
+      xhr.open("GET", url);
+      xhr.setRequestHeader("Cache-Control", "no-cache");
+      xhr.setRequestHeader("Authorization", readCookie('Authorization'));
+      xhr.send(data);
     }
   }
 
@@ -313,7 +315,10 @@ class Application extends React.Component {
             if (this.readyState === 4) {
               $('[data-toggle="popover"]').popover('hide');
               var result = JSON.parse(this.responseText);
+              console.log(this.responseText)
               createCookie('uid', result.uid);
+              console.log('uid', result.uid);
+              
               if (result.role == 'ADMIN') {
                 that.setState({ page: 4 })
               } else {
@@ -666,7 +671,6 @@ class Application extends React.Component {
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
         var text = this.responseText; 
-        console.log(text);
                
         $('[data-toggle="popover"]').popover('show'); 
         setTimeout(function() {
@@ -690,39 +694,51 @@ class Application extends React.Component {
    */
   showStatistic(r) {
     var data = null;
-		var endPoint = "report/reportId/" + r;
+		var endPoint = "report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
+        console.log(this.responseText);
+        
         $("#title").text("Statistics of " + r.toString());
     
-        var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
-        finalShowing += "<div class='row'><p>Created Time: " + result.time + "</p></div>";
-        finalShowing += "<div class='row'><p>Created By: " + result.createdUser + "</p></div>";
+        var finalShowing = "<div class='row'><p>Run Description: " + "Sample Description" + "</p></div>";
+        finalShowing += "<div class='row'><p>Created Time: " + "2018-01-01 00:00:00" + "</p></div>";
+        finalShowing += "<div class='row'><p>Created By: " + "Sample User" + "</p></div>";
         finalShowing += "<table class='table'><thead><tr>" + 
                         "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
                         "</tr></thead><tbody>";
 
-        for (var i = 0; i < result.data.length; i++) {
+        for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
           var row = "<tr>";
-          row += "<td>" + result.data[i].student1 + "</td>";
-          row += "<td>" + result.data[i].student2 + "</td>";
-          row += "<td>" + result.data[i].file1 + "</td>";
-          row += "<td>" + result.data[i].file2 + "</td>";
-          row += "<td>" + result.data[i].percentage + "</td>";
-          row += "<td id='" + result.data[i].severity + "'>" + result.data[i].severity + "</td>";
+          row += "<td>" + "rtudent1" + "</td>";
+          row += "<td>" + "Student2" + "</td>";
+          row += "<td>" + result.reportFile.comparisonList[i].filename1 + "</td>";
+          row += "<td>" + result.reportFile.comparisonList[i].filename2 + "</td>";
+          row += "<td>" + Math.floor(result.reportFile.comparisonList[i].scores.totalScore * 100) / 100 + "</td>";
+
+          var _score = Math.floor(result.reportFile.comparisonList[i].scores.totalScore * 100) / 100;
+          var se = "";
+          if (_score >= 0.8) {
+            se = "High";
+          } else if (_score >= 0.6 && _score < 0.8) {
+            se = "Medium";
+          } else {
+            se = "Low";
+          }
+
+          row += "<td id='" + se + "'>" + se + "</td>";
           row += "<td><div class='dropdown'>" +
                  "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
                  "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
-                 result.data[i].seperateScores;
+                 result.reportFile.comparisonList[i].scores.subScores;
           row += "</div></div></td></tr>"
           finalShowing += row;
         }
         finalShowing += "</tbody></table>";
-
         $("#sa").html(finalShowing);
 			}
 		});
