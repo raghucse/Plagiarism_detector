@@ -95,11 +95,12 @@ public class AbstractMvc {
         return result.andReturn().getResponse().getHeader("User");
     }
 
-    protected String getUserId(String userName, String token) throws Exception {
+    protected UserInfoRes getUserInfo(String userName, String token) throws Exception {
+        ObjectMapper obj = new ObjectMapper();
         String url = "/user?userName="+userName;
         ResultActions result = mockMvc.perform(get(url)
                 .header("Authorization", token));
-        return result.andReturn().getResponse().getContentAsString();
+        return obj.readValue(result.andReturn().getResponse().getContentAsString(), UserInfoRes.class);
 
     }
 
