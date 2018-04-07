@@ -60,8 +60,7 @@ public class PlagiarismRunController {
         if(!executionSubmitted) {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        
-        Log.info("Plagiarism run started with weights : "+comparisonStrategy.getWeights()[0]+", "+comparisonStrategy.getWeights()[1] + ", "+ comparisonStrategy.getWeights()[2]);
+
         return ResponseEntity.ok("Plagiarism run started");
     }
     
