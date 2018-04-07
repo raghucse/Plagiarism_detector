@@ -13,8 +13,8 @@ public class CosineSimilarityTest {
     public void twoDifferentFiles() {
         double EPSILON = 0.01;
 
-        File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
-        File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
+        File f1 = new File(getClass().getClassLoader().getResource("testfiles/student02/simplecode2.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("testfiles/student01/simplecode.py").getFile());
 
         CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
         double score = cos.compare(f1, f2);
@@ -25,7 +25,7 @@ public class CosineSimilarityTest {
     public void twoSameFiles() {
         double EPSILON = 0.01;
         
-        File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
+        File f1 = new File(getClass().getClassLoader().getResource("testfiles/student02/simplecode2.py").getFile());
         
         CosineSimilarity cos = new CosineSimilarity(new ASTUtils());
         double score = cos.compare(f1, f1);

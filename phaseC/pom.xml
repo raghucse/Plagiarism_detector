@@ -110,6 +110,12 @@
 			<version>4.11.0.201803080745-r</version>
 		</dependency>
 
+		<dependency>
+			<groupId>it.zielke</groupId>
+			<artifactId>moji</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

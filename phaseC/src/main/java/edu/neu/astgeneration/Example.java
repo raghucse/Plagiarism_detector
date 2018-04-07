@@ -1,10 +1,10 @@
 package edu.neu.astgeneration;
 
+import edu.neu.comparison.LCS;
+import edu.neu.comparison.LVDistance;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import edu.neu.comparison.LVDistance;
-import edu.neu.comparison.LCS;
 
 /**
  * This class contains the main function which is used for generating
@@ -34,8 +34,8 @@ public class Example {
      * @throws IOException
      */
     public void printAST() {
-    		File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
-        File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
+    		File f1 = new File(getClass().getClassLoader().getResource("testfiles/student02/simplecode2.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("testfiles/student01/simplecode.py").getFile());
         
         LVDistance lvd = new LVDistance(new ASTUtils());
         LCS lcs = new LCS(new ASTUtils());

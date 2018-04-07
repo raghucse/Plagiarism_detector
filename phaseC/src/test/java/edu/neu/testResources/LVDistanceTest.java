@@ -13,8 +13,8 @@ public class LVDistanceTest {
     public void testDifferent() {
         double EPSILON = 0.01;
 
-        File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
-        File f2 = new File(getClass().getClassLoader().getResource("simplecode.py").getFile());
+        File f1 = new File(getClass().getClassLoader().getResource("testfiles/student02/simplecode2.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("testfiles/student01/simplecode.py").getFile());
         
         LVDistance lvDistance = new LVDistance(new ASTUtils());
         
@@ -25,7 +25,7 @@ public class LVDistanceTest {
     @Test
     public void testSame() {
     		double EPSILON = 0.01;
-        File f1 = new File(getClass().getClassLoader().getResource("simplecode2.py").getFile());
+        File f1 = new File(getClass().getClassLoader().getResource("testfiles/student02/simplecode2.py").getFile());
         LVDistance lvDistance = new LVDistance(new ASTUtils());
         double score = lvDistance.compare(f1, f1);
         assertEquals((Math.round(score*10000.0)/10000.0), 1.0,EPSILON);
