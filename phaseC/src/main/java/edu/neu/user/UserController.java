@@ -28,6 +28,11 @@ public class UserController {
     public ResponseEntity<ServerResponse> registration(@ModelAttribute ApplicationUser userForm) {
         Log.info("Starting user registration");
         Log.error("errooorrr");
+
+        if(userService.findByUsername(userForm.getUsername()) != null){
+            return ResponseEntity.ok(new ServerResponse("user already registered"));
+        }
+
         userForm.setUsername(userForm.getUsername());
         userForm.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
         userForm.setRole(userForm.getRole());
@@ -39,11 +44,14 @@ public class UserController {
     /**
      * Fetch user id
      * @param userName username of the user
-     * @return user id for the user
+     * @return user id and role for the user
      */
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public ResponseEntity<Integer> userDetails(@RequestParam("userName") String userName) {
+    public ResponseEntity<UserInfoRes> userDetails(@RequestParam("userName") String userName) {
         ApplicationUser user = userService.findByUsername(userName);
-        return ResponseEntity.ok(user.getId());
+        UserInfoRes userInfoRes = new UserInfoRes();
+        userInfoRes.setUid(user.getId());
+        userInfoRes.setRole(user.getRole());
+        return ResponseEntity.ok(userInfoRes);
     }
 }
