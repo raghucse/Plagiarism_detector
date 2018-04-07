@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
+//@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create"})
 @Ignore
 public class AbstractMvc {
     protected MockMvc mockMvc;
@@ -68,8 +68,7 @@ public class AbstractMvc {
                 .param("username",username)
                 .param("password", password)
                 .param("role",role))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.msg", is("registration successful")));
+                .andExpect(status().isOk());
     }
 
 
@@ -95,11 +94,12 @@ public class AbstractMvc {
         return result.andReturn().getResponse().getHeader("User");
     }
 
-    protected String getUserId(String userName, String token) throws Exception {
+    protected UserInfoRes getUserInfo(String userName, String token) throws Exception {
+        ObjectMapper obj = new ObjectMapper();
         String url = "/user?userName="+userName;
         ResultActions result = mockMvc.perform(get(url)
                 .header("Authorization", token));
-        return result.andReturn().getResponse().getContentAsString();
+        return obj.readValue(result.andReturn().getResponse().getContentAsString(), UserInfoRes.class);
 
     }
 
