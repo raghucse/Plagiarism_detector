@@ -3,27 +3,24 @@ class Application extends React.Component {
     super();
 
     // Request all report IDs under the user's name
-    /*
-    var data = null;
-    var that = this;
-		var loadRuns = [];
-		var url = "/report/userId/" + readCookie('uid')
-		var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;
-		xhr.addEventListener("readystatechange", function () {
-			if (this.readyState === 4) {
-				loadRuns = JSON.parse(this.responseText);
-				that.setState({ runs: loadRuns });
-			}
-		});		
-		xhr.open("GET", url);
-		xhr.setRequestHeader("Cache-Control", "no-cache");
-		xhr.setRequestHeader("Authorization", readCookie('Authorization'));
-    xhr.send(data);
-    */
-
-   var loadRuns = ["sample"];
-   // this.setState({ runs: loadRuns });
+    if (readCookie('uid') != null) {
+      var data = null;
+      var that = this;
+      var loadRuns = [];
+      var url = "/report/userId/" + readCookie('uid')
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          loadRuns = JSON.parse(this.responseText);
+          that.setState({ runs: loadRuns });
+        }
+      });		
+      xhr.open("GET", url);
+      xhr.setRequestHeader("Cache-Control", "no-cache");
+      xhr.setRequestHeader("Authorization", readCookie('Authorization'));
+      xhr.send(data);
+    }
     
     /**
      * page: login/register
@@ -34,7 +31,7 @@ class Application extends React.Component {
     this.state = {
       page: 0,
       admin: 0,
-      runs: loadRuns,
+      runs: [],
       student: 1,
 
       email: "",
@@ -272,11 +269,6 @@ class Application extends React.Component {
                   <input type="password" id="pwd" placeholder="Password" onChange={ () => this.setState({ password: $('#pwd').val() }) }/>
                 </div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
-              </div>
-              <div className="row justify-content-center form">
-                <div className="col-md-auto index_label_role">
-                  <input id="admin" type="checkbox"/>&nbsp;&nbsp;<span className="index_label_text">I am Admin</span>&nbsp;&nbsp;
-                </div>
               </div>
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
@@ -595,11 +587,6 @@ class Application extends React.Component {
   }
 
   /**
-   * Remove a student from the modal.
-   */
-  removeStudent() { }
-
-  /**
    * Add a new student to the modal.
    */
   addStudent() {
@@ -607,9 +594,6 @@ class Application extends React.Component {
     var newGit = "<div id='stu" + stu.toString() + "'>"
     newGit += "<input type='text' class='git'" + " id='hw" + stu.toString() + "' placeholder='Student " + stu.toString() + " GitHub Link'/> ";
     newGit += "<input type='text' class='nm'" + " id='nm" + stu.toString() + "' placeholder='Student " + stu.toString() + " Name'/> ";
-    // newGit += "<button class='removestudent' id='remove" + stu.toString() + "'>&times;</button></div>";
-    // $("#remove").attr("click", this.removeStudent());
-    // newGit += "<button class='removestudent' id='remove'>&times;</button></div>";
     newGit += "</div>";
     $("#students").append(newGit);
     stu += 1;
@@ -688,156 +672,64 @@ class Application extends React.Component {
         setTimeout(function() {
           $('[data-toggle="popover"]').popover('hide'); 
         }, 2000);
-        
-        /*
-        // Update the state
-        var data = null;
-        var loadRuns = [];
-        var url = "/report/userId/" + readCookie('uid');
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.addEventListener("readystatechange", function() {
-          if (this.readyState === 4) {
-            loadRuns = JSON.parse(this.responseText);
-            that.setState({ runs: loadRuns });
-          }
-        });		
-        xhr.open("GET", url);
-        xhr.setRequestHeader("Cache-Control", "no-cache");
-        xhr.setRequestHeader("Authorization", readCookie('Authorization'));
-        xhr.send(data);*/
 
-
+        that.setState({
+          student: 1
+        });
+        location.reload;
 			}
 		});
-
 		xhr.open("POST", "/plagiarism/run");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
     xhr.send(data);
-    
-    /*
-    var test = ["sample"];
-    this.setState({
-      runs: test,
-      student: 1
-    });
-    location.reload;*/
   }
 
   /**
    * Show the statistic of a certain run.
    */
   showStatistic(r) {
-    
-    /*
     var data = null;
-		var endPoint = "report/reportId/" + r.toString();
+		var endPoint = "report/reportId/" + r;
 		var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     
-    var sim = 0;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
-        var showing = "";
         $("#title").text("Statistics of " + r.toString());
     
-        
-        for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
-          var row = "<div class='row' id='dropdown'>";
-          sim = result.reportFile.comparisonList[i].scores.totalScore;
-          row += "<div class='btn-group'>";
-          row += "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>";
-          row += result.reportFile.comparisonList[i].filename1 + " vs. " + result.reportFile.comparisonList[i].filename2 + "<span class='caret'></span>"
-          row += "</button><ul class='dropdown-menu'>";
-          row += "<div id='chart1'></div>";
-          row += "</ul></div></div>";
-          showing += row;
-        }
+        var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
+        finalShowing += "<div class='row'><p>Created Time: " + result.time + "</p></div>";
+        finalShowing += "<div class='row'><p>Created By: " + result.createdUser + "</p></div>";
+        finalShowing += "<table class='table'><thead><tr>" + 
+                        "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
+                        "</tr></thead><tbody>";
 
-        $("#sa").html(showing);
+        for (var i = 0; i < result.data.length; i++) {
+          var row = "<tr>";
+          row += "<td>" + result.data[i].student1 + "</td>";
+          row += "<td>" + result.data[i].student2 + "</td>";
+          row += "<td>" + result.data[i].file1 + "</td>";
+          row += "<td>" + result.data[i].file2 + "</td>";
+          row += "<td>" + result.data[i].percentage + "</td>";
+          row += "<td id='" + result.data[i].severity + "'>" + result.data[i].severity + "</td>";
+          row += "<td><div class='dropdown'>" +
+                 "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+                 "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
+                 result.data[i].seperateScores;
+          row += "</div></div></td></tr>"
+          finalShowing += row;
+        }
+        finalShowing += "</tbody></table>";
+
+        $("#sa").html(finalShowing);
 			}
 		});
 		xhr.open("GET", endPoint);
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Authorization", document.cookie);
-    xhr.send(data);*/
-
-
-    var result = new Object();
-
-    result.data = [];
-    var res1 = new Object();
-    res1.student1 = "Student 01";
-    res1.student2 = "Student 02";
-    res1.file1 = "File 01";
-    res1.file2 = "File 02";
-    res1.percentage = 0.7;
-    res1.severity = "Medium";
-    res1.gitDiff = "TBD";
-    result.data.push(res1);
-
-    var res2 = new Object();
-    res2.student1 = "Student 03";
-    res2.student2 = "Student 04";
-    res2.file1 = "File 03";
-    res2.file2 = "File 04";
-    res2.percentage = 0.9;
-    res2.severity = "High";
-    res2.gitDiff = "TBD";
-    result.data.push(res2);
-
-    result.description = "Sample Description";
-    result.time = "2018-04-01 00:00:00"
-    result.createdUser = "Junhao";
-
-
-    var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
-    finalShowing += "<div class='row'><p>Created Time: " + result.time + "</p></div>";
-    finalShowing += "<div class='row'><p>Created By: " + result.createdUser + "</p></div>";
-
-
-    finalShowing += "<table class='table'><thead><tr>" + 
-      "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
-      "</tr></thead><tbody>";
-
-    for (var i = 0; i < result.data.length; i++) {
-      var row = "<tr>";
-      row += "<td>" + result.data[i].student1 + "</td>";
-      row += "<td>" + result.data[i].student2 + "</td>";
-      row += "<td>" + result.data[i].file1 + "</td>";
-      row += "<td>" + result.data[i].file2 + "</td>";
-      row += "<td>" + result.data[i].percentage + "</td>";
-      row += "<td id='" + result.data[i].severity + "'>" + result.data[i].severity + "</td>";
-
-
-      /**
-       
-
-  
-    
-    Sample GitDiff Data</div></div></td>
-
-
-       */
-      // row += "<td>" + result.data[i].gitDiff + "</td>";
-
-      row += "<td><div class='dropdown'>" +
-        "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
-        "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
-        "Sample GitDiff Data</div></div></td>";
-
-
-      row += "</tr>"
-      finalShowing += row;
-    }
-
-    finalShowing += "</tbody></table>";
-    $("#title").text("Statistics of the " + r);
-    $("#sa").html(finalShowing);
-
-
+    xhr.send(data);
   }
 
   /**
