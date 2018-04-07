@@ -4,6 +4,7 @@ import edu.neu.astgeneration.ASTUtils;
 
 import org.junit.Test;
 import edu.neu.comparison.CosineSimilarity;
+import edu.neu.comparison.LVDistance;
 import edu.neu.comparison.STRATEGIES;
 
 import java.io.File;
