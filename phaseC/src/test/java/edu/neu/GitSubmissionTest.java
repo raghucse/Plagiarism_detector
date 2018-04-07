@@ -21,7 +21,7 @@ public class GitSubmissionTest {
 		}
 		
 		assertEquals(1, fileNames.size());
-		assertEquals("README.md", fileNames.get(0));
+		assertEquals("mock.py", fileNames.get(0));
 	}
 	
 }
