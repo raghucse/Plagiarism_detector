@@ -58,9 +58,40 @@ public class ComplexStrategy1 implements ASTBasedStrategy{
 		return new Scores(computedScore, computedDescription.toString());
 	}
 
+	/**
+	 * Returns the AST Utils used by the strategy
+	 */
 	@Override
 	public ASTUtils getASTUtils() {
 		return astUtils;
+	}
+	
+	/**
+	 * Set the LCS weight to the one specified
+	 * @param weight : The new weight of LCS
+	 */
+	public void setLCSWeight(double weight) {
+		weights[0] = weight;
+	}
+	
+	/**
+	 * Set the LVD weight to the one specified
+	 * @param weight : The new weight of LVD
+	 */
+	public void setLVDWeight(double weight) {
+		weights[1] = weight;
+	}
+	
+	/**
+	 * Set the Cosine weight to the one specified
+	 * @param weight : The new weight of Cosine
+	 */
+	public void setCosineWeight(double weight) {
+		weights[2] = weight;
+	}
+	
+	public double[] getWeights() {
+		return weights;
 	}
 
 }
