@@ -53,8 +53,10 @@ public class PlagiarismRunController {
         
         plagiarismRun.setUserId(userService.findByUsername(userName).getId());
         
+        // Submit the check to the executor
         boolean executionSubmitted = DetectionExecutor.getInstance(reportService).runPlagiarismCheck(plagiarismRun, comparisonStrategy);
         
+        // return an error if check could not be submitted
         if(!executionSubmitted) {
         		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -62,6 +64,12 @@ public class PlagiarismRunController {
         return ResponseEntity.ok("Plagiarism run started with weights : "+comparisonStrategy.getWeights()[0]+", "+comparisonStrategy.getWeights()[1] + ", "+ comparisonStrategy.getWeights()[2]);
     }
     
+    /**
+     * Converts a plagiarism run request to a plagiarism run object
+     * which would be later used by the engine
+     * @param runReq : The PlagiarismRunRequest
+     * @return : The constructed PlagiarismRun
+     */
     private PlagiarismRun mapRequestToBean(PlagiarismRunRequest runReq) {
     		PlagiarismRun plagiarismRun = new PlagiarismRun();
     		plagiarismRun.setDescription(runReq.getDescription());
@@ -69,6 +77,10 @@ public class PlagiarismRunController {
     		return plagiarismRun;
     }
     
+    /**
+     * Save the PlagiarismRun to the database using the PlagiarismRunService
+     * @param plagiarismRun : The PlagiarismRun to be saved
+     */
     private void savePlagiarismRunToTable(PlagiarismRun plagiarismRun) {
     		plagiarismRunService.savePlagiarismRun(plagiarismRun);
     }
