@@ -51,6 +51,7 @@ class Dashboard extends React.Component {
               </div>
               <div className="modal-body">
                 <h5>Step 1: Add Student (GitHub Repo)<button type="button" className="btn btn-primary add_student" onClick={ () => this.addStudent() }>Add Student</button></h5>
+                Example: https://github.com/user/exampleRepo.git
                 <div id="students"></div><hr/>
                 <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
                   <div className="row">
@@ -99,7 +100,7 @@ class Dashboard extends React.Component {
                   <div className="row">
                     <div className="col">
                       <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
-                        data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed in 2 secs">
+                        data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed and auto-refreshed in 5 secs.">
                         { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run ID and a description" : "Run" }
                       </button>
                     </div>
@@ -282,16 +283,17 @@ class Dashboard extends React.Component {
     var res = true;
     for (var i = 1; i < this.state.student; i++) {
       res &= $("#hw" + i.toString()).val() != "";
+      res &= /^https:\/\/github\.com[a-zA-Z0-9\/]+\.git$/.test($("#hw" + i.toString()).val());
       res &= $("#nm" + i.toString()).val() != "";
     }
 
     if (!res) {
-      $('[data-toggle="popover"]').attr('data-content', 'Incomplete student information!')
+      $('[data-toggle="popover"]').attr('data-content', 'Incomplete student information or invalid GitHub links!')
       $('[data-toggle="popover"]').popover('show'); 
       setTimeout(function() {
         $('[data-toggle="popover"]').popover('hide'); 
-      }, 2000);
-      $('[data-toggle="popover"]').attr('data-content', 'Check started, the window will be closed and auto-refreshed in 2 secs!')
+      }, 5000);
+      $('[data-toggle="popover"]').attr('data-content', 'Check started, the window will be closed and auto-refreshed in 5 secs!')
       return;
     }
 
@@ -300,7 +302,7 @@ class Dashboard extends React.Component {
     $(".cancel").attr("disabled", true);
     setTimeout(function() {
       $('#myModal').modal('hide');
-    }, 2000);
+    }, 5000);
     
     // Append all GitHub links & student names together
     var links = [];
@@ -341,7 +343,7 @@ class Dashboard extends React.Component {
         $('[data-toggle="popover"]').popover('show'); 
         setTimeout(function() {
           $('[data-toggle="popover"]').popover('hide'); 
-        }, 2000);
+        }, 5000);
 
         that.setState({
           student: 1
