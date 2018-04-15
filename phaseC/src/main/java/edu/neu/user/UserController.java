@@ -4,6 +4,8 @@ package edu.neu.user;
 import edu.neu.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,19 +29,63 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ResponseEntity<ServerResponse> registration(@ModelAttribute ApplicationUser userForm) {
         Log.info("Starting user registration");
-        Log.error("errooorrr");
-
         if(userService.findByUsername(userForm.getUsername()) != null){
             return ResponseEntity.ok(new ServerResponse("user already registered"));
         }
-
-        userForm.setUsername(userForm.getUsername());
         userForm.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
-        userForm.setRole(userForm.getRole());
+        userForm.setRole(Role.PROFESSOR);
         userService.save(userForm);
         Log.info("User registration successful");
         return ResponseEntity.ok(new ServerResponse("registration successful"));
     }
+
+    /**
+     * Exnd point for adding admin
+     * @param userForm admin information
+     * @return
+     */
+    @RequestMapping(value = "/add/admin", method = RequestMethod.POST)
+    public ResponseEntity<ServerResponse> addAdmin(@ModelAttribute ApplicationUser userForm) {
+        Log.info("Adding new admin:: ");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if(userService.findByUsername(auth.getName()).getRole() != Role.ADMIN){
+            return ResponseEntity.ok(new ServerResponse("Cannot create admin only admin create another admin"));
+        }
+
+        if(userService.findByUsername(userForm.getUsername()) != null){
+            return ResponseEntity.ok(new ServerResponse("Admin already exists in the system"));
+        }
+
+        userForm.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
+        userForm.setRole(Role.ADMIN);
+        userService.save(userForm);
+        Log.info("Admin registration successful");
+        return ResponseEntity.ok(new ServerResponse("Admin registration successful"));
+    }
+
+    /**
+     * end point for removing a admin
+     * @param user username to be removed
+     * @return Status of the removal
+     */
+    @RequestMapping(value = "/remove/user", method = RequestMethod.POST)
+    public ResponseEntity<ServerResponse> removeAdmin(@ModelAttribute RemoveRequest user) {
+        Log.info("Removing user:: "+user.getUserName());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if(userService.findByUsername(auth.getName()).getRole() != Role.ADMIN){
+            return ResponseEntity.ok(new ServerResponse("User can only be removed by admin"));
+        }
+
+        if(userService.removeUser(user.getUserName()) == 1 ){
+            Log.info("user removed successfully");
+            return ResponseEntity.ok(new ServerResponse("user removed successfully"));
+        }
+        Log.error("user removal failed");
+        return ResponseEntity.ok(new ServerResponse("user removal failed"));
+    }
+
 
     /**
      * Fetch user id

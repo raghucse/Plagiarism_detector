@@ -28,7 +28,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     *
+     * @return count of users in the database
+     */
     public long totalUserCount(){
         return userRepository.count();
+    }
+
+    /**
+     * remove user from the db
+     * @param user useranme of user to be removed
+     * @return 1 if successful else 0
+     */
+    public int removeUser(String user){
+        return userRepository.deleteByUsername(user);
     }
 }
