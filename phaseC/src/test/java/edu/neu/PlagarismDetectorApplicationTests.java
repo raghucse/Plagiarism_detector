@@ -92,4 +92,24 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 
 	}
 
+	@Test
+	public void testAdminAddAndRemoveUsingAdmin() throws Exception {
+		ResultActions logResult = login("admin@example.com", "123456");
+		String token = extractToken(logResult);
+
+		mockMvc.perform(post("/add/admin")
+				.param("username","admin5@example.com")
+				.param("password", "123456")
+				.param("role","ADMIN")
+				.header("Authorization", token))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.msg", is("Admin registration successful")));
+
+
+		mockMvc.perform(post("/remove/user")
+				.param("userName","admin5@example.com")
+				.header("Authorization", token))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.msg", is("user removed successfully")));
+	}
 }
