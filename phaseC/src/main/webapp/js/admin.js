@@ -26,7 +26,7 @@ class Admin extends React.Component {
     // Set state
     this.state = {
       usage: data,
-      admin: 0
+      admin: 3
     }
 
     // Ping end point
@@ -172,10 +172,106 @@ class Admin extends React.Component {
     return(
       <div>
         <div className="row">
-          <div className="col"><h3>TBD</h3></div>
+          <div className="col">
+            <div className="container">
+              <div id="addadminuser">
+                <div className="row justify-content-center form">
+                  <h4>Add Admin User</h4>
+                </div>
+                <form onSubmit={ e => this.onAddAdminUserSubmit(e) }>
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
+                    <div className="col-md-auto"><input type="email" id="admin_email" placeholder="user@example.com" /></div>
+                    <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+                  </div>
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto index_label"><span className="index_label_text">Name</span></div>
+                    <div className="col-md-auto"><input type="text" id="admin_name" placeholder="David Jackson" /></div>
+                    <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+                  </div>
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
+                    <div className="col-md-auto"><input type="password" id="admin_pwd" placeholder="6 to 15 characters" /></div>
+                    <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+                  </div>
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto index_label"><span className="index_label_text">Confirm</span></div>
+                    <div className="col-md-auto"><input type="password" id="admin_crfmpwd" placeholder="Confirm Password"/></div>
+                    <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+                  </div>
+                  <br />
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto">
+                      <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" 
+                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Add admin user</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div className="container">
+              <div id="removeuser">
+                <div className="row justify-content-center form">
+                  <h4>Remove user</h4>
+                </div>
+                <form>
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
+                    <div className="col-md-auto"><input type="email" id="rm_email" placeholder="user@example.com" /></div>
+                    <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
+                  </div>
+                  <br />
+                  <div className="row justify-content-center form">
+                    <div className="col-md-auto">
+                      <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" 
+                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Remove</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
+  }
+
+  /**
+   * Add admin user.
+   */
+  onAddAdminUserSubmit(e) {
+    e.preventDefault();
+    console.log($('#admin_email').val());
+    console.log($('#admin_name').val());
+    console.log($('#admin_pwd').val());
+    console.log($('#admin_crfmpwd').val());
+
+    
+  }
+
+  /**
+   * Usage information
+   */
+  usage() {
+    this.setState({ admin: 3 });
+    var datas = null;
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    var that = this;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        var new_data = JSON.parse(this.responseText);
+        that.setState({ usage: new_data });
+        that.getMemoryChart(new_data);
+        that.getReportChart(new_data);
+			}
+		});
+    xhr.open("GET", "/stats");
+    xhr.setRequestHeader("Authorization", readCookie('Authorization'));
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.send(datas);
   }
 
   /**
@@ -187,17 +283,17 @@ class Admin extends React.Component {
         <div className="container adminWrapper">
           <div className="row justify-content-md-center">
             <div className="col-md-auto indexBanner">
-              <button className={ this.state.admin == 0 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ admin: 0 }) }>
-                { this.state.admin == 0 ? "▶" : "" }Usage Info
+              <button className={ this.state.admin == 3 ? "clickedButton" : "unclickedButton" } onClick={ () => this.usage() }>
+                { this.state.admin == 3 ? "▶" : "" }Usage Info
               </button>
             </div>
             <div className="col-md-auto indexBanner">
-              <button disabled className={ this.state.admin == 1 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ admin: 1 }) }>
-              { this.state.admin == 1 ? "▶" : "" }Account Request
+              <button className={ this.state.admin == 4 ? "clickedButton" : "unclickedButton" } onClick={ () => this.setState({ admin: 4 }) }>
+              { this.state.admin == 4 ? "▶" : "" }Account Manage
               </button>
             </div>
           </div>
-          { this.state.admin == 0 ? this.renderUsage() : this.renderRequest() }
+          { this.state.admin == 3 ? this.renderUsage() : this.renderRequest() }
         </div>
       </div>
     )

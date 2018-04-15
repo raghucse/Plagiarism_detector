@@ -7,7 +7,8 @@ class Application extends React.Component {
       name: "",
       password: "",
       cfrm: "",
-      role: "PROFESSOR"
+      role: "PROFESSOR",
+      admin: false
     }
   }
 
@@ -289,6 +290,7 @@ class Application extends React.Component {
               console.log('uid', result.uid);
               
               if (result.role == 'ADMIN') {
+                createCookie('Admin', 'true');
                 that.setState({ page: 4 })
               } else {
                 that.setState({ page: 3 })
@@ -324,18 +326,19 @@ class Application extends React.Component {
     eraseCookie('UserName');
     eraseCookie('Authorization');
     eraseCookie('uid');
+    eraseCookie('Admin');
     this.setState({ page: 0 });
   }
 
   /**
    * Render the main UI.
    */
-  render() {
-    if (readCookie('UserName') != null && readCookie('UserName') != "" && this.state.page != 4) {
+  render() {    
+    if (readCookie('UserName') != null && readCookie('UserName') != "" && readCookie('Admin') != "true") {
       return(
         <div>{ this.renderNav() }<Dashboard /></div>
       );
-    } else if (this.state.page == 4) {
+    } else if (readCookie('Admin') == "true") {
       return(
         <div>{ this.renderNav() }<Admin /></div>
       );
