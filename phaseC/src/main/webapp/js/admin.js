@@ -227,7 +227,7 @@ class Admin extends React.Component {
                   <div className="row justify-content-center form">
                     <div className="col-md-auto">
                       <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" 
-                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Remove</button>
+                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Search</button>
                     </div>
                     
                   </div>
@@ -248,15 +248,19 @@ class Admin extends React.Component {
     var data = null;
     var url = "/user/info?userName=" + this.state.rm_email;
     var xhr = new XMLHttpRequest();
+    var that = this;
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 & this.status == 200) {
         var result = JSON.parse(this.responseText);
         var table = "<table class='table'><thead><tr><th>UID</th><th>Email</th><th>Manage</th></tr></thead><tbody>";
         table += "<tr><td>" + result.userId + "</td><td>" + result.userName + "</td><td>";
-        table += "<button type='button' class='btn btn-primary'>Primary</button>";
+        table += "<button type='button' class='btn btn-primary' id='rmResult'>Remove</button>";
         table += "</td></tr></tbody></table>";
         $("#searchresult").html(table);
+        $("#rmResult").on("click", function() {
+          that.onRemoveUserSubmit(result.userName)
+        })
       } else {
         console.log(this.status);
         $("#searchresult").html("No result found.");
@@ -267,6 +271,28 @@ class Admin extends React.Component {
     xhr.setRequestHeader("Authorization", readCookie('Authorization'));
     xhr.send(data);
 
+  }
+
+  /**
+   * Remove user.
+   */
+  onRemoveUserSubmit(user) {
+    var data = new FormData();
+    data.append('userName', user);
+
+    var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        console.log(this.responseText);
+        var msg = JSON.parse(this.responseText).msg;
+        $("#searchresult").html(msg);
+			}
+		});
+		xhr.open("POST", "/remove/user");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+    xhr.send(data);
   }
 
   /**
