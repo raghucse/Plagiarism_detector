@@ -260,6 +260,7 @@ class Admin extends React.Component {
     data.append('role', 'ADMIN');
 
     var xhr = new XMLHttpRequest();
+    var that = this;
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
@@ -273,6 +274,11 @@ class Admin extends React.Component {
           $('#admin_email').val('');
           $('#admin_pwd').val('');
           $('#admin_crfmpwd').val('');
+          that.setState({
+            admin_email: "",
+            admin_password: "",
+            admin_cfrm: ""
+          });
         } else {
           $('[data-toggle="popover"]').attr('data-content', 'User existed, adding failed!')
           $('[data-toggle="popover"]').popover('show'); 
