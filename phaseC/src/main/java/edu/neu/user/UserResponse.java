@@ -2,6 +2,11 @@ package edu.neu.user;
 
 public class UserResponse {
 
+    UserResponse(){
+
+    }
+
+
     UserResponse(ApplicationUser user){
         this.userName = user.getUsername();
         this.role = user.getRole();

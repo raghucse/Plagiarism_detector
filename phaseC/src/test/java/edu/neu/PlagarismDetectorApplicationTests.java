@@ -11,7 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.neu.reports.Report;
 import edu.neu.statistics.StatsRes;
+import edu.neu.user.Role;
 import edu.neu.user.UserInfoRes;
+import edu.neu.user.UserResponse;
 import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -111,5 +113,24 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 				.header("Authorization", token))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.msg", is("user removed successfully")));
+	}
+
+	@Test
+	public void testSearchUser() throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		ResultActions logResult = login("admin@example.com", "123456");
+		String token = extractToken(logResult);
+
+		register("adminSearch@example.com","123456","PROFESSOR");
+
+		ResultActions result = mockMvc.perform(get("/user/info")
+				.param("userName","adminSearch@example.com")
+				.header("Authorization", token))
+				.andExpect(status().isOk());
+
+		UserResponse userResponse = mapper.readValue(result.andReturn().getResponse().getContentAsString(), UserResponse.class);
+		assertEquals(userResponse.getUserName(), "adminSearch@example.com");
+		assertEquals(userResponse.getRole(), Role.PROFESSOR);
+
 	}
 }
