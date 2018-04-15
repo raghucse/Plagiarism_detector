@@ -7,8 +7,7 @@ class Application extends React.Component {
       name: "",
       password: "",
       cfrm: "",
-      role: "",
-      message: ""
+      role: "PROFESSOR"
     }
   }
 
@@ -83,13 +82,7 @@ class Application extends React.Component {
                 <div className="col-md-auto"><input type="password" id="crfmpwd" placeholder="Confirm Password" onChange={ () => this.setState({ cfrm: $('#crfmpwd').val() }) }/></div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
-              <div className="row justify-content-center form">
-                <div className="col-md-auto index_label_role">
-                  <span className="index_label_text">I am: </span>&nbsp;&nbsp;
-                  <input type="radio" name="role" value="PROFESSOR" onChange={ () => this.setState({ role: $('[name="role"]:checked').val() }) } />&nbsp;<span className="index_label_text">Professor</span>&nbsp;&nbsp;
-                  <input type="radio" name="role" value="GRADER" onChange={ () => this.setState({ role: $('[name="role"]:checked').val() }) } />&nbsp;<span className="index_label_text">Grader&nbsp;&nbsp;&nbsp;&nbsp;*</span>
-                </div>
-              </div>
+              <br />
               <div className="row justify-content-center form">
                 <div className="col-md-auto">
                   <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" disabled={ this.enableRegisterButton() }
@@ -124,6 +117,17 @@ class Application extends React.Component {
       $('[data-toggle="popover"]').popover('show'); 
       setTimeout(function() {
         $('[data-toggle="popover"]').popover('hide'); 
+      }, 2000);
+      return;
+    }
+
+    // Check email validity
+    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/.test(this.state.email)) {
+      $('[data-toggle="popover"]').attr('data-content', 'Invalid email format!')
+      $('[data-toggle="popover"]').popover('show'); 
+      setTimeout(function() {
+        $('[data-toggle="popover"]').popover('hide');
+        $('[data-toggle="popover"]').attr('data-content', 'Invalid password length!') 
       }, 2000);
       return;
     }
@@ -182,7 +186,7 @@ class Application extends React.Component {
    * Enabled the register button.
    */
   enableRegisterButton() {
-    return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "" && this.state.role != "");
+    return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "");
   }
 
   /**

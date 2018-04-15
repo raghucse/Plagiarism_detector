@@ -55,23 +55,9 @@ class Dashboard extends React.Component {
                 <div id="students"></div><hr/>
                 <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
                   <div className="row">
-                    <div className="col-3 step2label">Run ID:</div>
-                    <div className="col">
-                      <input type="text" id="runid" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run ID, 1 to 8 letters" }
-                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runID: $('#runid').val() }) }/>
-                    </div>
-                  </div>
-                  <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
                       <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
-                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-3 step2label">Share With:</div>
-                    <div className="col">
-                      <input type="text" id="sharedusers" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Enter the name, separed by ','" }
                         disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
@@ -120,7 +106,7 @@ class Dashboard extends React.Component {
    * Disabling different components for step 2.
    */
   disableStep2(type) {
-    var result = this.state.student == 1;
+    var result = this.state.student == 2;
     switch (type) {
       case 'text':
         return result ? "true" : null;
@@ -135,7 +121,7 @@ class Dashboard extends React.Component {
    * Disabling different components for the final run.
    */
   disableFinalRun() {
-    return !(!this.disableStep2('btn') && (this.state.runID.length > 0 && this.state.runID.length <= 8) && this.state.runDescription.length != 0);
+    return !(!this.disableStep2('btn') && this.state.runDescription.length != 0);
   }
 
   /**
@@ -374,8 +360,6 @@ class Dashboard extends React.Component {
         $("#title").text("Statistics of " + r.toString());
     
         var finalShowing = "<div class='row'><p>Run Description: " + "Sample Description" + "</p></div>";
-        finalShowing += "<div class='row'><p>Created Time: " + "2018-01-01 00:00:00" + "</p></div>";
-        finalShowing += "<div class='row'><p>Created By: " + "Sample User" + "</p></div>";
         finalShowing += "<table class='table'><thead><tr>" + 
                         "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
                         "</tr></thead><tbody>";
