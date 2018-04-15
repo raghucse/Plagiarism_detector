@@ -100,4 +100,17 @@ public class UserController {
         userInfoRes.setRole(user.getRole());
         return ResponseEntity.ok(userInfoRes);
     }
+
+    /**
+     * Fetch user information
+     * @param userName username of the user
+     * @return user information
+     */
+    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
+    public ResponseEntity<UserResponse> userInfo(@RequestParam("userName") String userName) {
+        ApplicationUser user = userService.findByUsername(userName);
+        UserResponse userInfo = new UserResponse(user);
+        return ResponseEntity.ok(userInfo);
+    }
+
 }
