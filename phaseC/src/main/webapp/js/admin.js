@@ -26,7 +26,11 @@ class Admin extends React.Component {
     // Set state
     this.state = {
       usage: data,
-      admin: 3
+      admin: 3,
+
+      admin_email: "",
+      admin_password: "",
+      admin_cfrm: "",
     }
 
     // Ping end point
@@ -181,29 +185,24 @@ class Admin extends React.Component {
                 <form onSubmit={ e => this.onAddAdminUserSubmit(e) }>
                   <div className="row justify-content-center form">
                     <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
-                    <div className="col-md-auto"><input type="email" id="admin_email" placeholder="user@example.com" /></div>
-                    <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
-                  </div>
-                  <div className="row justify-content-center form">
-                    <div className="col-md-auto index_label"><span className="index_label_text">Name</span></div>
-                    <div className="col-md-auto"><input type="text" id="admin_name" placeholder="David Jackson" /></div>
+                    <div className="col-md-auto"><input type="email" id="admin_email" placeholder="user@example.com" onChange={ () => this.setState({ admin_email: $('#admin_email').val() }) }/></div>
                     <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
                   </div>
                   <div className="row justify-content-center form">
                     <div className="col-md-auto index_label"><span className="index_label_text">Password</span></div>
-                    <div className="col-md-auto"><input type="password" id="admin_pwd" placeholder="6 to 15 characters" /></div>
+                    <div className="col-md-auto"><input type="password" id="admin_pwd" placeholder="6 to 15 characters" onChange={ () => this.setState({ admin_password: $('#admin_pwd').val() }) }/></div>
                     <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
                   </div>
                   <div className="row justify-content-center form">
                     <div className="col-md-auto index_label"><span className="index_label_text">Confirm</span></div>
-                    <div className="col-md-auto"><input type="password" id="admin_crfmpwd" placeholder="Confirm Password"/></div>
+                    <div className="col-md-auto"><input type="password" id="admin_crfmpwd" placeholder="Confirm Password" onChange={ () => this.setState({ admin_cfrm: $('#admin_crfmpwd').val() }) }/></div>
                     <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
                   </div>
                   <br />
                   <div className="row justify-content-center form">
                     <div className="col-md-auto">
                       <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" 
-                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Add admin user</button>
+                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!" disabled={ this.enableAddAdmin() }>{ this.enableAddAdmin() ? "Fill in info" : "Add admin user" }</button>
                     </div>
                   </div>
                 </form>
@@ -239,16 +238,55 @@ class Admin extends React.Component {
   }
 
   /**
+   * Enable add admin button
+   */
+  enableAddAdmin() {
+    var res1 = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/.test(this.state.admin_email);
+    var res2 = this.state.admin_password.length >= 6 && this.state.admin_password.length <= 15;
+    return !(this.state.admin_email != "" && this.state.admin_password != "" && this.state.admin_password == this.state.admin_cfrm && res1 && res2);
+  }
+
+  /**
    * Add admin user.
    */
   onAddAdminUserSubmit(e) {
     e.preventDefault();
-    console.log($('#admin_email').val());
-    console.log($('#admin_name').val());
-    console.log($('#admin_pwd').val());
-    console.log($('#admin_crfmpwd').val());
-
     
+
+    // Send the data to the end point
+    var data = new FormData();
+    data.append('username', $('#admin_email').val());
+    data.append('password', $('#admin_pwd').val());
+    data.append('role', 'ADMIN');
+
+    var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+			if (this.readyState === 4) {
+        if (JSON.parse(this.responseText).msg != 'Admin already exists in the system'){
+          $('[data-toggle="popover"]').attr('data-content', 'Add admin user succeed!')
+          $('[data-toggle="popover"]').popover('show'); 
+          setTimeout(function() {
+            $('[data-toggle="popover"]').popover('hide');
+            $('[data-toggle="popover"]').attr('data-content', 'Invalid password length!') 
+          }, 5000);
+          $('#admin_email').val('');
+          $('#admin_pwd').val('');
+          $('#admin_crfmpwd').val('');
+        } else {
+          $('[data-toggle="popover"]').attr('data-content', 'User existed, adding failed!')
+          $('[data-toggle="popover"]').popover('show'); 
+          setTimeout(function() {
+            $('[data-toggle="popover"]').popover('hide');
+            $('[data-toggle="popover"]').attr('data-content', 'Invalid password length!') 
+          }, 5000);
+        } 
+			}
+		});
+		xhr.open("POST", "/add/admin");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Authorization", document.cookie);
+    xhr.send(data);
   }
 
   /**
