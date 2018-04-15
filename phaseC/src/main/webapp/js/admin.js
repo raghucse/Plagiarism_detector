@@ -226,10 +226,8 @@ class Admin extends React.Component {
                   <br />
                   <div className="row justify-content-center form">
                     <div className="col-md-auto">
-                      <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" 
-                        data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Search</button>
+                      <button type="submit" className="btn btn-primary subbtn" >Search</button>
                     </div>
-                    
                   </div>
                 </form>
                 <div className="row justify-content-center form">
@@ -243,6 +241,9 @@ class Admin extends React.Component {
     );
   }
 
+  /**
+   * Search if there is any user for removing.
+   */
   onSearchUserSubmit(e) {
     e.preventDefault();
     var data = null;
