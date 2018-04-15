@@ -31,6 +31,8 @@ class Admin extends React.Component {
       admin_email: "",
       admin_password: "",
       admin_cfrm: "",
+
+      rm_email: ""
     }
 
     // Ping end point
@@ -215,10 +217,10 @@ class Admin extends React.Component {
                 <div className="row justify-content-center form">
                   <h4>Remove user</h4>
                 </div>
-                <form>
+                <form onSubmit={ e => this.onSearchUserSubmit(e) }>
                   <div className="row justify-content-center form">
                     <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
-                    <div className="col-md-auto"><input type="email" id="rm_email" placeholder="user@example.com" /></div>
+                    <div className="col-md-auto"><input type="email" id="rm_email" placeholder="user@example.com" onChange={ () => this.setState({ rm_email: $('#rm_email').val() }) }/></div>
                     <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
                   </div>
                   <br />
@@ -227,14 +229,44 @@ class Admin extends React.Component {
                       <button type="submit" className="btn btn-primary subbtn" title="Warning!" data-container="body" 
                         data-toggle="popover" data-placement="right" data-content="Passwords don't match!">Remove</button>
                     </div>
+                    
                   </div>
                 </form>
+                <div className="row justify-content-center form">
+                <div className="col-md-auto" id="searchresult"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  onSearchUserSubmit(e) {
+    e.preventDefault();
+    var data = null;
+    var url = "/user/info?userName=" + this.state.rm_email;
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4 & this.status == 200) {
+        var result = JSON.parse(this.responseText);
+        var table = "<table class='table'><thead><tr><th>UID</th><th>Email</th><th>Manage</th></tr></thead><tbody>";
+        table += "<tr><td>" + result.userId + "</td><td>" + result.userName + "</td><td>";
+        table += "<button type='button' class='btn btn-primary'>Primary</button>";
+        table += "</td></tr></tbody></table>";
+        $("#searchresult").html(table);
+      } else {
+        console.log(this.status);
+        $("#searchresult").html("No result found.");
+      }
+    });		
+    xhr.open("GET", url);
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.setRequestHeader("Authorization", readCookie('Authorization'));
+    xhr.send(data);
+
   }
 
   /**
@@ -252,7 +284,6 @@ class Admin extends React.Component {
   onAddAdminUserSubmit(e) {
     e.preventDefault();
     
-
     // Send the data to the end point
     var data = new FormData();
     data.append('username', $('#admin_email').val());
