@@ -53,7 +53,7 @@ public class GitSubmission implements Submission{
 					Log.info("Looping over files");
 			        for(File f : localPath.listFiles())
 			        {
-			        		if(!f.getName().equals(".git")) {
+			        		if(isValidFileForCheck(f)) {
 								Log.info("Visited file : "+f.getName());
 								files.add(f);
 							}
@@ -66,6 +66,10 @@ public class GitSubmission implements Submission{
 		}
 
 		return files;
+	}
+	
+	public boolean isValidFileForCheck(File f) {
+		return f.getName().endsWith(".py"); // && !f.getName().equals(".git")
 	}
 
 }

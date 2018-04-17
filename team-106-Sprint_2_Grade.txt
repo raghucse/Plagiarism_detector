@@ -1,0 +1,37 @@
+CS5500 Managing Software Development
+
+------------------------------------------------
+Sprint 2 Group Grade Team 106:
+------------------------------------------------
+
+Functionality Expectations Achieved:
+-----------------------------------------------
+
+Comments on Functionality Expectations:
+
+UI Comments:
+1. The link ""View UI as non-wireframes"" does not work
+2. Admin login does not work
+3. UI needs prompts; labels and user messaging
+4. Comparison UI (Add Run) has no labels or instructions for inputs. 
+
+Stretches Achieved:
+-----------------------------------------------
+
+(1) Stretch (small): employs more than one comparison strategy on demand. Hint: use the strategy pattern.; (2) Stretch (bigger): uses more than one comparison strategy and reports the results of each method.; (4) Stretch (even bigger): uses more than one comparison strategy and computes an overall score using a weighted polynomial function.; (2) Stretch: Performs the comparison against multiple submissions.; (2) Stretch: System throws a message (email SNMP trap  etc.) when something bad happens.
+
+Comments: 3 strategies: Levinstine; LCS; Cosine Good job on error logging and email code.
+
+
+Environment Expectations: 
+-----------------------------------------------
+
+Comments: Jenkins : http://ec2-35-167-17-90.us-west-2.compute.amazonaws.com:8080 SonarQube: http://128.31.25.108:9000/dashboard?id=edu.neu%3APlagarismDetectorTeam106
+
+------------------------------------------------
+Team GRADE: 101
+------------------------------------------------
+
+Extra Comments:  
+
+Grader: Biswaraj

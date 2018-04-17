@@ -17,5 +17,16 @@ public interface UserService {
      */
     public ApplicationUser findByUsername(String username);
 
+    /**
+     * remove user from the db
+     * @param user useranme of user to be removed
+     * @return 1 if successful else 0
+     */
+    public int removeUser(String user);
+
+    /**
+     *
+     * @return count of users in the database
+     */
     public long totalUserCount();
 }
