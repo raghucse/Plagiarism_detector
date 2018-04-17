@@ -17,11 +17,22 @@ import static edu.neu.Security.SecurityConstants.HEADER_STRING;
 import static edu.neu.Security.SecurityConstants.SECRET;
 import static edu.neu.Security.SecurityConstants.TOKEN_PREFIX;
 
+/**
+ * Validate requests containing JWTS
+ */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     public JWTAuthorizationFilter(AuthenticationManager authManager) {
         super(authManager);
     }
 
+    /**
+     * If everything is okay set the user in security context and allow request to move on
+     * @param req Http request received
+     * @param res Http response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
@@ -36,6 +47,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         chain.doFilter(req, res);
     }
 
+    /**
+     *  Extract authentication from the request
+     * @param request request that is received
+     * @return
+     */
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {

@@ -62,4 +62,56 @@ public class LVDistanceTest {
         lvd.compare(null, null);
     }
     
+    /**
+     * Example test : for exactly same files
+     */
+    @Test
+    public void testExactlySame(){
+        double EPSILON = 0.01;
+        double roundOff = 10000.0;
+        double actualValue = 1;
+
+        File f1 = new File(getClass().getClassLoader().getResource("example/exactlySame/student1/student1-file1.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("example/exactlySame/student2/student2-file1.py").getFile());
+        
+        LVDistance lvDistance = new LVDistance(new ASTUtils());
+        double score = lvDistance.compare(f1, f2).getTotalScore();
+        assertEquals((Math.round(score*roundOff)/roundOff),actualValue,EPSILON);
+    }
+    
+    
+    /**
+     * Example test : for files replaced names
+     */
+    @Test
+    public void testSimplyChangeNames(){
+        double EPSILON = 0.01;
+        double roundOff = 10000.0;
+        double actualValue = 1;
+
+        File f1 = new File(getClass().getClassLoader().getResource("example/simplyChangeNames/student1/student1-file1.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("example/simplyChangeNames/student2/student2-file1.py").getFile());
+        
+        LVDistance lvDistance = new LVDistance(new ASTUtils());
+        double score = lvDistance.compare(f1, f2).getTotalScore();
+        assertEquals((Math.round(score*roundOff)/roundOff),actualValue,EPSILON);
+    }
+    
+    /**
+     * Example test : for exactly same files
+     */
+    @Test
+    public void testNotSameAtAll(){
+        double EPSILON = 0.01;
+        double roundOff = 10000.0;
+        double actualValue = 0.1171;
+
+        File f1 = new File(getClass().getClassLoader().getResource("example/notSameAtAll/student1/student1-file1.py").getFile());
+        File f2 = new File(getClass().getClassLoader().getResource("example/notSameAtAll/student2/student2-file1.py").getFile());
+        
+        LVDistance lvDistance = new LVDistance(new ASTUtils());
+        double score = lvDistance.compare(f1, f2).getTotalScore();
+        assertEquals((Math.round(score*roundOff)/roundOff),actualValue,EPSILON);
+    }
+    
 }

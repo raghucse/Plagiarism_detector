@@ -20,11 +20,22 @@ import java.util.Date;
 
 import static edu.neu.Security.SecurityConstants.*;
 
+/**
+ * Issue JWT'S to users sending credentials,
+ */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
     private AuthenticationManager authenticationManager;
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
+
+    /**
+     * Authenticates and returns a token
+     * @param req Http request
+     * @param res http response
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
@@ -41,6 +52,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Called when user logs in to generate JWT for the user
+     * @param req http request  from the user
+     * @param res http response returned to the user
+     * @param chain Filter chain
+     * @param auth Authentication object maintained for the user
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest req,
                                             HttpServletResponse res,
