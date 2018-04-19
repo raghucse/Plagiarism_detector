@@ -106,7 +106,7 @@ class Dashboard extends React.Component {
    * Disabling different components for step 2.
    */
   disableStep2(type) {
-    var result = this.state.student == 2;
+    var result = this.state.student <= 2;
     switch (type) {
       case 'text':
         return result ? "true" : null;
@@ -304,8 +304,8 @@ class Dashboard extends React.Component {
 
     // Append all data together
     var data = new FormData();
-    data.append("runID", $('#runid').val());
-    data.append("createdUserID", readCookie('uid'));
+    data.append("runID", "");
+    data.append("createdUserID", 0);
     data.append("description", $("#rundescription").val()); 
     data.append("sharedUsers", []);
 
