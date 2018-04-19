@@ -135,21 +135,41 @@ class Application extends React.Component {
     data.append('username', this.state.email);
     data.append('password', this.state.password);
     data.append('role', this.state.role);
-    fetch('/registration', {
-      method: 'POST',
-      body: data
-    });
+    var that = this;
 
-    // Clear registration cache
-    $('#email').val('');
-    $('#pwd').val('');
-    $('#crfmpwd').val('');
-    this.setState({
-      page: 0,
-      email: "",
-      password: "",
-      cfrm: ""
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        if (JSON.parse(this.responseText).msg != "user already registered") {
+          $('#email').val('');
+          $('#pwd').val('');
+          $('#crfmpwd').val('');
+          that.setState({
+            page: 0,
+            email: "",
+            password: "",
+            cfrm: ""
+          });
+          $('[data-toggle="popover"]').attr('data-content', 'Registration succeed!');
+          $('[data-toggle="popover"]').popover('show'); 
+          setTimeout(function() {
+            $('[data-toggle="popover"]').popover('hide'); 
+          }, 2000);
+          $('[data-toggle="popover"]').attr('data-content', "Invalid credential!");
+        } else {
+          $('[data-toggle="popover"]').attr('data-content', 'User already exists, switch to other emails!');
+          $('[data-toggle="popover"]').popover('show'); 
+          setTimeout(function() {
+            $('[data-toggle="popover"]').popover('hide'); 
+          }, 5000);
+          $('[data-toggle="popover"]').attr('data-content', "Passwords don't match!");
+        }
+      }
     });
+    xhr.open("POST", '/registration');
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.send(data);
   }
 
   /**
