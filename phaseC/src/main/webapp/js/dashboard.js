@@ -1,6 +1,8 @@
 class Dashboard extends React.Component {
   constructor() {
     super();
+
+    window.location.reload();
     this.state = {
       runs: [],
       runnames: [],
@@ -312,6 +314,7 @@ class Dashboard extends React.Component {
 
     // Append all data together
     var data = new FormData();
+    data.append("runID", "");
     data.append("runName", this.state.runName);
     data.append("createdUserID", 0);
     data.append("description", $("#rundescription").val()); 

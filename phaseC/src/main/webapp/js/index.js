@@ -6,8 +6,7 @@ class Application extends React.Component {
       email: "",
       password: "",
       cfrm: "",
-      role: "PROFESSOR",
-      admin: false
+      role: "PROFESSOR"
     }
   }
 
