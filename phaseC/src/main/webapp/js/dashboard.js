@@ -328,13 +328,14 @@ class Dashboard extends React.Component {
                
         $('[data-toggle="popover"]').popover('show'); 
         setTimeout(function() {
-          $('[data-toggle="popover"]').popover('hide'); 
+          $('[data-toggle="popover"]').popover('hide');
+          window.location.reload(); 
         }, 5000);
 
         that.setState({
           student: 1
         });
-        window.location.reload();
+        // window.location.reload();
 			}
 		});
 		xhr.open("POST", "/plagiarism/run");
