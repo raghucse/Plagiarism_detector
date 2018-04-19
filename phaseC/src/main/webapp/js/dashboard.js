@@ -335,7 +335,6 @@ class Dashboard extends React.Component {
         that.setState({
           student: 1
         });
-        // window.location.reload();
 			}
 		});
 		xhr.open("POST", "/plagiarism/run");
@@ -357,7 +356,11 @@ class Dashboard extends React.Component {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
         console.log(this.responseText);
-        
+      
+        if (result.reportFile == null) {
+          $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
+          return;
+        }
         $("#title").text("Statistics of " + r.toString());
     
         var finalShowing = "<div class='row'><p>Run Description: " + "Sample Description" + "</p></div>";
