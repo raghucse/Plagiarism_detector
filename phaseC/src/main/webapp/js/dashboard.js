@@ -351,12 +351,28 @@ class Dashboard extends React.Component {
 		var endPoint = "report/reportId/" + r.toString();
 		var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
+
+    /* Following defined is a fake data */
+    var fakeData = new Object();
+    fakeData.description = "Sample Description";
+    var data01 = new Object();
+    data01.student1 = "name1";
+    data01.student2 = "name2";
+    data01.file1 = "filename1";
+    data01.file2 = "filename2";
+    data01.percentage = 0.8;
+    var code01 = "def greet(name):\nprint 'Hello', name\ngreet('Jack')\ngreet('Jill')\ngreet('Bob')";
+    data01.gitDiff = [code01, code01];
+    data01.seperateScores = "LCS:0.2087912087912088;LVDistance:0.20879120879120883;CosineSimilarity:0.06621710408586144;"
+    fakeData.data = [data01, data01];
+    var fakeDataResult = JSON.stringify(fakeData);
+    /* Fake data ends */
     
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
+
+        /*
         var result = JSON.parse(this.responseText);
-        console.log(this.responseText);
-      
         if (result.reportFile == null) {
           $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
           return;
@@ -392,6 +408,60 @@ class Dashboard extends React.Component {
                  "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
                  result.reportFile.comparisonList[i].scores.subScores;
           row += "</div></div></td></tr>"
+          finalShowing += row;
+        }
+        finalShowing += "</tbody></table>";
+        $("#sa").html(finalShowing);
+        */
+
+        var result = JSON.parse(fakeDataResult); // fakeDataResult -> JSON.parse(this.responseText)
+        console.log(result.description);
+        if (result == null) {
+          $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
+          return;
+        }
+        $("#title").text("Statistics of " + r.toString());
+
+        var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
+        finalShowing += "<table class='table'><thead><tr>" + 
+                        "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
+                        "</tr></thead><tbody>";
+        for (var i = 0; i < result.data.length; i++) {
+          var row = "<tr>";
+          row += "<td>" + result.data[i].student1 + "</td>";
+          row += "<td>" + result.data[i].student2 + "</td>";
+          row += "<td>" + result.data[i].file1 + "</td>";
+          row += "<td>" + result.data[i].file2 + "</td>";
+
+          var _score = Math.floor(result.data[i].percentage * 100) / 100;
+          row += "<td>" + _score + "</td>";
+          var se = "";
+          if (_score >= 0.8) {
+            se = "High";
+          } else if (_score >= 0.6 && _score < 0.8) {
+            se = "Medium";
+          } else {
+            se = "Low";
+          }
+          row += "<td id='" + se + "'>" + se + "</td>";
+          row += "<td><div class='dropdown'>" +
+                 "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+                 "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>";
+
+                 
+          var _sS = result.data[i].seperateScores.split(";");
+
+          
+          var _ssS = "<table id='separ' class='table'><thead class='thead-light'><tr><th id='havetocenter' scope='col' colspan='3'>Seperate Scores of Three Startegies</th>" + 
+                     "</tr><tr><th id='havetocenter' scope='col'>LCS</th><th id='havetocenter' scope='col'>LVDistance</th><th id='havetocenter' scope='col'>CosineSimilarity</th></tr></thead>" + 
+                     "<tbody><tr><td id='havetocenter'>" + Math.floor(_sS[0].substring(4)* 10000) / 10000 + "</td><td id='havetocenter' >" + 
+                     Math.floor(_sS[1].substring(11)* 10000) / 10000 + "</td><td id='havetocenter'>" + Math.floor(_sS[2].substring(17)* 10000) / 10000 + "</td></tr></tbody></table>"; 
+
+          row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><div class='row'>" + 
+                 "<div class='col'>" + result.data[i].gitDiff[0] + "</div><div class='col'>" + result.data[i].gitDiff[1] + "</div></div></div>";
+
+
+          row += "</div></div></td></tr>";
           finalShowing += row;
         }
         finalShowing += "</tbody></table>";

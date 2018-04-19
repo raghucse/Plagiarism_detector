@@ -125,3 +125,11 @@ h5 {
 .advancedSlider, .advancedSlider2, .advancedSlider3 {
 	padding-top: 5%;
 }
+
+#separ {
+	width: 80%;
+}
+
+#havetocenter {
+	text-align: center;
+}
