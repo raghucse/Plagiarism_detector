@@ -4,7 +4,6 @@ class Application extends React.Component {
     this.state = {
       page: 0,
       email: "",
-      name: "",
       password: "",
       cfrm: "",
       role: "PROFESSOR",
@@ -66,11 +65,6 @@ class Application extends React.Component {
               <div className="row justify-content-center form">
                 <div className="col-md-auto index_label"><span className="index_label_text">Email</span></div>
                 <div className="col-md-auto"><input type="email" id="email" placeholder="user@example.com" onChange={ () => this.setState({ email: $('#email').val() }) }/></div>
-                <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
-              </div>
-              <div className="row justify-content-center form">
-                <div className="col-md-auto index_label"><span className="index_label_text">Name</span></div>
-                <div className="col-md-auto"><input type="text" id="name" placeholder="David Jackson" onChange={ () => this.setState({ name: $('#name').val() }) }/></div>
                 <div className="col-md-auto index_star"><span className="index_label_text">&nbsp;&nbsp;&nbsp;&nbsp;*</span></div>
               </div>
               <div className="row justify-content-center form">
@@ -148,18 +142,13 @@ class Application extends React.Component {
 
     // Clear registration cache
     $('#email').val('');
-    $('#name').val('');
     $('#pwd').val('');
     $('#crfmpwd').val('');
-    $('#email').val('');
-    $('[name="role"]:checked').val('');
     this.setState({
       page: 0,
       email: "",
-      name: "",
       password: "",
-      cfrm: "",
-      role: ""
+      cfrm: ""
     });
   }
 
@@ -168,18 +157,13 @@ class Application extends React.Component {
    */
   prepareForLoginOrReg(_page) {
     $('#email').val('');
-    $('#name').val('');
     $('#pwd').val('');
     $('#crfmpwd').val('');
-    $('#email').val('');
-    $('[name="role"]:checked').val('');
     this.setState({
       page: _page,
       email: "",
-      name: "",
       password: "",
-      cfrm: "",
-      role: "",
+      cfrm: ""
     });
   }
 
@@ -187,7 +171,7 @@ class Application extends React.Component {
    * Enabled the register button.
    */
   enableRegisterButton() {
-    return !(this.state.email != "" && this.state.name != "" && this.state.password != "" && this.state.cfrm != "");
+    return !(this.state.email != "" && this.state.password != "" && this.state.cfrm != "");
   }
 
   /**

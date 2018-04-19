@@ -3,6 +3,7 @@ class Dashboard extends React.Component {
     super();
     this.state = {
       runs: [],
+      runnames: [],
       student: 1,
       runName: "",
       runDescription: "",
