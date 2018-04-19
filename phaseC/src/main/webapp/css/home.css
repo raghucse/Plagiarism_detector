@@ -133,3 +133,7 @@ h5 {
 #havetocenter {
 	text-align: center;
 }
+
+.gitdiff {
+	color: red;
+}

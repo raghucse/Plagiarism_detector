@@ -448,19 +448,14 @@ class Dashboard extends React.Component {
                  "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
                  "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>";
 
-                 
           var _sS = result.data[i].seperateScores.split(";");
-
-          
           var _ssS = "<table id='separ' class='table'><thead class='thead-light'><tr><th id='havetocenter' scope='col' colspan='3'>Seperate Scores of Three Startegies</th>" + 
                      "</tr><tr><th id='havetocenter' scope='col'>LCS</th><th id='havetocenter' scope='col'>LVDistance</th><th id='havetocenter' scope='col'>CosineSimilarity</th></tr></thead>" + 
                      "<tbody><tr><td id='havetocenter'>" + Math.floor(_sS[0].substring(4)* 10000) / 10000 + "</td><td id='havetocenter' >" + 
                      Math.floor(_sS[1].substring(11)* 10000) / 10000 + "</td><td id='havetocenter'>" + Math.floor(_sS[2].substring(17)* 10000) / 10000 + "</td></tr></tbody></table>"; 
 
-          row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><div class='row'>" + 
+          row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><p>Parts which are similiar in two files:</p><div class='row justify-content-md-center gitdiff'>" + 
                  "<div class='col'>" + result.data[i].gitDiff[0] + "</div><div class='col'>" + result.data[i].gitDiff[1] + "</div></div></div>";
-
-
           row += "</div></div></td></tr>";
           finalShowing += row;
         }
