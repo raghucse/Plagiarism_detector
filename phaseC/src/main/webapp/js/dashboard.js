@@ -2,7 +2,6 @@ class Dashboard extends React.Component {
   constructor() {
     super();
 
-    window.location.reload();
     this.state = {
       runs: [],
       runnames: [],
@@ -372,8 +371,10 @@ class Dashboard extends React.Component {
     data01.file1 = "filename1";
     data01.file2 = "filename2";
     data01.percentage = 0.8;
-    var code01 = "def greet(name):\nprint 'Hello', name\ngreet('Jack')\ngreet('Jill')\ngreet('Bob')";
-    data01.gitDiff = [code01, code01];
+    var code01 = ["print 1", "print 2", "print 3", "print 4"];
+    var matching01 = ["print 2", "print 4"];
+    // data01.gitDiff = [code01, code01, matching01, matching01];
+    data01.gitDiff = ["", ""]
     data01.seperateScores = "LCS:0.2087912087912088;LVDistance:0.20879120879120883;CosineSimilarity:0.06621710408586144;"
     fakeData.data = [data01, data01];
     var fakeDataResult = JSON.stringify(fakeData);
@@ -464,6 +465,15 @@ class Dashboard extends React.Component {
                      "</tr><tr><th id='havetocenter' scope='col'>LCS</th><th id='havetocenter' scope='col'>LVDistance</th><th id='havetocenter' scope='col'>CosineSimilarity</th></tr></thead>" + 
                      "<tbody><tr><td id='havetocenter'>" + Math.floor(_sS[0].substring(4)* 10000) / 10000 + "</td><td id='havetocenter' >" + 
                      Math.floor(_sS[1].substring(11)* 10000) / 10000 + "</td><td id='havetocenter'>" + Math.floor(_sS[2].substring(17)* 10000) / 10000 + "</td></tr></tbody></table>"; 
+
+                     /*
+          var file1mark = "";
+          var file2mark = "";
+          for (var a = 0; a < result.data[i].gitDiff[0].length; a++) {
+            for ()
+          }*/
+
+
 
           row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><p>Parts which are similiar in two files:</p><div class='row justify-content-md-center gitdiff'>" + 
                  "<div class='col'>" + result.data[i].gitDiff[0] + "</div><div class='col'>" + result.data[i].gitDiff[1] + "</div></div></div>";
