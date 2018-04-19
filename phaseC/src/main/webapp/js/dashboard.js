@@ -4,7 +4,7 @@ class Dashboard extends React.Component {
     this.state = {
       runs: [],
       student: 1,
-      runID: "",
+      runName: "",
       runDescription: "",
       showModal: true
     }
@@ -55,6 +55,13 @@ class Dashboard extends React.Component {
                 <div id="students"></div><hr/>
                 <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
                   <div className="row">
+                    <div className="col-3 step2label">Run Name:</div>
+                    <div className="col">
+                      <input type="text" id="runname" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Name, 1-8 letters" }
+                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runName: $('#runname').val() }) }/>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
                       <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
@@ -87,7 +94,7 @@ class Dashboard extends React.Component {
                     <div className="col">
                       <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
                         data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed and auto-refreshed in 5 secs.">
-                        { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run ID and a description" : "Run" }
+                        { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run name and a description" : "Run" }
                       </button>
                     </div>
                   </div>
@@ -121,7 +128,7 @@ class Dashboard extends React.Component {
    * Disabling different components for the final run.
    */
   disableFinalRun() {
-    return !(!this.disableStep2('btn') && this.state.runDescription.length != 0);
+    return !(!this.disableStep2('btn') && this.state.runDescription.length != 0 && (this.state.runName.length > 0 && this.state.runName.length <= 8));
   }
 
   /**
@@ -130,7 +137,7 @@ class Dashboard extends React.Component {
   resetStudent() {
     this.setState({ student: 1 });
     document.getElementById('students').innerHTML = null;
-    $('#runid').val('');
+    $('#runname').val('');
     $('#rundescription').val('');
     $('#sharedusers').val('');
     $("#slider1").val(34).slider("refresh");
@@ -304,7 +311,7 @@ class Dashboard extends React.Component {
 
     // Append all data together
     var data = new FormData();
-    data.append("runID", "");
+    data.append("runName", this.state.runName);
     data.append("createdUserID", 0);
     data.append("description", $("#rundescription").val()); 
     data.append("sharedUsers", []);
