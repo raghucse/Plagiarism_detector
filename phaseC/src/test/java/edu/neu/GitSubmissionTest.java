@@ -24,4 +24,11 @@ public class GitSubmissionTest {
 		assertEquals("mock.py", fileNames.get(0));
 	}
 	
+	
+	@Test
+	public void testFilesInsideFolders() {
+		GitSubmission submission = new GitSubmission("https://github.com/qujunhao1549/testRepo.git");
+		assertEquals(6, submission.getFiles().size());
+	}
+	
 }
