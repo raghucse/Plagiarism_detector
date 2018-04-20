@@ -164,7 +164,7 @@ class Dashboard extends React.Component {
       runElements.push(
         <div className="row runelems">
           <div className="col sider">
-            <button type="button" id={this.state.runs[i]} className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(this.state.runs[i], this.state.runnames[i]) }>{ this.state.runnames[i] }</button>
+            <button type="button" id={this.state.runs[i]} className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(this.state.runs[i]) }>{ this.state.runnames[i] }</button>
           </div>
         </div>
       )
@@ -364,7 +364,7 @@ class Dashboard extends React.Component {
   /**
    * Show the statistic of a certain run.
    */
-  showStatistic(r, n) {
+  showStatistic(r) {
     var data = null;
 		var endPoint = "report/reportId/" + r;
 		var xhr = new XMLHttpRequest();
@@ -396,7 +396,7 @@ class Dashboard extends React.Component {
           $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
           return;
         }
-        $("#title").text("Statistics of " + n);
+        $("#title").text("Statistics of the run");
 
         var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
         finalShowing += "<table class='table'><thead><tr>" + 
