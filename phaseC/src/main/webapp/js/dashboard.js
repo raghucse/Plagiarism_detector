@@ -381,8 +381,8 @@ class Dashboard extends React.Component {
     data01.percentage = 0.8;
     var code01 = ["print 1", "print 2", "print 3", "print 4"];
     var matching01 = ["print 2", "print 4"];
-    // data01.gitDiff = [code01, code01, matching01, matching01];
-    data01.gitDiff = ["", ""]
+    data01.gitDiff = [code01, code01, matching01, matching01];
+    // data01.gitDiff = ["", ""]
     data01.seperateScores = "LCS:0.2087912087912088;LVDistance:0.20879120879120883;CosineSimilarity:0.06621710408586144;"
     fakeData.data = [data01, data01];
     var fakeDataResult = JSON.stringify(fakeData);
@@ -390,49 +390,6 @@ class Dashboard extends React.Component {
     
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
-
-        /*
-        var result = JSON.parse(this.responseText);
-        if (result.reportFile == null) {
-          $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
-          return;
-        }
-        $("#title").text("Statistics of " + r.toString());
-    
-        var finalShowing = "<div class='row'><p>Run Description: " + "Sample Description" + "</p></div>";
-        finalShowing += "<table class='table'><thead><tr>" + 
-                        "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
-                        "</tr></thead><tbody>";
-
-        for (var i = 0; i < result.reportFile.comparisonList.length; i++) {
-          var row = "<tr>";
-          row += "<td>" + "Student1" + "</td>";
-          row += "<td>" + "Student2" + "</td>";
-          row += "<td>" + result.reportFile.comparisonList[i].filename1 + "</td>";
-          row += "<td>" + result.reportFile.comparisonList[i].filename2 + "</td>";
-          row += "<td>" + Math.floor(result.reportFile.comparisonList[i].scores.totalScore * 100) / 100 + "</td>";
-
-          var _score = Math.floor(result.reportFile.comparisonList[i].scores.totalScore * 100) / 100;
-          var se = "";
-          if (_score >= 0.8) {
-            se = "High";
-          } else if (_score >= 0.6 && _score < 0.8) {
-            se = "Medium";
-          } else {
-            se = "Low";
-          }
-
-          row += "<td id='" + se + "'>" + se + "</td>";
-          row += "<td><div class='dropdown'>" +
-                 "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
-                 "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
-                 result.reportFile.comparisonList[i].scores.subScores;
-          row += "</div></div></td></tr>"
-          finalShowing += row;
-        }
-        finalShowing += "</tbody></table>";
-        $("#sa").html(finalShowing);
-        */
 
         var result = JSON.parse(fakeDataResult); // fakeDataResult -> JSON.parse(this.responseText)
         if (result == null) {
@@ -473,17 +430,43 @@ class Dashboard extends React.Component {
                      "<tbody><tr><td id='havetocenter'>" + Math.floor(_sS[0].substring(4)* 10000) / 10000 + "</td><td id='havetocenter' >" + 
                      Math.floor(_sS[1].substring(11)* 10000) / 10000 + "</td><td id='havetocenter'>" + Math.floor(_sS[2].substring(17)* 10000) / 10000 + "</td></tr></tbody></table>"; 
 
-                     /*
-          var file1mark = "";
-          var file2mark = "";
+          // Check the gitDiff in the first file
+          var gitSituation1 = "";
           for (var a = 0; a < result.data[i].gitDiff[0].length; a++) {
-            for ()
-          }*/
+            var flag = false;
+            for (var b = 0; b < result.data[i].gitDiff[2].length; b++) {
+              if (result.data[i].gitDiff[0][a] == result.data[i].gitDiff[2][b]) {
+                flag = true;
+                break;
+              }
+            }
+            if (flag) {
+              gitSituation1 += "<p id='gitDuplicate'>" + result.data[i].gitDiff[0][a] + "</p>";
+            } else {
+              gitSituation1 += "<p id='gitNotDuplicate'>" + result.data[i].gitDiff[0][a] + "</p>";
+            }
+          }
 
+          // Check the gitDiff in the second file
+          var gitSituation2 = "";
+          for (var a = 0; a < result.data[i].gitDiff[1].length; a++) {
+            var flag = false;
+            for (var b = 0; b < result.data[i].gitDiff[3].length; b++) {
+              if (result.data[i].gitDiff[1][a] == result.data[i].gitDiff[3][b]) {
+                flag = true;
+                break;
+              }
+            }
+            if (flag) {
+              gitSituation2 += "<p id='gitDuplicate'>" + result.data[i].gitDiff[1][a] + "</p>";
+            } else {
+              gitSituation2 += "<p id='gitNotDuplicate'>" + result.data[i].gitDiff[1][a] + "</p>";
+            }
+          }
 
 
           row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><p>Parts which are similiar in two files:</p><div class='row justify-content-md-center gitdiff'>" + 
-                 "<div class='col'>" + result.data[i].gitDiff[0] + "</div><div class='col'>" + result.data[i].gitDiff[1] + "</div></div></div>";
+                 "<div class='col'>" + gitSituation1 + "</div><div class='col'>" + gitSituation2 + "</div></div></div>";
           row += "</div></div></td></tr>";
           finalShowing += row;
         }
