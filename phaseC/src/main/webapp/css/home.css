@@ -137,3 +137,15 @@ h5 {
 .gitdiff {
 	color: red;
 }
+
+#gitDuplicate {
+	color: red;
+	margin-top: -1%;
+	margin-bottom: -1%;
+}
+
+#gitNotDuplicate {
+	color: green;
+	margin-top: -1%;
+	margin-bottom: -1%;
+}
