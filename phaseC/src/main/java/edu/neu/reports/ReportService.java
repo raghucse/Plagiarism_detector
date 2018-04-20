@@ -4,6 +4,7 @@ import edu.neu.user.ApplicationUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,8 +49,17 @@ public class ReportService {
      *               the reports related to this user
      * @return returns all the report ids found against the specified user id
      */
-    public List<Integer> getReportByOwnerId(int userId){
-        return reportRepository.findReportIdsByOwner(userId);
+    public List<ReportIdsRes> getReportByOwnerId(int userId){
+        List<ReportIdsRes> reportIdsRes = new ArrayList<>();
+        List<Object[]> objs = reportRepository.findReportIdsByOwner(userId);
+        System.out.println(objs.size());
+        for(Object[] obj: objs ){
+            ReportIdsRes reportIds = new ReportIdsRes();
+            reportIds.setId((int)obj[0]);
+            reportIds.setRunName((String)obj[1]);
+            reportIdsRes.add(reportIds);
+        }
+        return reportIdsRes;
     }
 
     /**
@@ -84,9 +94,10 @@ public class ReportService {
      * @param ownerId is the id of the owner related to the report
      * @return returns the newly created report
      */
-    public Report createNewEmptyReportWithNameAndOwner(String name, int ownerId) {
+    public Report createNewEmptyReportWithNameAndOwner(String name, int ownerId, String description) {
     		Report report = new Report();
-    		report.setName(name);
+    		report.setRunName(name);
+    		report.setDescription(description);
     		report.setOwner(ownerId);
     		return saveReport(report);
     }

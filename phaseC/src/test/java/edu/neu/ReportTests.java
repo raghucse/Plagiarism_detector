@@ -28,8 +28,8 @@ public class ReportTests {
     public void test03(){
         Report r = new Report();
         String name = "Lexo";
-        r.setName(name);
-        String val = r.getName();
+        r.setRunName(name);
+        String val = r.getRunName();
         assertEquals(val,name);
     }
 

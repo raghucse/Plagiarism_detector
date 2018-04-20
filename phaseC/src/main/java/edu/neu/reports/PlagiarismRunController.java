@@ -74,6 +74,7 @@ public class PlagiarismRunController {
     		PlagiarismRun plagiarismRun = new PlagiarismRun();
     		plagiarismRun.setDescription(runReq.getDescription());
     		plagiarismRun.setGitUrls(runReq.getGitUrls());
+    		plagiarismRun.setRunName(runReq.getRunName());
     		return plagiarismRun;
     }
     

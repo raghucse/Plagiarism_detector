@@ -14,7 +14,25 @@ public class Report {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String name;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRunName() {
+        return runName;
+    }
+
+    public void setRunName(String runName) {
+        this.runName = runName;
+    }
+
+    private String description;
+    private String runName;
     private int owner;
     private double reportScore;
     private ReportContent reportFile;
@@ -49,20 +67,6 @@ public class Report {
         this.owner = owner;
     }
 
-    /**
-     * @return Returns the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name to a particular valur
-     * @param name is the String which is to be used as the name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * @return Returns the report score
