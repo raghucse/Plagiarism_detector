@@ -40,7 +40,7 @@ public class PlagiarismRunTests {
         pr.setStudentNames(students);
         List<String> actValues = pr.getGitUrls();
         List<Submission> submissions = pr.getStudentSubmissions();
-        String val = "PlagiarismRun : [RunID:0,UserID:0,GitURLS:[https://github.ccs.neu.edu/cs5500/team-106]]";
+        String val = "PlagiarismRun : [RunID:0,UserID:0,GitURLS:[https://github.ccs.neu.edu/cs5500/team-106],Students:[mockstudent]]";
         assertEquals(val, pr.toString());
         assertEquals(actValues,urls);
     }
