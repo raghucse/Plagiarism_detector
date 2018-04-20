@@ -80,7 +80,7 @@ public class DiffContent {
             finalArr.add(matContString);
             return finalArr;
         } catch (IOException e) {
-            e.printStackTrace();
+           Log.info(e.getMessage());
         }
         return null;
     }

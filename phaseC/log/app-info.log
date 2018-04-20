@@ -691,3 +691,142 @@
 2018-04-20 04:18:24.912  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
 2018-04-20 04:18:24.912  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
 2018-04-20 04:18:27.147  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Index: 0, Size: 0
+2018-04-20 04:27:11.318  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Plagiarism Check Error
+2018-04-20 04:27:11.328  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : COMPLEX1
+2018-04-20 04:27:11.521  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Cloning from https://github.com/qujunhao1549/testRepo.git to C:\Users\anant\AppData\Local\Temp\jgitTemphelloworld2115037706516176384
+2018-04-20 04:27:14.453  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Looping over files
+2018-04-20 04:27:14.463  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : Main.py
+2018-04-20 04:27:14.463  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : Main.py
+2018-04-20 04:27:14.463  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : Main2.py
+2018-04-20 04:27:14.463  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : Main3.py
+2018-04-20 04:27:14.463  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : Main2.py
+2018-04-20 04:27:14.463  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : Main3.py
+2018-04-20 04:27:14.469  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done cloning https://github.com/qujunhao1549/testRepo.git to C:\Users\anant\AppData\Local\Temp\jgitTemphelloworld2115037706516176384
+2018-04-20 04:27:14.473  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Cloning from https://github.com/bharat94/hello_world.git to C:\Users\anant\AppData\Local\Temp\jgitTemphelloworld7978719882781955748
+2018-04-20 04:27:15.577  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Looping over files
+2018-04-20 04:27:15.587  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Visited file : mock.py
+2018-04-20 04:27:15.588  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done cloning https://github.com/bharat94/hello_world.git to C:\Users\anant\AppData\Local\Temp\jgitTemphelloworld7978719882781955748
+2018-04-20 04:27:55.220  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Starting user registration
+2018-04-20 04:27:56.305  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting system statistics
+2018-04-20 04:27:56.961  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Returning system statistics
+2018-04-20 04:27:57.245  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Starting user registration
+2018-04-20 04:27:57.661  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Adding new admin:: 
+2018-04-20 04:27:58.108  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Admin registration successful
+2018-04-20 04:27:58.152  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Removing user:: admin5@example.com
+2018-04-20 04:27:58.480  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : user removed successfully
+2018-04-20 04:27:58.499  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Starting user registration
+2018-04-20 04:27:59.357  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Starting executor with 2 threads
+2018-04-20 04:27:59.357  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Submitting git plagiarism check to executor : PlagiarismRun : [RunID:20,UserID:4,GitURLS:[https://github.com/bharat94/testRepo1.git, https://github.com/bharat94/testRepo2.git],Students:[]]
+2018-04-20 04:27:59.384  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Submitted git plagiarism check to executor : PlagiarismRun : [RunID:20,UserID:4,GitURLS:[https://github.com/bharat94/testRepo1.git, https://github.com/bharat94/testRepo2.git],Students:[]]
+2018-04-20 04:27:59.639  INFO LAPTOP-OAEHTTJL --- [pool-5-thread-1] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:09.409  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Request log for user with id:: 4
+2018-04-20 04:28:09.614  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Reports for the user:: [edu.neu.reports.Report@5826078b, edu.neu.reports.Report@277c3af5, edu.neu.reports.Report@6e67b6c2, edu.neu.reports.Report@4ab63fcb, edu.neu.reports.Report@14230d42, edu.neu.reports.Report@52ce36a1, edu.neu.reports.Report@14c4b9c, edu.neu.reports.Report@7aff6419, edu.neu.reports.Report@76ba2f19, edu.neu.reports.Report@55e27451, edu.neu.reports.Report@3691d5da, edu.neu.reports.Report@374fb0bd, edu.neu.reports.Report@10aa83aa, edu.neu.reports.Report@562c2d12, edu.neu.reports.Report@242b8228, edu.neu.reports.Report@6058f2d4, edu.neu.reports.Report@572b0770, edu.neu.reports.Report@61de93c0, edu.neu.reports.Report@191c6711, edu.neu.reports.Report@3e75e8b4]
+2018-04-20 04:28:09.828  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Starting user registration
+2018-04-20 04:28:10.315  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Submitting git plagiarism check to executor : null
+2018-04-20 04:28:10.315  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Submitted git plagiarism check to executor : null
+2018-04-20 04:28:10.316  INFO LAPTOP-OAEHTTJL --- [pool-5-thread-2] e.n.Log                                  : Generated an unsuccessful report content
+2018-04-20 04:28:10.316  INFO LAPTOP-OAEHTTJL --- [pool-5-thread-2] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.317  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Stopping executor
+2018-04-20 04:28:10.319  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Generated an unsuccessful report content
+2018-04-20 04:28:10.319  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.324  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:10.325  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.325  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.337  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp1
+2018-04-20 04:28:10.337  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.337  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Comparing All Submissions pairs
+2018-04-20 04:28:10.337  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Report generated with 1 comparisons
+2018-04-20 04:28:10.337  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Saving the report
+2018-04-20 04:28:10.338  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
+2018-04-20 04:28:10.338  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp1
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp1
+2018-04-20 04:28:10.339  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp2
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Comparing All Submissions pairs
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Report generated with 3 comparisons
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Saving the report
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
+2018-04-20 04:28:10.340  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a1
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a1
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.342  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a2
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a2
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Comparing All Submissions pairs
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Report generated with 4 comparisons
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Saving the report
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
+2018-04-20 04:28:10.343  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.344  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:10.344  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.344  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp1
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Comparing All Submissions pairs
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Report generated with 1 comparisons
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Saving the report
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
+2018-04-20 04:28:10.345  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.346  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:10.346  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp1
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Comparing All Submissions pairs
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Report generated with 1 comparisons
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Saving the report
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
+2018-04-20 04:28:10.347  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:10.349  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Start Comparing All Submissions pairs
+2018-04-20 04:28:10.349  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.349  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.349  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a1
+2018-04-20 04:28:10.349  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a1
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a2
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a2
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.350  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.351  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a1
+2018-04-20 04:28:10.351  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.351  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a1
+2018-04-20 04:28:10.351  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a2
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-a2
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Getting submission Files and comparing them
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-b1
+2018-04-20 04:28:10.352  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.353  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-b1
+2018-04-20 04:28:10.353  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.353  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-b2
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Comparing files
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : temp-b2
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done comparing getting submission Files and comparing them
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Comparing All Submissions pairs
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Report generated with 12 comparisons
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Saving the report
+2018-04-20 04:28:10.354  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Saving the report
+2018-04-20 04:28:10.355  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Done Completing plagiarism check run
+2018-04-20 04:28:12.234  INFO LAPTOP-OAEHTTJL --- [           main] e.n.Log                                  : Index: 0, Size: 0
