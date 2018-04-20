@@ -135,7 +135,7 @@ public class PlagiarismRun {
      *         URLs in the form of a String
      */
     public String toString() {
-        return "PlagiarismRun : ["+"RunID:"+runId+","+"UserID:"+userId+","+"GitURLS:"+gitUrls+"]";
+        return "PlagiarismRun : ["+"RunID:"+runId+","+"UserID:"+userId+","+"GitURLS:"+gitUrls+","+"Students:"+studentNames+"]";
     }
 
 }
