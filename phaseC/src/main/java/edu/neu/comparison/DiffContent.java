@@ -1,5 +1,6 @@
 package edu.neu.comparison;
 
+import edu.neu.Log;
 import edu.neu.astgeneration.ASTUtils;
 import org.antlr.v4.runtime.RuleContext;
 
@@ -12,13 +13,13 @@ import java.util.List;
 
 public class DiffContent {
 
-    public  ArrayList<String> AST1String = new ArrayList<String>();
-    public  ArrayList<String> AST2String = new ArrayList<String>();
-    public  ArrayList<Integer> lineNum1;
-    public  ArrayList<Integer> lineNum2;
-    public  ASTUtils astUtils1 =new ASTUtils();
-    public  ASTUtils astUtils2 = new ASTUtils();
-    public ArrayList<String> matContString = new ArrayList<>();
+    ArrayList<String> AST1String = new ArrayList<String>();
+    ArrayList<String> AST2String = new ArrayList<String>();
+    ArrayList<Integer> lineNum1;
+    ArrayList<Integer> lineNum2;
+    ASTUtils astUtils1 =new ASTUtils();
+    ASTUtils astUtils2 = new ASTUtils();
+    ArrayList<String> matContString = new ArrayList<>();
 
     public  List<List<String>> getFinalDiff(File f1, File f2) {
         RuleContext ctx1 = null;
@@ -70,7 +71,7 @@ public class DiffContent {
             }
 
         }catch (Exception e){
-            System.out.println(e);
+            Log.info(e.getMessage());
         }
         finally {
             lr1.close();
