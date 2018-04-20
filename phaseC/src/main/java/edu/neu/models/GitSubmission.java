@@ -51,7 +51,7 @@ public class GitSubmission implements Submission{
 		                .setDirectory(localPath)
 		                .call()) {
 					Log.info("Looping over files");
-			        for(File f : localPath.listFiles())
+			        for(File f : listAllFiles(localPath))
 			        {
 			        		if(isValidFileForCheck(f)) {
 								Log.info("Visited file : "+f.getName());
@@ -66,6 +66,19 @@ public class GitSubmission implements Submission{
 		}
 
 		return files;
+	}
+	
+	public List<File> listAllFiles(File localPath) {
+		List<File> resultFiles = new ArrayList<>();
+		for (File f : localPath.listFiles()) {
+			if(f.isDirectory()) {
+				resultFiles.addAll(listAllFiles(f));
+			}
+			else {
+				resultFiles.add(f);
+			}
+		}
+		return resultFiles;
 	}
 	
 	public boolean isValidFileForCheck(File f) {
