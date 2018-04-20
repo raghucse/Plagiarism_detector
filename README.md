@@ -14,5 +14,9 @@ Jenkins : http://ec2-35-167-17-90.us-west-2.compute.amazonaws.com:8080
 
 SonarQube : http://128.31.25.108:9000/dashboard?id=edu.neu%3APlagarismDetectorTeam106
 
+System Demo Video: https://youtu.be/3mqlCnSZMO8
 
+System Setup Video: https://youtu.be/0Mp1_vS9Y5w
+
+Final Presentation Video: https://youtu.be/2izGEH0sxJg  
 
