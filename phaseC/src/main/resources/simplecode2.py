@@ -1,13 +1,10 @@
-def sum(a,b):
-	return a+b
+import os
 
-def mult(a,b):
-	return a*b
+def calculation(i,j):
+    return i+j
 
-def div(a,b):
-	return a/b
+def main():
+    sum = calculation(4,5)
+    print("The sum of 4 and 5 is:"+str(sum))
 
-print("The addition of 8 and 12 is:"+str(sum(8,12)))
-
-print("The mult of 8 and 12 is:"+str(mult(8,12)))
-print("The division of 8 and 12 is:"+str(div(8,12)))
+main()

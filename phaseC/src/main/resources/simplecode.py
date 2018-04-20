@@ -1,6 +1,18 @@
-print("The addition of 8 and 12 is:"+str(sum(8,12)))
+import os
+import sys
 
-print("The mult of 8 and 12 is:"+str(mult(8,12)))
+def sum(a,b):
+    return a+b
 
-def prod(c,d):
-	return c*d
+def mult(x,y):
+    return x*y
+
+
+def main():
+    total = sum(8,12)
+    print("The addition of 8 and 12 is:"+str(total))
+
+    mult_result = mult(3,4)
+    print("The multiplication of 3 and 4 is:"+str(mult_result))
+
+main()

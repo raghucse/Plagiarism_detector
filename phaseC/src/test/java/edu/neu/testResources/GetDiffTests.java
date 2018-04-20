@@ -51,8 +51,8 @@ public class GetDiffTests {
 
     @Test
     public void test02() throws IOException {
-        File f1 = new File("src/main/resources/simplecode2.py");
-        File f2 = new File("src/main/resources/simplecode.py");
+        File f1 = new File("src/main/resources/simplecode4.py");
+        File f2 = new File("src/main/resources/simplecode3.py");
         DiffContent dc = new DiffContent();
         ArrayList<ArrayList<String>>finalArr = dc.getFinalDiff(f1,f2);
         ArrayList<ArrayList<String>> finalArr2 = finalArr;
