@@ -19,6 +19,18 @@ public class PlagiarismRun {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int runId;
     private int userId;
+
+    public String getRunName() {
+        return runName;
+    }
+
+    public void setRunName(String runName) {
+        this.runName = runName;
+    }
+
+    private String runName;
+
+
     @ElementCollection
     List<String> gitUrls;
     String description;

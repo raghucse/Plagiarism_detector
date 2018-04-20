@@ -26,7 +26,7 @@ public class DetectionExecutorTests {
 		MockitoAnnotations.initMocks(this);
 		Report report = new Report();
 		report.setId(1);
-		when(reportService.createNewEmptyReportWithNameAndOwner(null, 0)).thenReturn(report);
+		when(reportService.createNewEmptyReportWithNameAndOwner(null, 0, null)).thenReturn(report);
 		when(reportService.saveReport(any(Report.class))).thenReturn(report);
 	}
 	

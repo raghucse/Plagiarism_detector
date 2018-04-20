@@ -38,8 +38,8 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 	@Test
 	public void testRunPlagiarism() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-        register("sa@example.com","123456","PROFESSOR");
-		ResultActions logResult = login("sa@example.com", "123456");
+        register("admin@example.com","123456","ADMIN");
+		ResultActions logResult = login("admin@example.com", "123456");
 		String token = extractToken(logResult);
 		String userName = extractUserName(logResult);
 		UserInfoRes userInfoRes = getUserInfo(userName, token);
@@ -51,7 +51,8 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 						.header("Authorization", token)
 						.param("description","Sample description")
 						.param("gitUrls", "https://github.com/bharat94/testRepo1.git, https://github.com/bharat94/testRepo2.git")
-						.param("sharedUsers", ""));
+						.param("sharedUsers", "")
+						.param("runName", "testRun"));
 		Thread.sleep(10000);
 	//	assertEquals("Plagiarism run started",result.andReturn().getResponse().getContentAsString());
 		//get reports by id
@@ -63,8 +64,10 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 
 		String test = resultReport.andReturn().getResponse().getContentAsString();
 
-		//assertTrue(resultReport.andReturn().getResponse().getContentAsString().contains("0.1695617381920277"));
-
+		resultReport = mockMvc.perform(
+				get("/report/userId/{userId}",userInfoRes.getUid())
+						.header("Authorization", token));
+		resultReport.andExpect(status().isOk());
 	}
 
 	@Test

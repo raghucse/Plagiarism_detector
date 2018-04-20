@@ -24,6 +24,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findByOwner(int owner);
 
 
-    @Query(value = "SELECT r.id FROM report r WHERE r.owner = :owner", nativeQuery = true)
-    List<Integer> findReportIdsByOwner(@Param("owner") int owner);
+    @Query(value = "SELECT r.id, r.run_name FROM report r WHERE r.owner = :owner", nativeQuery = true)
+    List<Object[]> findReportIdsByOwner(@Param("owner") int owner);
 }

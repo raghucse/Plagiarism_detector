@@ -1,10 +1,12 @@
 class Dashboard extends React.Component {
   constructor() {
     super();
+
     this.state = {
       runs: [],
+      runnames: [],
       student: 1,
-      runID: "",
+      runName: "",
       runDescription: "",
       showModal: true
     }
@@ -12,13 +14,21 @@ class Dashboard extends React.Component {
     var data = null;
     var that = this;
     var loadRuns = [];
+    var loadNames = [];
     var url = "/report/userId/" + readCookie('uid')
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        loadRuns = JSON.parse(this.responseText);          
-        that.setState({ runs: loadRuns });
+      if (this.readyState === 4) {        
+        var temp = JSON.parse(this.responseText);   
+        for (var i = 0; i < temp.length; i++) {
+          loadRuns.push(temp[i].id);
+          loadNames.push(temp[i].runName);
+        }
+        that.setState({ 
+          runs: loadRuns,
+          runnames: loadNames
+        });
       }
     });		
     xhr.open("GET", url);
@@ -55,10 +65,17 @@ class Dashboard extends React.Component {
                 <div id="students"></div><hr/>
                 <h5>Step 2: Define Run<button type="button" className="btn btn-primary advanced" disabled={ this.disableStep2('btn') } onClick={ () => this.advancedSettings() }>Advanced</button></h5>
                   <div className="row">
+                    <div className="col-3 step2label">Run Name:</div>
+                    <div className="col">
+                      <input type="text" id="runname" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Name, 1-8 letters" }
+                         onChange={ () => this.setState({ runName: $('#runname').val() }) }/>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
                       <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
-                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
+                         onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
                   <div id="advanced"><hr />
@@ -85,9 +102,9 @@ class Dashboard extends React.Component {
                   </div>
                   <div className="row">
                     <div className="col">
-                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
+                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" 
                         data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed and auto-refreshed in 5 secs.">
-                        { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run ID and a description" : "Run" }
+                        { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run name and a description" : "Run" }
                       </button>
                     </div>
                   </div>
@@ -106,7 +123,7 @@ class Dashboard extends React.Component {
    * Disabling different components for step 2.
    */
   disableStep2(type) {
-    var result = this.state.student == 2;
+    var result = this.state.student <= 2;
     switch (type) {
       case 'text':
         return result ? "true" : null;
@@ -121,7 +138,7 @@ class Dashboard extends React.Component {
    * Disabling different components for the final run.
    */
   disableFinalRun() {
-    return !(!this.disableStep2('btn') && this.state.runDescription.length != 0);
+    return !(!this.disableStep2('btn') && this.state.runDescription.length != 0 && (this.state.runName.length > 0 && this.state.runName.length <= 8));
   }
 
   /**
@@ -130,7 +147,7 @@ class Dashboard extends React.Component {
   resetStudent() {
     this.setState({ student: 1 });
     document.getElementById('students').innerHTML = null;
-    $('#runid').val('');
+    $('#runname').val('');
     $('#rundescription').val('');
     $('#sharedusers').val('');
     $("#slider1").val(34).slider("refresh");
@@ -143,14 +160,14 @@ class Dashboard extends React.Component {
    */
   renderSideColumn() {
     const runElements = [];
-    for (let r of this.state.runs) {
+    for (var i = 0; i < this.state.runs.length; i++) {
       runElements.push(
         <div className="row runelems">
           <div className="col sider">
-            <button type="button" className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(r) }>Run { r }</button>
+            <button type="button" id={this.state.runs[i]} className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(this.state.runs[i], this.state.runnames[i]) }>{ this.state.runnames[i] }</button>
           </div>
         </div>
-      );
+      )
     }
 
     return(
@@ -304,8 +321,9 @@ class Dashboard extends React.Component {
 
     // Append all data together
     var data = new FormData();
-    data.append("runID", $('#runid').val());
-    data.append("createdUserID", readCookie('uid'));
+    data.append("runID", "");
+    data.append("runName", this.state.runName);
+    data.append("createdUserID", 0);
     data.append("description", $("#rundescription").val()); 
     data.append("sharedUsers", []);
 
@@ -328,13 +346,13 @@ class Dashboard extends React.Component {
                
         $('[data-toggle="popover"]').popover('show'); 
         setTimeout(function() {
-          $('[data-toggle="popover"]').popover('hide'); 
+          $('[data-toggle="popover"]').popover('hide');
+          window.location.reload(); 
         }, 5000);
 
         that.setState({
           student: 1
         });
-        window.location.reload();
 			}
 		});
 		xhr.open("POST", "/plagiarism/run");
@@ -346,17 +364,39 @@ class Dashboard extends React.Component {
   /**
    * Show the statistic of a certain run.
    */
-  showStatistic(r) {
+  showStatistic(r, n) {
     var data = null;
-		var endPoint = "report/reportId/" + r.toString();
+		var endPoint = "report/reportId/" + r;
 		var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
+
+    /* Following defined is a fake data */
+    var fakeData = new Object();
+    fakeData.description = "Sample Description";
+    var data01 = new Object();
+    data01.student1 = "name1";
+    data01.student2 = "name2";
+    data01.file1 = "filename1";
+    data01.file2 = "filename2";
+    data01.percentage = 0.8;
+    var code01 = ["print 1", "print 2", "print 3", "print 4"];
+    var matching01 = ["print 2", "print 4"];
+    // data01.gitDiff = [code01, code01, matching01, matching01];
+    data01.gitDiff = ["", ""]
+    data01.seperateScores = "LCS:0.2087912087912088;LVDistance:0.20879120879120883;CosineSimilarity:0.06621710408586144;"
+    fakeData.data = [data01, data01];
+    var fakeDataResult = JSON.stringify(fakeData);
+    /* Fake data ends */
     
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
+
+        /*
         var result = JSON.parse(this.responseText);
-        console.log(this.responseText);
-        
+        if (result.reportFile == null) {
+          $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
+          return;
+        }
         $("#title").text("Statistics of " + r.toString());
     
         var finalShowing = "<div class='row'><p>Run Description: " + "Sample Description" + "</p></div>";
@@ -388,6 +428,63 @@ class Dashboard extends React.Component {
                  "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>" +
                  result.reportFile.comparisonList[i].scores.subScores;
           row += "</div></div></td></tr>"
+          finalShowing += row;
+        }
+        finalShowing += "</tbody></table>";
+        $("#sa").html(finalShowing);
+        */
+
+        var result = JSON.parse(fakeDataResult); // fakeDataResult -> JSON.parse(this.responseText)
+        if (result == null) {
+          $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
+          return;
+        }
+        $("#title").text("Statistics of " + n);
+
+        var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
+        finalShowing += "<table class='table'><thead><tr>" + 
+                        "<th>Student1</th><th>Student2</th><th>File1</th><th>File2</th><th>Percentage</th><th>Severity</th><th>GitDiff</th>" +
+                        "</tr></thead><tbody>";
+        for (var i = 0; i < result.data.length; i++) {
+          var row = "<tr>";
+          row += "<td>" + result.data[i].student1 + "</td>";
+          row += "<td>" + result.data[i].student2 + "</td>";
+          row += "<td>" + result.data[i].file1 + "</td>";
+          row += "<td>" + result.data[i].file2 + "</td>";
+
+          var _score = Math.floor(result.data[i].percentage * 100) / 100;
+          row += "<td>" + _score + "</td>";
+          var se = "";
+          if (_score >= 0.8) {
+            se = "High";
+          } else if (_score >= 0.6 && _score < 0.8) {
+            se = "Medium";
+          } else {
+            se = "Low";
+          }
+          row += "<td id='" + se + "'>" + se + "</td>";
+          row += "<td><div class='dropdown'>" +
+                 "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+                 "View</button><div class='dropdown-menu dropdown-menu-right' id='gitdiffdata' aria-labelledby='dropdownMenuButton'>";
+
+          var _sS = result.data[i].seperateScores.split(";");
+          var _ssS = "<table id='separ' class='table'><thead class='thead-light'><tr><th id='havetocenter' scope='col' colspan='3'>Seperate Scores of Three Startegies</th>" + 
+                     "</tr><tr><th id='havetocenter' scope='col'>LCS</th><th id='havetocenter' scope='col'>LVDistance</th><th id='havetocenter' scope='col'>CosineSimilarity</th></tr></thead>" + 
+                     "<tbody><tr><td id='havetocenter'>" + Math.floor(_sS[0].substring(4)* 10000) / 10000 + "</td><td id='havetocenter' >" + 
+                     Math.floor(_sS[1].substring(11)* 10000) / 10000 + "</td><td id='havetocenter'>" + Math.floor(_sS[2].substring(17)* 10000) / 10000 + "</td></tr></tbody></table>"; 
+
+                     /*
+          var file1mark = "";
+          var file2mark = "";
+          for (var a = 0; a < result.data[i].gitDiff[0].length; a++) {
+            for ()
+          }*/
+
+
+
+          row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><p>Parts which are similiar in two files:</p><div class='row justify-content-md-center gitdiff'>" + 
+                 "<div class='col'>" + result.data[i].gitDiff[0] + "</div><div class='col'>" + result.data[i].gitDiff[1] + "</div></div></div>";
+          row += "</div></div></td></tr>";
           finalShowing += row;
         }
         finalShowing += "</tbody></table>";

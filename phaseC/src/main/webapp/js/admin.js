@@ -176,8 +176,8 @@ class Admin extends React.Component {
    */
   renderRequest() {
     return(
-      <div>
-        <div className="row">
+      <div >
+        <div className="row justify-content-md-center test">
           <div className="col">
             <div className="container">
               <div id="addadminuser">
