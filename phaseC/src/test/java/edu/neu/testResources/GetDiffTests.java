@@ -12,10 +12,18 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/** This class is used for testing the GitDiff and DiffContent classes
+ * @author Ananta Rajesh Arora
+ * @version 1.0
+ * @since 2018-04-19
+ */
 public class GetDiffTests {
 
 
     @Test
+    /**
+     * This method is used for testing the functions in GitDiff class
+     */
     public void test01(){
         GetContent gc1 = new GetContent();
         GetContent gc2 = new GetContent();
@@ -50,6 +58,10 @@ public class GetDiffTests {
         assertEquals(gc1.getMatchedContentF1(),gc2.getMatchedContentF1());
     }
 
+    /**
+     * This method is used for testing the method in the DiffContent class
+     * @throws IOException
+     */
     @Test
     public void test02() throws IOException {
         File f1 = new File("src/main/resources/simplecode4.py");
@@ -61,6 +73,10 @@ public class GetDiffTests {
     }
 
     @Test
+    /**
+     * This method is also used for testing the method in the DiffContent class
+     * @throws IOException
+     */
     public void test03() throws IOException {
         File f1 = new File("src/main/resources/simplecode6.py");
         File f2 = new File("src/main/resources/simplecode5.py");
