@@ -11,6 +11,12 @@ import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/** This class is used to find the similarities between the two files
+ * so as to display the same in the git diff tab of UI
+ * @author Ananta Rajesh Arora
+ * @version 1.0
+ * @since 2018-04-19
+ */
 public class DiffContent {
 
     ArrayList<String> AST1String = new ArrayList<String>();
@@ -20,6 +26,13 @@ public class DiffContent {
     ASTUtils astUtils1 =new ASTUtils();
     ASTUtils astUtils2 = new ASTUtils();
     ArrayList<String> matContString = new ArrayList<>();
+
+    /**
+     * This method finds the similarities between the two files
+     * @param f1 is the first file
+     * @param f2 is the second file
+     * @return returns the files and the similar content between them
+     */
 
     public  List<List<String>> getFinalDiff(File f1, File f2) {
         RuleContext ctx1 = null;

@@ -7,9 +7,19 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This class is used for testing the GetContent class
+ * @author Ananta Rajesh Arora
+ * @version 1.0
+ * @since 2018-04-19
+ */
 public class GetContentTests {
     GetContent gc = new GetContent();
     @Test
+
+    /**
+     * This method is used for testing the get and set methods for file1.
+     */
     public void test01(){
 
         ArrayList<Integer> a1 = new ArrayList<>();
@@ -20,6 +30,9 @@ public class GetContentTests {
     }
 
     @Test
+    /**
+     * This method is used for testing the get and set methods for file2.
+     */
     public void test02(){
 
         ArrayList<Integer> a2 = new ArrayList<>();
