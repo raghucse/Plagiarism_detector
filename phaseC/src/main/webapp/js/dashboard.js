@@ -14,24 +14,21 @@ class Dashboard extends React.Component {
     var data = null;
     var that = this;
     var loadRuns = [];
+    var loadNames = [];
     var url = "/report/userId/" + readCookie('uid')
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        //loadRuns = JSON.parse(this.responseText);
-        
-        var temp = JSON.parse(this.responseText);
-        console.log(temp.length);
-        
+      if (this.readyState === 4) {        
+        var temp = JSON.parse(this.responseText);   
         for (var i = 0; i < temp.length; i++) {
           loadRuns.push(temp[i].id);
+          loadNames.push(temp[i].runName);
         }
-        // console.log(JSON.stringify(loadRuns));
-
-        
-                 
-        that.setState({ runs: loadRuns });
+        that.setState({ 
+          runs: loadRuns,
+          runnames: loadNames
+        });
       }
     });		
     xhr.open("GET", url);
@@ -163,14 +160,14 @@ class Dashboard extends React.Component {
    */
   renderSideColumn() {
     const runElements = [];
-    for (let r of this.state.runs) {
+    for (var i = 0; i < this.state.runs.length; i++) {
       runElements.push(
         <div className="row runelems">
           <div className="col sider">
-            <button type="button" className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(r) }>Run { r }</button>
+            <button type="button" id={this.state.runs[i]} className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(this.state.runs[i], this.state.runnames[i]) }>{ this.state.runnames[i] }</button>
           </div>
         </div>
-      );
+      )
     }
 
     return(
@@ -367,9 +364,9 @@ class Dashboard extends React.Component {
   /**
    * Show the statistic of a certain run.
    */
-  showStatistic(r) {
+  showStatistic(r, n) {
     var data = null;
-		var endPoint = "report/reportId/" + r.toString();
+		var endPoint = "report/reportId/" + r;
 		var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
@@ -438,12 +435,11 @@ class Dashboard extends React.Component {
         */
 
         var result = JSON.parse(fakeDataResult); // fakeDataResult -> JSON.parse(this.responseText)
-        console.log(result.description);
         if (result == null) {
           $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
           return;
         }
-        $("#title").text("Statistics of " + r.toString());
+        $("#title").text("Statistics of " + n);
 
         var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
         finalShowing += "<table class='table'><thead><tr>" + 
