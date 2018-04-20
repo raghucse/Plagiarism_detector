@@ -10,6 +10,7 @@ public class GetContent {
     ArrayList<Integer> file2MatCont = new ArrayList<>();
 
     public GetContent(){
+        //empty
     }
 
 

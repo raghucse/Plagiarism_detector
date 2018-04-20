@@ -1,14 +1,8 @@
 package plagiarismdetection;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.neu.Log;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import edu.neu.comparison.ComparisonReport;
+import edu.neu.comparison.DiffContent;
 import edu.neu.comparison.Strategy;
 import edu.neu.models.ReportContent;
 import edu.neu.models.Submission;
@@ -17,6 +11,12 @@ import edu.neu.reports.PlagiarismRun;
 import edu.neu.reports.Report;
 import edu.neu.reports.ReportService;
 import edu.neu.utils.Constants;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is a runnable class which is run by the detection executor
@@ -171,15 +171,8 @@ public class PlagiarismChecker implements Runnable{
 	 * @return : The comparison report containing the comparison report for the files
 	 */
 	public ComparisonReport compareFiles(String s1, String s2, File f1, File f2) {
-		List<String> mockContent = new ArrayList<>();
-		mockContent.add("Mock");
-		List<List<String>> mockDiff = new ArrayList<>();
-		mockDiff.add(mockContent);
-		mockDiff.add(mockContent);
-		mockDiff.add(mockContent);
-		mockDiff.add(mockContent);
-		return new ComparisonReport(s1, s2, f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2), mockDiff);
-		
+		return new ComparisonReport(s1, s2, f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2), new DiffContent().getFinalDiff(f1, f2));
+
 	}
 	
 	/**

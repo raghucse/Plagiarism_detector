@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -54,8 +55,8 @@ public class GetDiffTests {
         File f1 = new File("src/main/resources/simplecode4.py");
         File f2 = new File("src/main/resources/simplecode3.py");
         DiffContent dc = new DiffContent();
-        ArrayList<ArrayList<String>>finalArr = dc.getFinalDiff(f1,f2);
-        ArrayList<ArrayList<String>> finalArr2 = finalArr;
+        List<List<String>>finalArr = dc.getFinalDiff(f1,f2);
+        List<List<String>> finalArr2 = finalArr;
         assertEquals(finalArr.size(),finalArr2.size());
     }
 
@@ -64,8 +65,8 @@ public class GetDiffTests {
         File f1 = new File("src/main/resources/simplecode6.py");
         File f2 = new File("src/main/resources/simplecode5.py");
         DiffContent dc = new DiffContent();
-        ArrayList<ArrayList<String>>finalArr = dc.getFinalDiff(f1,f2);
-        ArrayList<ArrayList<String>> finalArr2 = finalArr;
+        List<List<String>>finalArr = dc.getFinalDiff(f1,f2);
+        List<List<String>> finalArr2 = finalArr;
         assertEquals(finalArr.size(),finalArr2.size());
     }
 }

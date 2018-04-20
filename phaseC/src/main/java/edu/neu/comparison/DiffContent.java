@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiffContent {
 
@@ -19,9 +20,13 @@ public class DiffContent {
     public  ASTUtils astUtils2 = new ASTUtils();
     public ArrayList<String> matContString = new ArrayList<>();
 
-    public  ArrayList<ArrayList<String>> getFinalDiff(File f1, File f2) throws IOException {
-        RuleContext ctx1 = astUtils1.getParserFacade().parse(f1);
-        RuleContext ctx2 = astUtils2.getParserFacade().parse(f2);
+    public  List<List<String>> getFinalDiff(File f1, File f2) {
+        RuleContext ctx1 = null;
+        RuleContext ctx2 = null;
+        try {
+            ctx1 = astUtils1.getParserFacade().parse(f1);
+            ctx2 = astUtils2.getParserFacade().parse(f2);
+
         AST1String = astUtils1.getAstPrinter().getASTStringeEq(ctx1);
         lineNum1 = astUtils1.getAstPrinter().lineNum;
         AST2String = astUtils2.getAstPrinter().getASTStringeEq(ctx2);
@@ -31,7 +36,7 @@ public class DiffContent {
         GetContent gc = GetDiff.getMatchingLines(AST1String,AST2String,tree1Length,tree2Length,lineNum1,lineNum2);
         ArrayList<Integer> matchedContentF1 = gc.getMatchedContentF1();
         ArrayList<Integer> matchedContentF2 = gc.getMatchedContentF2();
-        ArrayList<ArrayList<String>> finalArr = new ArrayList<ArrayList<String>>( 4);
+        List<List<String>> finalArr = new ArrayList<List<String>>( 4);
 
         LineNumberReader lr1 = null;
         try(LineNumberReader lr2 = new LineNumberReader(new FileReader(f2))) {
@@ -70,10 +75,13 @@ public class DiffContent {
         finally {
             lr1.close();
         }
-
-        finalArr.add(matContString);
-        finalArr.add(matContString);
-        return finalArr;
+            finalArr.add(matContString);
+            finalArr.add(matContString);
+            return finalArr;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
