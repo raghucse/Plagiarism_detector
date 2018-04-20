@@ -29,7 +29,7 @@ public class GitSubmissionTest {
 	
 	@Test
 	public void testFilesInsideFolders() {
-		GitSubmission submission = new GitSubmission("https://github.com/qujunhao1549/testRepo.git");
+		GitSubmission submission = new GitSubmission(DUMMY_STUDENT_NAME, "https://github.com/qujunhao1549/testRepo.git");
 		assertEquals(6, submission.getFiles().size());
 	}
 	
