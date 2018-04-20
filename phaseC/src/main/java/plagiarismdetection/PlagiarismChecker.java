@@ -171,7 +171,15 @@ public class PlagiarismChecker implements Runnable{
 	 * @return : The comparison report containing the comparison report for the files
 	 */
 	public ComparisonReport compareFiles(String s1, String s2, File f1, File f2) {
-		return new ComparisonReport(s1, s2, f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2));
+		List<String> mockContent = new ArrayList<>();
+		mockContent.add("Mock");
+		List<List<String>> mockDiff = new ArrayList<>();
+		mockDiff.add(mockContent);
+		mockDiff.add(mockContent);
+		mockDiff.add(mockContent);
+		mockDiff.add(mockContent);
+		return new ComparisonReport(s1, s2, f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2), mockDiff);
+		
 	}
 	
 	/**
