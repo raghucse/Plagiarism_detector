@@ -30,7 +30,7 @@ public class ReportContentTests {
     
     @Test
     public void testSerializeDeserializeComparisonReport() {
-    		ComparisonReport cr1 = new ComparisonReport("abc", "def", new Scores(1.0, ""));
+    		ComparisonReport cr1 = new ComparisonReport("mockuser1", "mockuser2", "abc", "def", new Scores(1.0, ""));
     		ComparisonReport cr2 = (ComparisonReport) SerializationUtils.deserialize(SerializationUtils.serialize(cr1));
         assertEquals(cr1.getFilename1(), cr2.getFilename1());
         assertEquals(cr1.getFilename2(), cr2.getFilename2());

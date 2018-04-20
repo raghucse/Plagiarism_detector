@@ -8,6 +8,7 @@ import edu.neu.models.Submission;
 
 public class MockSubmission implements Submission{
 
+	private String MOCK_STUDENT = "MockStudent";
 	public List<File> files;
 	
 	public MockSubmission() {
@@ -17,6 +18,11 @@ public class MockSubmission implements Submission{
 	@Override
 	public List<File> getFiles() {
 		return this.files;
+	}
+
+	@Override
+	public String getStudentName() {
+		return MOCK_STUDENT;
 	}
 
 }

@@ -32,9 +32,12 @@ public class PlagiarismRunTests {
     public void test03(){
         PlagiarismRun pr = new PlagiarismRun();
         ArrayList<String> urls = new ArrayList<>();
+        ArrayList<String> students = new ArrayList<>();
         String url1 = "https://github.ccs.neu.edu/cs5500/team-106";
         urls.add(url1);
         pr.setGitUrls(urls);
+        students.add("mockstudent");
+        pr.setStudentNames(students);
         List<String> actValues = pr.getGitUrls();
         List<Submission> submissions = pr.getStudentSubmissions();
         String val = "PlagiarismRun : [RunID:0,UserID:0,GitURLS:[https://github.ccs.neu.edu/cs5500/team-106]]";
