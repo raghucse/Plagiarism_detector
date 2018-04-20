@@ -38,9 +38,10 @@ public class ReportController {
      * @return reports associated with the given user
      */
     @RequestMapping(value = "/report/userId/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Integer>> getReportsByOwner(@PathVariable("userId") int userId) {
+    public ResponseEntity<List<ReportIdsRes>> getReportsByOwner(@PathVariable("userId") int userId) {
 
-        List<Integer> result = reportService.getReportByOwnerId(userId);
+        List<ReportIdsRes> result = reportService.getReportByOwnerId(userId);
+        System.out.println(result);
         return ResponseEntity.ok(result);
     }
 

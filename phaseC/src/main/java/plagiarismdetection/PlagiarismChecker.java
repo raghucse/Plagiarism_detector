@@ -91,7 +91,7 @@ public class PlagiarismChecker implements Runnable{
 	public boolean check() {
 		if(this.plagiarismRun!=null) {
 			log.info("Initiating Plagiarism Check with id : "+checkID);
-			this.report = reportService.createNewEmptyReportWithNameAndOwner(plagiarismRun.getDescription(), plagiarismRun.getUserId());
+			this.report = reportService.createNewEmptyReportWithNameAndOwner(plagiarismRun.getDescription(), plagiarismRun.getUserId(), plagiarismRun.getDescription());
 			runStarted = true;
 			// Starting to compare all submissions
 			this.compareAllSubmissions(this.plagiarismRun);

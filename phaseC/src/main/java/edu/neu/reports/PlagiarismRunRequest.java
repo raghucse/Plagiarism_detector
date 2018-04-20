@@ -137,6 +137,16 @@ public class PlagiarismRunRequest {
 	private String runID;
     private String createdUserID;
     private String description;
+
+	public String getRunName() {
+		return runName;
+	}
+
+	public void setRunName(String runName) {
+		this.runName = runName;
+	}
+
+	private String runName;
     private List<String> sharedUsers = new ArrayList<>();
     private List<Double> strategiesWeight = new ArrayList<>();
     private List<String> strategiesNames = new ArrayList<>();
