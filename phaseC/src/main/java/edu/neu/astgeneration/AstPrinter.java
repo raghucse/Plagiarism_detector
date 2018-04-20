@@ -22,13 +22,17 @@ public class AstPrinter {
         this.ignoringWrappers = ignoringWrappers;
     }
 
+    public ArrayList<String> ASTStringEquiv =  new ArrayList<String>();
+    public ArrayList<Integer> lineNum = new ArrayList<>();
+
+
     /**
      * Creates a flattened string version of the tree
      * @param ctx is the object of RuleContext class
      * @return returns a flattened list of the AST
      */
     public ArrayList<String> getASTStringeEq(RuleContext ctx) {
-    		Log.trace("Starting to build AST String List");
+        Log.trace("Starting to build AST String List");
         ArrayList<String> astStringEquiv =  new ArrayList<>();
         explore(ctx,astStringEquiv);
         Log.trace("Done building AST String List");
@@ -49,8 +53,17 @@ public class AstPrinter {
                 && ctx.getChildCount()==1
                 && ctx.getChild(0) instanceof ParserRuleContext;
 
+
+        if(!toBeIgnored){
+            ASTStringEquiv.add(ruleName);
+            int currLine =((ParserRuleContext) ctx).getStart().getLine();
+            lineNum.add(currLine);
+        }
+
+
         if(!toBeIgnored)
-        		astStringEquiv.add(ruleName);
+            astStringEquiv.add(ruleName);
+
         for (int i=0; i<ctx.getChildCount();i++)
         {
             ParseTree element = ctx.getChild(i);
@@ -59,9 +72,8 @@ public class AstPrinter {
                 explore((RuleContext)element, astStringEquiv);
             }
         }
-        
+
 
     }
 
 }
-
