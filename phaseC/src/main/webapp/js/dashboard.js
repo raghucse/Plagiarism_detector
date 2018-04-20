@@ -19,7 +19,18 @@ class Dashboard extends React.Component {
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        loadRuns = JSON.parse(this.responseText);          
+        //loadRuns = JSON.parse(this.responseText);
+        
+        var temp = JSON.parse(this.responseText);
+        console.log(temp.length);
+        
+        for (var i = 0; i < temp.length; i++) {
+          loadRuns.push(temp[i].id);
+        }
+        // console.log(JSON.stringify(loadRuns));
+
+        
+                 
         that.setState({ runs: loadRuns });
       }
     });		
@@ -60,14 +71,14 @@ class Dashboard extends React.Component {
                     <div className="col-3 step2label">Run Name:</div>
                     <div className="col">
                       <input type="text" id="runname" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Name, 1-8 letters" }
-                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runName: $('#runname').val() }) }/>
+                         onChange={ () => this.setState({ runName: $('#runname').val() }) }/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
                       <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
-                        disabled={ this.disableStep2('text') } onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
+                         onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
                   <div id="advanced"><hr />
@@ -94,7 +105,7 @@ class Dashboard extends React.Component {
                   </div>
                   <div className="row">
                     <div className="col">
-                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
+                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" 
                         data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed and auto-refreshed in 5 secs.">
                         { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run name and a description" : "Run" }
                       </button>
