@@ -156,7 +156,7 @@ public class PlagiarismChecker implements Runnable{
 		for(File f1 : submission1.getFiles()) {
 			for(File f2 : submission2.getFiles()) {
 				Log.info("Comparing files");
-				this.reportContent.addTOComparisonList(compareFiles(f1, f2));
+				this.reportContent.addTOComparisonList(compareFiles(submission1.getStudentName(), submission2.getStudentName(), f1, f2));
 			}
 		}
 		Log.info("Done comparing getting submission Files and comparing them");
@@ -164,12 +164,14 @@ public class PlagiarismChecker implements Runnable{
 	
 	/**
 	 * Compare two files and return the comparison report
+	 * @param s1 : Student 1 name
+	 * @param s2 : Student 2 name
 	 * @param f1 : File 1
 	 * @param f2 : File 2
 	 * @return : The comparison report containing the comparison report for the files
 	 */
-	public ComparisonReport compareFiles(File f1, File f2) {
-		return new ComparisonReport(f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2));
+	public ComparisonReport compareFiles(String s1, String s2, File f1, File f2) {
+		return new ComparisonReport(s1, s2, f1.getName(), f2.getName(), comparisonStrategy.compare(f1, f2));
 	}
 	
 	/**

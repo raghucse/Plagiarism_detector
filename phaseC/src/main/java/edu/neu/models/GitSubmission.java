@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class GitSubmission implements Submission{
 	
+	private String studentName;
 	private String gitURL;
 	private List<File> files;
 
@@ -21,7 +22,8 @@ public class GitSubmission implements Submission{
 	 * to the gitURL variable
 	 * @param gitURL
 	 */
-	public GitSubmission(String gitURL) {
+	public GitSubmission(String studentName, String gitURL) {
+		this.studentName = studentName;
 		this.gitURL = gitURL;
 	}
 
@@ -83,6 +85,11 @@ public class GitSubmission implements Submission{
 	
 	public boolean isValidFileForCheck(File f) {
 		return f.getName().endsWith(".py"); // && !f.getName().equals(".git")
+	}
+
+	@Override
+	public String getStudentName() {
+		return studentName;
 	}
 
 }

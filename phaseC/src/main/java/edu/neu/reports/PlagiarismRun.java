@@ -33,6 +33,10 @@ public class PlagiarismRun {
 
     @ElementCollection
     List<String> gitUrls;
+    
+    @ElementCollection
+    List<String> studentNames;
+    
     String description;
 
     /**
@@ -81,6 +85,23 @@ public class PlagiarismRun {
     public void setGitUrls(List<String> gitUrls) {
         this.gitUrls = gitUrls;
     }
+    
+    /**
+     * @return Returns the list of Student names associated with this run
+     */
+    public List<String> getStudentNames() {
+        return studentNames;
+    }
+
+    /**
+     * Stores the student names
+     * @param studentNames determines the student names to be stored
+     */
+    public void setStudentNames(List<String> studentNames) {
+        this.studentNames = studentNames;
+    }
+    
+    
     /**
      * @return Returns the run description
      */
@@ -102,8 +123,8 @@ public class PlagiarismRun {
      */
     public List<Submission> getStudentSubmissions() {
         List<Submission> submissions = new ArrayList<>();
-        for(String gitUrl : this.getGitUrls()) {
-            submissions.add(new GitSubmission(gitUrl));
+        for(int i=0; i<this.getGitUrls().size(); i++) {
+        	submissions.add(new GitSubmission(this.getStudentNames().get(i), this.getGitUrls().get(i)));
         }
         return submissions;
     }
@@ -114,7 +135,7 @@ public class PlagiarismRun {
      *         URLs in the form of a String
      */
     public String toString() {
-        return "PlagiarismRun : ["+"RunID:"+runId+","+"UserID:"+userId+","+"GitURLS:"+gitUrls+"]";
+        return "PlagiarismRun : ["+"RunID:"+runId+","+"UserID:"+userId+","+"GitURLS:"+gitUrls+","+"Students:"+studentNames+"]";
     }
 
 }
