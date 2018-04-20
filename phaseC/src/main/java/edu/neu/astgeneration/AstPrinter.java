@@ -13,7 +13,8 @@ public class AstPrinter {
     public void setIgnoringWrappers(boolean ignoringWrappers) {
         this.ignoringWrappers = ignoringWrappers;
     }
-
+    public ArrayList<String> ASTStringEquiv =  new ArrayList<String>();
+    public ArrayList<Integer> lineNum = new ArrayList<>();
     public ArrayList<String> getASTStringeEq(RuleContext ctx) {
 
         ArrayList<String> ASTStringEquiv =  new ArrayList<String>();
@@ -29,9 +30,12 @@ public class AstPrinter {
                 && ctx.getChildCount()==1
                 && ctx.getChild(0) instanceof ParserRuleContext;
 
-        if(!toBeIgnored)
-            //System.out.println(ruleName);
+        if(!toBeIgnored){
             ASTStringEquiv.add(ruleName);
+            int currLine =((ParserRuleContext) ctx).getStart().getLine();
+            lineNum.add(currLine);
+        }
+
         for (int i=0; i<ctx.getChildCount();i++)
         {
             ParseTree element = ctx.getChild(i);
