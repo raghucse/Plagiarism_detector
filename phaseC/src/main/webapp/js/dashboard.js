@@ -67,14 +67,14 @@ class Dashboard extends React.Component {
                   <div className="row">
                     <div className="col-3 step2label">Run Name:</div>
                     <div className="col">
-                      <input type="text" id="runname" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Name, 1-8 letters" }
+                      <input type="text" id="runname" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Name, 1-8 letters" } disabled={ this.disableStep2('text') }
                          onChange={ () => this.setState({ runName: $('#runname').val() }) }/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-3 step2label">Description:</div>
                     <div className="col">
-                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" }
+                      <input type="text" id="rundescription" placeholder={ this.disableStep2('btn') ? "Add some students first" : "Run Description" } disabled={ this.disableStep2('text') }
                          onChange={ () => this.setState({ runDescription: $('#rundescription').val() }) }/>
                     </div>
                   </div>
@@ -102,7 +102,7 @@ class Dashboard extends React.Component {
                   </div>
                   <div className="row">
                     <div className="col">
-                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" 
+                      <button type="button" className="btn btn-primary runCheck" onClick={ () => this.runCheck() } title="Information" data-container="body" disabled={ this.disableFinalRun() }
                         data-toggle="popover" data-placement="right" data-content="Check started, the window will be closed and auto-refreshed in 5 secs.">
                         { this.disableStep2('btn') ? "Add some students first" : this.disableFinalRun() ? "Add run name and a description" : "Run" }
                       </button>
@@ -164,7 +164,7 @@ class Dashboard extends React.Component {
       runElements.push(
         <div className="row runelems">
           <div className="col sider">
-            <button type="button" id={this.state.runs[i]} className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(this.state.runs[i], this.state.runnames[i]) }>{ this.state.runnames[i] }</button>
+            <button type="button" id={this.state.runs[i]} className="btn btn-info btn-lg runbtn" onClick={ () => this.showStatistic(this.state.runs[i]) }>{ this.state.runnames[i] }</button>
           </div>
         </div>
       )
@@ -364,7 +364,7 @@ class Dashboard extends React.Component {
   /**
    * Show the statistic of a certain run.
    */
-  showStatistic(r, n) {
+  showStatistic(r) {
     var data = null;
 		var endPoint = "report/reportId/" + r;
 		var xhr = new XMLHttpRequest();
@@ -379,7 +379,7 @@ class Dashboard extends React.Component {
     data01.file1 = "filename1";
     data01.file2 = "filename2";
     data01.percentage = 0.8;
-    var code01 = ["print 1", "print 2", "print 3", "print 4"];
+    var code01 = ["print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4"];
     var matching01 = ["print 2", "print 4"];
     data01.gitDiff = [code01, code01, matching01, matching01];
     // data01.gitDiff = ["", ""]
@@ -396,7 +396,7 @@ class Dashboard extends React.Component {
           $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
           return;
         }
-        $("#title").text("Statistics of " + n);
+        $("#title").text("Statistics of the run");
 
         var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
         finalShowing += "<table class='table'><thead><tr>" + 
@@ -464,8 +464,7 @@ class Dashboard extends React.Component {
             }
           }
 
-
-          row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><p>Parts which are similiar in two files:</p><div class='row justify-content-md-center gitdiff'>" + 
+          row += "<div class='container'><div class='row justify-content-md-center'>" + _ssS + "</div><p>Comparison of two files, similiar parts are marked as red:</p><div class='row justify-content-md-center gitdiff pre-scrollable'>" + 
                  "<div class='col'>" + gitSituation1 + "</div><div class='col'>" + gitSituation2 + "</div></div></div>";
           row += "</div></div></td></tr>";
           finalShowing += row;
