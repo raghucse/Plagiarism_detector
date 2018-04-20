@@ -2,12 +2,21 @@ package edu.neu.comparison;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is used for generating the plagiarism report
  */
 public class ComparisonReport implements Serializable{
 
+	String studentname1;
+	String studentname2;
+    String filename1;
+	String filename2;
+	Scores scores;
+	List<List<String>> diffContent;
+	
 	/**
 	 * This function is used for returning the student name
 	 * @return a student name which is a string
@@ -76,12 +85,6 @@ public class ComparisonReport implements Serializable{
         this.filename2 = filename2;
     }
 
-    
-    String studentname1;
-	String studentname2;
-    String filename1;
-	String filename2;
-
 	/**
 	 * This function is used to return the scores generated from the plagiarism run
 	 * @return the score of the plagiarism run
@@ -98,8 +101,16 @@ public class ComparisonReport implements Serializable{
 		this.scores = scores;
 	}
 
-	Scores scores;
 	
+	
+	public List<List<String>> getDiffContent() {
+		return diffContent;
+	}
+
+	public void setDiffContent(List<List<String>> diffContent) {
+		this.diffContent = diffContent;
+	}
+
 	public ComparisonReport() {
 	}
 
@@ -112,12 +123,13 @@ public class ComparisonReport implements Serializable{
 	 * @param scores is the value to be assigned as the score
 	 */
 	
-	public ComparisonReport(String studentname1, String studentname2, String filename1, String filename2, Scores scores) {
+	public ComparisonReport(String studentname1, String studentname2, String filename1, String filename2, Scores scores, List<List<String>> diffContent) {
 		this.studentname1 = studentname1;
 		this.studentname2 = studentname2;
 		this.filename1 = filename1;
 		this.filename2 = filename2;
 		this.scores = scores;
+		this.diffContent = diffContent;
 	}
 
 	/**
@@ -140,6 +152,13 @@ public class ComparisonReport implements Serializable{
 		out.writeUTF(filename1);
 		out.writeUTF(filename2);
 		out.writeObject(scores);
+		out.writeInt(diffContent.size());
+		for(int i=0; i<diffContent.size(); i++) {
+			out.writeInt(diffContent.get(i).size());
+			for(int j=0; j<diffContent.get(i).size(); j++) {
+				out.writeUTF(diffContent.get(i).get(j));
+			}
+		}
 	}
 
 	/**
@@ -154,6 +173,16 @@ public class ComparisonReport implements Serializable{
 		filename1 = in.readUTF();
 		filename2 = in.readUTF();
 		scores = (Scores) in.readObject();
+		diffContent = new ArrayList<>();
+		int diffSize = in.readInt();
+		for(int i=0; i<diffSize; i++) {
+			List<String> innerDiff = new ArrayList<>();
+			int diffSizeInner = in.readInt();
+			for(int j=0; j<diffSizeInner; j++) {
+				innerDiff.add(in.readUTF());
+			}
+			diffContent.add(innerDiff);
+		}
 	}
 	
 }
