@@ -64,12 +64,10 @@ public class PlagarismDetectorApplicationTests extends AbstractMvc{
 
 		String test = resultReport.andReturn().getResponse().getContentAsString();
 
-		mockMvc.perform(
-				post("/report/userId/1")
+		resultReport = mockMvc.perform(
+				get("/report/userId/{userId}",userInfoRes.getUid())
 						.header("Authorization", token));
-
-		//assertTrue(resultReport.andReturn().getResponse().getContentAsString().contains("0.1695617381920277"));
-
+		resultReport.andExpect(status().isOk());
 	}
 
 	@Test
