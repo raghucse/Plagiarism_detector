@@ -136,16 +136,21 @@ h5 {
 
 .gitdiff {
 	color: red;
+	height: 175px;
 }
 
 #gitDuplicate {
 	color: red;
-	margin-top: -1%;
-	margin-bottom: -1%;
+	margin-top: -0.2%;
+	margin-bottom: -0.2%;
+	font-size: 110%;
+	font-family: 'Courier New', Courier, monospace;
 }
 
 #gitNotDuplicate {
 	color: green;
-	margin-top: -1%;
-	margin-bottom: -1%;
+	margin-top: -0.2%;
+	margin-bottom: -0.2%;
+	font-size: 110%;
+	font-family: 'Courier New', Courier, monospace;
 }
