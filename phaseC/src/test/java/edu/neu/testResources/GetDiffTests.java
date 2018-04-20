@@ -58,4 +58,14 @@ public class GetDiffTests {
         ArrayList<ArrayList<String>> finalArr2 = finalArr;
         assertEquals(finalArr.size(),finalArr2.size());
     }
+
+    @Test
+    public void test03() throws IOException {
+        File f1 = new File("src/main/resources/simplecode6.py");
+        File f2 = new File("src/main/resources/simplecode5.py");
+        DiffContent dc = new DiffContent();
+        ArrayList<ArrayList<String>>finalArr = dc.getFinalDiff(f1,f2);
+        ArrayList<ArrayList<String>> finalArr2 = finalArr;
+        assertEquals(finalArr.size(),finalArr2.size());
+    }
 }
