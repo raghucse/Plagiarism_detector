@@ -1,0 +1,156 @@
+@charset "UTF-8";
+
+.top {
+	background-color: #553f7a;
+	color: white;	
+	font-size: 125%;
+	height: 55px;
+}
+
+.statistics {
+	vertical-align: middle;
+}
+
+#chart{
+	width: 600px;
+	height: 400px;
+}
+
+.pcheck {
+	margin-top: 2%;
+}
+
+.sider {
+	text-align: center;
+}
+
+h4 {
+	text-align: center;
+	color: black;
+	margin-top: 1.5%;
+}
+
+#rundescription, #runname, #sharedusers {
+	width: 100%;
+  font-size: 100%; 
+  background-color: #f2f2f2; 
+	border: 1px solid #cccccc;
+	padding: 1.3%;
+	border-radius: 5px;
+	margin-top: 1%;
+}
+
+.git, .nm {
+	width: 46.5%;
+  font-size: 100%; 
+  background-color: #f2f2f2; 
+	border: 1px solid #cccccc;
+	padding: 1%;
+	border-radius: 5px;
+	margin-top: 1%;
+}
+
+.removestudent {
+	width: 5%;
+	color: gray;
+	background-color: white;
+	border: none;
+}
+
+.removestudent:hover {
+	width: 5%;
+	color: black;
+	background-color: lightcoral;
+}
+
+.runelems {
+	margin-top: 1%;
+}
+
+.runbtn {
+	width: 68%;
+}
+
+#dropdown {
+	margin-top: 3px;
+}
+
+#chart1, #chart2 {
+	width: 600px;
+	height: 400px;
+}
+
+.add_student, .advanced {
+	width: 25%;
+	float: right;
+	margin-top: -1.5%;
+}
+
+.step2label {
+	padding-top: 1.5%;
+}
+
+h5 {
+	padding-bottom: 1%;
+}
+
+.runCheck {
+	width: 100%;
+	margin-top: 2%;
+}
+
+#High {
+	background-color: tomato;
+}
+
+#Medium {
+	background-color: yellow;
+}
+
+#Low {
+	background-color: lightseagreen;
+}
+
+#dropdownMenuButton {
+	margin-top: -20%;
+	margin-bottom: -20%;
+	width: 100%;
+}
+
+#gitdiffdata {
+	width: 800%;
+	height: 400px;
+}
+
+.advancedSlider, .advancedSlider2, .advancedSlider3 {
+	padding-top: 5%;
+}
+
+#separ {
+	width: 80%;
+}
+
+#havetocenter {
+	text-align: center;
+}
+
+.gitdiff {
+	color: red;
+	height: 175px;
+}
+
+#gitDuplicate {
+	color: red;
+	margin-top: -0.2%;
+	margin-bottom: -0.2%;
+	font-size: 110%;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+#gitNotDuplicate {
+	color: green;
+	margin-top: -0.2%;
+	margin-bottom: -0.2%;
+	font-size: 110%;
+	font-family: 'Courier New', Courier, monospace;
+}

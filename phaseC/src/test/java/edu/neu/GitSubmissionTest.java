@@ -11,17 +11,26 @@ import org.junit.Test;
 import edu.neu.models.GitSubmission;
 
 public class GitSubmissionTest {
+	
+	private String DUMMY_STUDENT_NAME = "mockuser";
 
 	@Test
 	public void test01() {
-		GitSubmission submission = new GitSubmission("https://github.com/bharat94/hello_world.git");
+		GitSubmission submission = new GitSubmission(DUMMY_STUDENT_NAME, "https://github.com/bharat94/hello_world.git");
 		List<String> fileNames = new ArrayList<>();
 		for (File f : submission.getFiles()) {
 			fileNames.add(f.getName());
 		}
 		
 		assertEquals(1, fileNames.size());
-		assertEquals("README.md", fileNames.get(0));
+		assertEquals("mock.py", fileNames.get(0));
+	}
+	
+	
+	@Test
+	public void testFilesInsideFolders() {
+		GitSubmission submission = new GitSubmission(DUMMY_STUDENT_NAME, "https://github.com/qujunhao1549/testRepo.git");
+		assertEquals(6, submission.getFiles().size());
 	}
 	
 }

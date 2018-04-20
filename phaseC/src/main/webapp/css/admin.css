@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+h3 {
+	text-align: center;
+	padding-top: 3%;
+	padding-bottom: 1.5%;
+}
+
+.adminWrapper {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.admintable, #adminchart {
+	width: 50%;
+}
+
+#usageChart, #reportChart {
+	width: 450px;
+	height: 300px;
+}
+
+#admin_email, #admin_pwd, #admin_crfmpwd, #admin_name, #rm_email {
+	width: 120%;
+  font-size: 100%; 
+  background-color: #f2f2f2; 
+	border: 1px solid #cccccc;
+	padding: 3%;
+	border-radius: 5px;
+}
+
+#addadminuser, #removeuser {
+	margin-top: 3%;
+}
+
+.test {
+	width: 80%;
+}

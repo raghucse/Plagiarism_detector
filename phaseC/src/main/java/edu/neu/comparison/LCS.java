@@ -1,11 +1,11 @@
 package edu.neu.comparison;
 
+import edu.neu.Log;
+import edu.neu.astgeneration.ASTUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import edu.neu.Log;
-import edu.neu.astgeneration.ASTUtils;
 /**
  * Implementing another comparison strategy by using the Longest
  * Common Subsequence (LCS) technique.
@@ -17,31 +17,50 @@ import edu.neu.astgeneration.ASTUtils;
 public class LCS implements ASTBasedStrategy{
 
 	private ASTUtils astUtils;
-	
+
+	/**
+	 * The constructor is used to set the astUtils parameter
+	 * @param astUtils is an object of the ASTUtils class which
+	 *                 determines the value to be set for the local astUtils
+	 *                 variable
+	 */
 	public LCS(ASTUtils astUtils) {
 		this.astUtils = astUtils;
 	}
-	
-	@Override
+
+
+	/**
+	 * Returns the name of the strategy to be used for comparison
+	 * @return LCS as the value as Longest Common Subsequence technique
+	 * 		   will be used for comparison
+	 */
 	public STRATEGIES getName() {
 		return STRATEGIES.LCS;
 	}
 
-	@Override
-	public double compare(File f1, File f2) {
+	/**
+	 * This function is used to compare two files using LCS Strategy
+	 * @param f1 is the first file
+	 * @param f2 is the second file
+	 * @return the score generated after implementing the longest common
+	 *         subsequence strategy
+	 */
+	public Scores compare(File f1, File f2) {
 		try {
-			return calculateLCS(
+			double score = calculateLCS(
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f1)),
 					astUtils.getAstPrinter().getASTStringeEq(astUtils.getParserFacade().parse(f2))
 					);
+			return new Scores(score, "LCS:"+score+ ";");
 		} catch (IOException e) {
 			Log.info("ERROR while reading files for comparison "+e.getStackTrace());
 		}
-		return 0;
-				
+		return new Scores(0, "LCS:"+0+ ";");
 	}
-	
-	@Override
+
+	/**
+	 * @return Returns the astUtils value
+	 */
 	public ASTUtils getASTUtils() {
 		return astUtils;
 	}
@@ -60,22 +79,23 @@ public class LCS implements ASTBasedStrategy{
         int tree1Size = tree1.size();
         int tree2Size = tree2.size();
         int cost;
-        double score, maxNodeCount;
-        int LCSScore[][] = new int[tree1Size+1][tree2Size+1];
+        double score;
+        double maxNodeCount;
+        int[][] lCSScore = new int[tree1Size+1][tree2Size+1];
 
         for(int i=0; i<=tree1Size; i++)
         {
             for(int j = 0; j<=tree2Size; j++)
             {
                 if(i == 0 || j == 0)
-                    LCSScore[i][j] = 0;
+                	lCSScore[i][j] = 0;
                 else if(tree1.get(i-1).equals(tree2.get(j-1)))
-                    LCSScore[i][j] = LCSScore[i-1][j-1]+1;
+                	lCSScore[i][j] = lCSScore[i-1][j-1]+1;
                 else
-                    LCSScore[i][j] = Math.max(LCSScore[i-1][j], LCSScore[i][j-1]);
+                	lCSScore[i][j] = Math.max(lCSScore[i-1][j], lCSScore[i][j-1]);
             }
         }
-        cost =  LCSScore[tree1Size][tree2Size];
+        cost =  lCSScore[tree1Size][tree2Size];
         maxNodeCount =Math.max(tree1Size,tree2Size);
         score = cost/maxNodeCount;
         return score;
