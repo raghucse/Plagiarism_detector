@@ -286,7 +286,7 @@ class Dashboard extends React.Component {
     var res = true;
     for (var i = 1; i < this.state.student; i++) {
       res &= $("#hw" + i.toString()).val() != "";
-      res &= /^https:\/\/github\.com[a-zA-Z0-9\/]+\.git$/.test($("#hw" + i.toString()).val());
+      res &= /^https:\/\/github\.com[a-zA-Z0-9\/-]+\.git$/.test($("#hw" + i.toString()).val());
       res &= $("#nm" + i.toString()).val() != "";
     }
 
@@ -370,34 +370,16 @@ class Dashboard extends React.Component {
 		var endPoint = "report/reportId/" + thisStatus;
 		var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
-    /* Following defined is a fake data */
-    var fakeData = new Object();
-    fakeData.description = "Sample Description";
-    var data01 = new Object();
-    data01.student1 = "name1";
-    data01.student2 = "name2";
-    data01.file1 = "filename1";
-    data01.file2 = "filename2";
-    data01.percentage = 0.8;
-    var code01 = ["print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4","print 1", "print 2", "print 3", "print 4"];
-    var matching01 = ["print 2", "print 4"];
-    data01.gitDiff = [code01, code01, matching01, matching01];
-    data01.seperateScores = "LCS:0.2087912087912088;LVDistance:0.20879120879120883;CosineSimilarity:0.06621710408586144;"
-    fakeData.data = [data01, data01];
-    var fakeDataResult = JSON.stringify(fakeData);
-    /* Fake data ends */
-    
 		xhr.addEventListener("readystatechange", function () {
 			if (this.readyState === 4) {
         var result = JSON.parse(this.responseText);
-        console.log(this.responseText);
         
-        if (result == null) {
+        if (result == null || result.reportFile == null) {
           $("#title").text("Errors in getting report. Probably caused by invalid GitHub repo URL.");
+          $("#sa").html("");
           return;
         }
-        $("#title").text("Statistics of the run" + result.runName);
+        $("#title").text("Statistics of the run " + result.runName);
 
         var finalShowing = "<div class='row'><p>Run Description: " + result.description + "</p></div>";
         finalShowing += "<table class='table'><thead><tr>" + 
